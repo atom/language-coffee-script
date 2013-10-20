@@ -1,0 +1,8 @@
+{
+  "name": "Disable Indent Corrections",
+  "scope": "source.coffee",
+  "settings": {
+    "disableIndentCorrections": true,
+    "indentOnPaste": "simple"
+  }
+}

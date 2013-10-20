@@ -1,0 +1,6 @@
+{
+  "content": "\\`${1:`pbpaste`}\\`",
+  "keyEquivalent": "^j",
+  "name": "Raw javascript",
+  "scope": "source.coffee"
+}

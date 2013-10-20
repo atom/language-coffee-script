@@ -1,0 +1,6 @@
+{
+  "content": "class ${1:ClassName}${2: extends ${3:Ancestor}}\n\n  ${4:constructor: (${5:args}) ->\n    ${6:# body...}}\n  $7",
+  "name": "Class",
+  "scope": "source.coffee",
+  "tabTrigger": "cla"
+}

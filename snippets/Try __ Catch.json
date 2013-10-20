@@ -1,0 +1,6 @@
+{
+  "content": "try\n  $1\ncatch ${2:error}\n  $3",
+  "name": "Try .. Catch",
+  "scope": "source.coffee",
+  "tabTrigger": "try"
+}

@@ -1,0 +1,6 @@
+{
+  "content": "# $1\n# -------------------------\n$0",
+  "name": "Subheader",
+  "scope": "source.coffee",
+  "tabTrigger": "/3"
+}

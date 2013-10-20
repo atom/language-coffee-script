@@ -1,0 +1,8 @@
+{
+  "name": "Symbol List: Method",
+  "scope": "source.coffee meta.function.coffee",
+  "settings": {
+    "showInSymbolList": 1,
+    "symbolTransformation": "s/^\\s*([a-zA-Z\\$_]+)\\s*=/$2/"
+  }
+}

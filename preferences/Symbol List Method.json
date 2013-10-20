@@ -1,0 +1,7 @@
+{
+  "name": "Symbol List: Method Instance",
+  "scope": "source.coffee entity.name.type.instance",
+  "settings": {
+    "showInSymbolList": 0
+  }
+}

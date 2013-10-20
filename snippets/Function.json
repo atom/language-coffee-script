@@ -1,0 +1,6 @@
+{
+  "content": "(${1:args}) ->\n  ${0:# body...}\n\n",
+  "name": "Function",
+  "scope": "source.coffee",
+  "tabTrigger": "fun"
+}

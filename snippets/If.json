@@ -1,0 +1,6 @@
+{
+  "content": "if ${1:condition}\n  ${0:# body...}",
+  "name": "If",
+  "scope": "source.coffee",
+  "tabTrigger": "if"
+}

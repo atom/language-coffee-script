@@ -1,0 +1,6 @@
+{
+  "content": "for ${1:name} in ${2:array}\n  ${0:# body...}",
+  "name": "Array Comprehension",
+  "scope": "source.coffee",
+  "tabTrigger": "fora"
+}

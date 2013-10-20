@@ -1,0 +1,6 @@
+{
+  "content": "console.log $0",
+  "name": "log",
+  "scope": "source.coffee",
+  "tabTrigger": "log"
+}

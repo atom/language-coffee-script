@@ -1,0 +1,6 @@
+{
+  "content": "for ${1:name} in [${2:start}...${3:finish}]${4: by ${5:step}}\n  ${0:# body...}",
+  "name": "Range comprehension (exclusive)",
+  "scope": "source.coffee",
+  "tabTrigger": "forrex"
+}
