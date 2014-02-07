@@ -1,9 +1,0 @@
-{
-  "beforeRunningCommand": "nop",
-  "command": "#!/bin/bash\n\n${TM_COFFEE:=coffee} -s\n",
-  "input": "selection",
-  "keyEquivalent": "@R",
-  "name": "Run selected text",
-  "output": "showAsTooltip",
-  "scope": "source.coffee"
-}
