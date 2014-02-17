@@ -1,0 +1,7 @@
+{
+  "source.coffee, source.litcoffee, source.coffee.md": {
+    "editor": {
+      "commentStart": "# "
+    }
+  }
+}
