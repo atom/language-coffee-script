@@ -1,6 +1,0 @@
-{
-  "content": "for ${1:key}, ${2:value} of ${3:Object}\n  ${0:# body...}",
-  "name": "Object comprehension",
-  "scope": "source.coffee",
-  "tabTrigger": "foro"
-}

@@ -1,7 +1,0 @@
-{
-  "content": "#{${1:$TM_SELECTED_TEXT}}",
-  "keyEquivalent": "#",
-  "name": "Interpolated Code",
-  "scope": "(string.quoted.double.coffee) - string source, (string.quoted.double.heredoc.coffee) - string source",
-  "tabTrigger": "#"
-}

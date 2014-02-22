@@ -1,6 +1,0 @@
-{
-  "content": "${1:action} unless ${2:condition}",
-  "name": "Unless",
-  "scope": "source.coffee",
-  "tabTrigger": "unl"
-}

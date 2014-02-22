@@ -1,6 +1,0 @@
-{
-  "content": "${2/^.*?([\\w_]+).*$/\\L$1/} = require ${2:'${1:sys}'}$3",
-  "name": "require",
-  "scope": "source.coffee",
-  "tabTrigger": "req"
-}

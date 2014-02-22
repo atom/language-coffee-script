@@ -1,6 +1,0 @@
-{
-  "content": "switch ${1:object}\n  when ${2:value}\n    ${0:# body...}",
-  "name": "Switch",
-  "scope": "source.coffee",
-  "tabTrigger": "swi"
-}
