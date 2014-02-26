@@ -1,6 +1,6 @@
 # CoffeeScript language support in Atom
 
-Adds syntax highlighting and snippets to C/C++ files in Atom.
+Adds syntax highlighting and snippets to CoffeeScript files in Atom.
 
 Originally [converted](http://atom.io/docs/latest/converting-a-text-mate-bundle)
 from the [CoffeeScript TextMate bundle](https://github.com/jashkenas/coffee-script-tmbundle).
