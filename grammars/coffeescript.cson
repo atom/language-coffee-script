@@ -4,6 +4,7 @@
   'Cakefile'
   'coffee.erb'
   'cson'
+  '_coffee'
 ]
 'firstLineMatch': '^#!.*\\bcoffee'
 'foldingStartMarker': '^\\s*class\\s+\\S.*$|.*(->|=>)\\s*$|.*[\\[{]\\s*$'
