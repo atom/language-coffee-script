@@ -47,6 +47,12 @@
   'log':
     'prefix': 'log'
     'body': 'console.log $0'
+  'warn':
+    'prefix': 'warn'
+    'body': 'console.warn $0'
+  'error':
+    'prefix': 'error'
+    'body': 'console.error $0'
   'require':
     'prefix': 'req'
     'body': '${1:sys} = require "${2:sys}"$3'
