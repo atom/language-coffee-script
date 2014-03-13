@@ -118,6 +118,19 @@
     'begin': '(?<!\\d|\\d\\s)/{1}(?=[^\n]+(?<!\\\\)/(?!\\s|\\d))',
     'end': '/{1}[imgy]{0,4}',
     'name': 'string.regexp.coffee'
+    'patterns': [
+      {
+        'include': 'source.js.regexp'
+      }
+    ]
+    'beginCaptures':
+      '0':
+        'name': 'punctuation.definition.string.begin.js'
+
+    'endCaptures':
+      '0':
+        'name': 'punctuation.definition.string.begin.js'
+
   }
   {
     'match': '(?x)\n\t\t\t\t\\b(?<![\\.\\$])(\n\t\t\t\t\tbreak|by|catch|continue|else|finally|for|in|of|if|return|switch|\n\t\t\t\t\tthen|throw|try|unless|when|while|until|loop|do|(?<=for)\\s+own\n\t\t\t\t)(?!\\s*:)\\b\n\t\t\t'
