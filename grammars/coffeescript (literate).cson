@@ -263,39 +263,6 @@
         'include': 'source.coffee'
       }
     ]
-  'double_quoted_string':
-    'patterns': [
-      {
-        'begin': '"'
-        'beginCaptures':
-          '0':
-            'name': 'punctuation.definition.string.begin.coffee'
-        'end': '"'
-        'endCaptures':
-          '0':
-            'name': 'punctuation.definition.string.end.coffee'
-        'name': 'string.quoted.double.coffee'
-        'patterns': [
-          {
-            'match': '\\\\(x\\h{2}|[0-2][0-7]{,2}|3[0-6][0-7]|37[0-7]?|[4-7][0-7]?|.)'
-            'name': 'constant.character.escape.coffee'
-          }
-          {
-            'include': '#interpolated_coffee'
-          }
-        ]
-      }
-    ]
-  'embedded_comment':
-    'patterns': [
-      {
-        'captures':
-          '1':
-            'name': 'punctuation.definition.comment.coffee'
-        'match': '(?<!\\\\)(#).*$\\n?'
-        'name': 'comment.line.number-sign.coffee'
-      }
-    ]
   'escape':
     'match': '\\\\[-`*_#+.!(){}\\[\\]\\\\>]'
     'name': 'constant.character.escape.markdown'
@@ -405,29 +372,6 @@
       }
       {
         'include': '#link-ref'
-      }
-    ]
-  'instance_variable':
-    'patterns': [
-      {
-        'match': '(@)([a-zA-Z_\\$]\\w*)?'
-        'name': 'variable.other.readwrite.instance.coffee'
-      }
-    ]
-  'interpolated_coffee':
-    'patterns': [
-      {
-        'begin': '\\#\\{'
-        'captures':
-          '0':
-            'name': 'punctuation.section.embedded.coffee'
-        'end': '\\}'
-        'name': 'source.coffee.embedded.source'
-        'patterns': [
-          {
-            'include': '$self'
-          }
-        ]
       }
     ]
   'italic':
@@ -592,13 +536,6 @@
         ]
       }
     ]
-  'numeric':
-    'patterns': [
-      {
-        'match': '(?<!\\$)\\b((0([box])[0-9a-fA-F]+)|([0-9]+(\\.[0-9]+)?(e[+\\-]?[0-9]+)?))\\b'
-        'name': 'constant.numeric.coffee'
-      }
-    ]
   'raw':
     'captures':
       '1':
@@ -610,34 +547,4 @@
   'separator':
     'match': '\\G[ ]{,3}([-*_])([ ]{,2}\\1){2,}[ \\t]*$\\n?'
     'name': 'meta.separator.markdown'
-  'single_quoted_string':
-    'patterns': [
-      {
-        'begin': '\''
-        'beginCaptures':
-          '0':
-            'name': 'punctuation.definition.string.begin.coffee'
-        'end': '\''
-        'endCaptures':
-          '0':
-            'name': 'punctuation.definition.string.end.coffee'
-        'name': 'string.quoted.single.coffee'
-        'patterns': [
-          {
-            'match': '\\\\(x\\h{2}|[0-2][0-7]{,2}|3[0-6][0-7]?|37[0-7]?|[4-7][0-7]?|.)'
-            'name': 'constant.character.escape.coffee'
-          }
-        ]
-      }
-    ]
-  'variable_name':
-    'patterns': [
-      {
-        'captures':
-          '1':
-            'name': 'variable.assignment.coffee'
-        'match': '([a-zA-Z\\$_]\\w*(\\.\\w+)*)'
-        'name': 'variable.assignment.coffee'
-      }
-    ]
 'scopeName': 'source.litcoffee'
