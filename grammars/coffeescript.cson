@@ -1,4 +1,5 @@
-'comment': 'CoffeeScript'
+'scopeName': 'source.coffee'
+'name': 'CoffeeScript'
 'fileTypes': [
   'coffee'
   'Cakefile'
@@ -9,7 +10,6 @@
 'firstLineMatch': '^#!.*\\bcoffee'
 'foldingStartMarker': '^\\s*class\\s+\\S.*$|.*(->|=>)\\s*$|.*[\\[{]\\s*$'
 'foldingStopMarker': '^\\s*$|^\\s*[}\\]]\\s*$'
-'name': 'CoffeeScript'
 'patterns': [
   {
     'captures':
@@ -520,4 +520,3 @@
         'include': '#embedded_comment'
       }
     ]
-'scopeName': 'source.coffee'
