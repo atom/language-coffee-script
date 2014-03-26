@@ -103,14 +103,14 @@
   }
   {
     'begin': '/{3}'
-    'end': '/{3}[imgy]{0,4}'
+    'end': '(/{3})[imgy]{0,4}'
     'name': 'string.regexp.coffee'
     'beginCaptures':
       '0':
         'name': 'punctuation.definition.string.begin.js'
 
     'endCaptures':
-      '0':
+      '1':
         'name': 'punctuation.definition.string.begin.js'
 
     'patterns': [
@@ -121,8 +121,8 @@
 
   }
   {
-    'begin': '(?<!\\d|\\d\\s)/{1}(?=[^\n]+(?<!\\\\)/(?!\\s|\\d))',
-    'end': '/{1}[imgy]{0,4}',
+    'begin': '(?<!\\d|\\d\\s)/{1}(?=[^\n]+(?<!\\\\)/(?!\\s|\\d))'
+    'end': '(/{1})[imgy]{0,4}'
     'name': 'string.regexp.coffee'
     'patterns': [
       {
@@ -134,7 +134,7 @@
         'name': 'punctuation.definition.string.begin.js'
 
     'endCaptures':
-      '0':
+      '1':
         'name': 'punctuation.definition.string.begin.js'
 
   }
