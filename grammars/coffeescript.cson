@@ -9,7 +9,6 @@
 'firstLineMatch': '^#!.*\\bcoffee'
 'foldingStartMarker': '^\\s*class\\s+\\S.*$|.*(->|=>)\\s*$|.*[\\[{]\\s*$'
 'foldingStopMarker': '^\\s*$|^\\s*[}\\]]\\s*$'
-'keyEquivalent': '^~C'
 'name': 'CoffeeScript'
 'patterns': [
   {
