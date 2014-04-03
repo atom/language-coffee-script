@@ -143,6 +143,10 @@
     'name': 'keyword.operator.coffee'
   }
   {
+    'match': '(?x)\n\t\t\t\t\\b(?<![\\.\\$])(case|default|function|var|void|with|const|let|enum|export|import|native|__hasProp|__extends|__slice|__bind|__indexOf|implements|interface|package|private|protected|public|static|yield)(?!\\s*:)\\b\n\t\t\t'
+    'name': 'keyword.reserved.coffee'
+  }
+  {
     'captures':
       '1':
         'name': 'variable.assignment.coffee'
