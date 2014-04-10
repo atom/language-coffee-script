@@ -157,15 +157,43 @@
     'name': 'variable.assignment.coffee'
   }
   {
-    'begin': '(?<=\\s|^)([\\[\\{])(?=.*?[\\]\\}]\\s+[:=])'
+    'begin': '(?<=\\s|^)(\\{)(?=.+?\\}\\s+[:=])'
     'beginCaptures':
       '0':
         'name': 'keyword.operator.coffee'
-    'end': '([\\]\\}]\\s*[:=])'
+    'end': '(\\}\\s*[:=])'
     'endCaptures':
       '0':
         'name': 'keyword.operator.coffee'
-    'name': 'meta.variable.assignment.destructured.coffee'
+    'name': 'meta.variable.assignment.destructured.object.coffee'
+    'patterns': [
+      {
+        'include': '#variable_name'
+      }
+      {
+        'include': '#instance_variable'
+      }
+      {
+        'include': '#single_quoted_string'
+      }
+      {
+        'include': '#double_quoted_string'
+      }
+      {
+        'include': '#numeric'
+      }
+    ]
+  }
+  {
+    'begin': '(?<=\\s|^)(\\[)(?=.+?\\]\\s+[:=])'
+    'beginCaptures':
+      '0':
+        'name': 'keyword.operator.coffee'
+    'end': '(\\]\\s*[:=])'
+    'endCaptures':
+      '0':
+        'name': 'keyword.operator.coffee'
+    'name': 'meta.variable.assignment.destructured.array.coffee'
     'patterns': [
       {
         'include': '#variable_name'
