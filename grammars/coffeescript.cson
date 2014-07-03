@@ -250,6 +250,17 @@
       '1':
         'name': 'storage.type.class.coffee'
       '2':
+        'name': 'keyword.control.inheritance.coffee'
+      '3':
+        'name': 'entity.other.inherited-class.coffee'
+    'match': '(class)\\s+(extends)\\s+(@?[a-zA-Z\\$\\._][\\w\\.]*)'
+    'name': 'meta.class.coffee'
+  }
+  {
+    'captures':
+      '1':
+        'name': 'storage.type.class.coffee'
+      '2':
         'name': 'entity.name.type.class.coffee'
       '3':
         'name': 'keyword.control.inheritance.coffee'
