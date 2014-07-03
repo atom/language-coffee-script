@@ -1,4 +1,4 @@
-# CoffeeScript language support in Atom
+# CoffeeScript language support in Atom [![Build Status](https://travis-ci.org/atom/language-coffee-script.svg?branch=master)](https://travis-ci.org/atom/language-coffee-script)
 
 Adds syntax highlighting and snippets to CoffeeScript files in Atom.
 
