@@ -25,9 +25,13 @@
     'captures':
       '1':
         'name': 'keyword.operator.new.coffee'
-      '2':
+      '4':
+        'name': 'storage.type.class.coffee'
+      '6':
         'name': 'entity.name.type.instance.coffee'
-    'match': '(new)\\s+(\\w+(?:\\.\\w*)*)'
+      '7':
+        'name': 'entity.name.type.instance.coffee'
+    'match': '(new)\\s+(((class)(\\s+(\\w+(?:\\.\\w*)*))?)|(\\w+(?:\\.\\w*)*))'
     'name': 'meta.class.instance.constructor'
   }
   {
