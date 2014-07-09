@@ -55,7 +55,7 @@
     'body': 'console.error $0'
   'require':
     'prefix': 'req'
-    'body': '${1:sys} = require "${2:sys}"$3'
+    'body': '${1:sys} $3= require "${2:${1:sys}}"$4'
   'Describe block':
     'prefix': 'de',
     'body': 'describe "${1:description}", ->\n  ${2:body}'
