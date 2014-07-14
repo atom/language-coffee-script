@@ -19,6 +19,9 @@ describe "CoffeeScript grammar", ->
     expect(tokens[1]).toEqual value: " ", scopes: ["source.coffee", "meta.class.coffee"]
     expect(tokens[2]).toEqual value: "Foo", scopes: ["source.coffee", "meta.class.coffee", "entity.name.type.class.coffee"]
 
+    {tokens} = grammar.tokenizeLine("subclass Foo")
+    expect(tokens[0]).toEqual value: "subclass Foo", scopes: ["source.coffee"]
+
   it "tokenizes named subclasses", ->
     {tokens} = grammar.tokenizeLine("class Foo extends Bar")
 

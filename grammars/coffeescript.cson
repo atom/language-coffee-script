@@ -257,7 +257,7 @@
         'name': 'keyword.control.inheritance.coffee'
       '3':
         'name': 'entity.other.inherited-class.coffee'
-    'match': '(?:\\s|^)(class)\\s+(extends)\\s+(@?[a-zA-Z\\$\\._][\\w\\.]*)'
+    'match': '(?<=\\s|^)(class)\\s+(extends)\\s+(@?[a-zA-Z\\$\\._][\\w\\.]*)'
     'name': 'meta.class.coffee'
   }
   {
@@ -270,7 +270,7 @@
         'name': 'keyword.control.inheritance.coffee'
       '4':
         'name': 'entity.other.inherited-class.coffee'
-    'match': '(class\\b)\\s+(@?[a-zA-Z\\$_][\\w\\.]*)?(?:\\s+(extends)\\s+(@?[a-zA-Z\\$\\._][\\w\\.]*))?'
+    'match': '(?<=\\s|^)(class\\b)\\s+(@?[a-zA-Z\\$_][\\w\\.]*)?(?:\\s+(extends)\\s+(@?[a-zA-Z\\$\\._][\\w\\.]*))?'
     'name': 'meta.class.coffee'
   }
   {
