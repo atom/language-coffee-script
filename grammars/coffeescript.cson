@@ -257,7 +257,7 @@
         'name': 'keyword.control.inheritance.coffee'
       '3':
         'name': 'entity.other.inherited-class.coffee'
-    'match': '(?:\s+|^)(class)\\s+(extends)\\s+(@?[a-zA-Z\\$\\._][\\w\\.]*)'
+    'match': '(?:\\s|^)(class)\\s+(extends)\\s+(@?[a-zA-Z\\$\\._][\\w\\.]*)'
     'name': 'meta.class.coffee'
   }
   {
