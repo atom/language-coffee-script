@@ -314,6 +314,10 @@
     'name': 'support.function.static.number.coffee'
   }
   {
+    'match': '(?<!\\.)\\b(module|exports|__filename|__dirname|global|process)(?!\\s*:)\\b'
+    'name': 'support.variable.coffee'
+  }
+  {
     'match': '\\b(Infinity|NaN|undefined)\\b'
     'name': 'constant.language.coffee'
   }
