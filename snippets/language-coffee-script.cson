@@ -55,13 +55,13 @@
     'body': 'console.error $0'
   'require':
     'prefix': 'req'
-    'body': "${1:sys} $3= require '${2:${1:sys}}'$4"
+    'body': '${1:sys} $3= require "${2:${1:sys}}"$4'
   'Describe block':
     'prefix': 'de',
-    'body': "describe '${1:description}', ->\n  ${2:body}"
+    'body': 'describe "${1:description}", ->\n  ${2:body}'
   'It block':
     'prefix': 'i',
-    'body': "it '$1', ->\n  $2"
+    'body': 'it "$1", ->\n  $2'
   'Before each':
     'prefix': 'be',
     'body': 'beforeEach ->\n  $1'
@@ -79,10 +79,10 @@
     'body': '[$1, $2]'
   'Key-value pair':
     'prefix': ':',
-    'body': "${1:'${2:key}'}: ${3:value}"
+    'body': '${1:"${2:key}"}: ${3:value}'
   'Create Jasmine spy':
     'prefix': 'spy',
-    'body': "jasmine.createSpy('${1:description}')$2"
+    'body': 'jasmine.createSpy("${1:description}")$2'
 '.string.quoted.double.coffee:not(.string .source), .string.quoted.double.heredoc.coffee:not(.string .source)':
   'Interpolated Code':
     'prefix': '#'
