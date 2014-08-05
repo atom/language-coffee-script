@@ -220,8 +220,6 @@
     'captures':
       '1':
         'name': 'entity.name.function.coffee'
-      '2':
-        'name': 'entity.name.function.coffee'
       '3':
         'name': 'variable.parameter.function.coffee'
       '4':
