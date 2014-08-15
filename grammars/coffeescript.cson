@@ -90,8 +90,8 @@
     'name': 'comment.block.coffee'
     'patterns': [
       {
-        'match': '@\\w*'
-        'name': 'storage.type.annotation.coffeescript'
+        'match': '(?<=^|\\s)@\\w*(?=\\s)'
+        'name': 'storage.type.annotation.coffee'
       }
     ]
   }
