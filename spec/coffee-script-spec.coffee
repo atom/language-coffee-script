@@ -90,7 +90,7 @@ describe "CoffeeScript grammar", ->
     expect(lines[1][1]).toEqual value: '@foo', scopes: ["source.coffee", "comment.block.coffee", "storage.type.annotation.coffee"]
     expect(lines[2][0]).toEqual value: '@bar', scopes: ["source.coffee", "comment.block.coffee", "storage.type.annotation.coffee"]
 
-  it "tokenizes this as a keyword", ->
+  it "tokenizes this as a special variable", ->
     {tokens} = grammar.tokenizeLine("this")
 
-    expect(tokens[0]).toEqual value: "this", scopes: ["source.coffee", "keyword.reserved.coffee"]
+    expect(tokens[0]).toEqual value: "this", scopes: ["source.coffee", "variable.language.this.coffee"]
