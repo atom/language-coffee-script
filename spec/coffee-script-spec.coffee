@@ -94,3 +94,49 @@ describe "CoffeeScript grammar", ->
     {tokens} = grammar.tokenizeLine("this")
 
     expect(tokens[0]).toEqual value: "this", scopes: ["source.coffee", "variable.language.this.coffee"]
+
+  it "tokenizes variable assignments", ->
+    {tokens} = grammar.tokenizeLine("a = b")
+    expect(tokens[0]).toEqual value: "a ", scopes: ["source.coffee", "variable.assignment.coffee", "variable.assignment.coffee"]
+    expect(tokens[1]).toEqual value: "=", scopes: ["source.coffee", "variable.assignment.coffee", "variable.assignment.coffee", "keyword.operator.coffee"]
+    expect(tokens[2]).toEqual value: " b", scopes: ["source.coffee"]
+
+    {tokens} = grammar.tokenizeLine("a and= b")
+    expect(tokens[0]).toEqual value: "a ", scopes: ["source.coffee", "variable.assignment.coffee", "variable.assignment.coffee"]
+    expect(tokens[1]).toEqual value: "and=", scopes: ["source.coffee", "variable.assignment.coffee", "variable.assignment.coffee", "keyword.operator.coffee"]
+    expect(tokens[2]).toEqual value: " b", scopes: ["source.coffee"]
+
+    {tokens} = grammar.tokenizeLine("a or= b")
+    expect(tokens[0]).toEqual value: "a ", scopes: ["source.coffee", "variable.assignment.coffee", "variable.assignment.coffee"]
+    expect(tokens[1]).toEqual value: "or=", scopes: ["source.coffee", "variable.assignment.coffee", "variable.assignment.coffee", "keyword.operator.coffee"]
+    expect(tokens[2]).toEqual value: " b", scopes: ["source.coffee"]
+
+    {tokens} = grammar.tokenizeLine("a -= b")
+    expect(tokens[0]).toEqual value: "a ", scopes: ["source.coffee", "variable.assignment.coffee", "variable.assignment.coffee"]
+    expect(tokens[1]).toEqual value: "-=", scopes: ["source.coffee", "variable.assignment.coffee", "variable.assignment.coffee", "keyword.operator.coffee"]
+    expect(tokens[2]).toEqual value: " b", scopes: ["source.coffee"]
+
+    {tokens} = grammar.tokenizeLine("a += b")
+    expect(tokens[0]).toEqual value: "a ", scopes: ["source.coffee", "variable.assignment.coffee", "variable.assignment.coffee"]
+    expect(tokens[1]).toEqual value: "+=", scopes: ["source.coffee", "variable.assignment.coffee", "variable.assignment.coffee", "keyword.operator.coffee"]
+    expect(tokens[2]).toEqual value: " b", scopes: ["source.coffee"]
+
+    {tokens} = grammar.tokenizeLine("a /= b")
+    expect(tokens[0]).toEqual value: "a ", scopes: ["source.coffee", "variable.assignment.coffee", "variable.assignment.coffee"]
+    expect(tokens[1]).toEqual value: "/=", scopes: ["source.coffee", "variable.assignment.coffee", "variable.assignment.coffee", "keyword.operator.coffee"]
+    expect(tokens[2]).toEqual value: " b", scopes: ["source.coffee"]
+
+    {tokens} = grammar.tokenizeLine("a &= b")
+    expect(tokens[0]).toEqual value: "a ", scopes: ["source.coffee", "variable.assignment.coffee", "variable.assignment.coffee"]
+    expect(tokens[1]).toEqual value: "&=", scopes: ["source.coffee", "variable.assignment.coffee", "variable.assignment.coffee", "keyword.operator.coffee"]
+    expect(tokens[2]).toEqual value: " b", scopes: ["source.coffee"]
+
+    {tokens} = grammar.tokenizeLine("a %= b")
+    expect(tokens[0]).toEqual value: "a ", scopes: ["source.coffee", "variable.assignment.coffee", "variable.assignment.coffee"]
+    expect(tokens[1]).toEqual value: "%=", scopes: ["source.coffee", "variable.assignment.coffee", "variable.assignment.coffee", "keyword.operator.coffee"]
+    expect(tokens[2]).toEqual value: " b", scopes: ["source.coffee"]
+
+    {tokens} = grammar.tokenizeLine("a *= b")
+    expect(tokens[0]).toEqual value: "a ", scopes: ["source.coffee", "variable.assignment.coffee", "variable.assignment.coffee"]
+    expect(tokens[1]).toEqual value: "*=", scopes: ["source.coffee", "variable.assignment.coffee", "variable.assignment.coffee", "keyword.operator.coffee"]
+    expect(tokens[2]).toEqual value: " b", scopes: ["source.coffee"]
