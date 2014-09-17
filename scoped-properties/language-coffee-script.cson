@@ -3,5 +3,15 @@
     'commentStart': '# '
 '.source.coffee':
   'editor':
-    'increaseIndentPattern': '(?x)\n\t\t^\\s*\n\t\t(.*class\n\t\t|[a-zA-Z\\$_](\\w|\\$|:|\\.)*\\s*(?=\\:(\\s*\\(.*\\))?\\s*((=|-)>\\s*$)) # function that is not one line\n\t\t|[a-zA-Z\\$_](\\w|\\$|\\.)*\\s*(:|=)\\s*((if|while)(?!.*?then)|for|$) # assignment using multiline if/while/for\n\t\t|(if|else|unless|while|when)\\b(?!.*?then)|for|loop\\b\n\t\t|(try|finally|catch|((catch|switch)\\s+\\S.*))\\s*$\n\t\t|.*[-=]>\\s*$\n\t\t|.*[\\{\\[]\\s*$)'
+    'increaseIndentPattern': '(?x)
+      ^\\s*
+      (
+        .*class
+        | [a-zA-Z\\$_](\\w|\\$|:|\\.)*\\s*(?=\\:(\\s*\\(.*\\))?\\s*((=|-)>\\s*$))
+        | [a-zA-Z\\$_](\\w|\\$|\\.)*\\s*(:|=)\\s*((if|while)(?!.*?then)|for|$)
+        | (if|else|unless|while|when)\\b(?!.*?then)|for|loop\\b
+        | (try|finally|catch|((catch|switch)\\s+\\S.*))\\s*$
+        | .*[-=]>\\s*$
+        | .*[\\{\\[]\\s*$
+      )'
     'decreaseIndentPattern': '^\\s*(\\}|\\]|else|catch|finally)$'
