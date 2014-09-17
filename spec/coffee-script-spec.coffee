@@ -140,3 +140,52 @@ describe "CoffeeScript grammar", ->
     expect(tokens[0]).toEqual value: "a ", scopes: ["source.coffee", "variable.assignment.coffee", "variable.assignment.coffee"]
     expect(tokens[1]).toEqual value: "*=", scopes: ["source.coffee", "variable.assignment.coffee", "variable.assignment.coffee", "keyword.operator.coffee"]
     expect(tokens[2]).toEqual value: " b", scopes: ["source.coffee"]
+
+  it "does not confuse prototype properties with constants and keywords", ->
+    {tokens} = grammar.tokenizeLine("Foo::true")
+    expect(tokens[0]).toEqual value: "Foo", scopes: ["source.coffee"]
+    expect(tokens[1]).toEqual value: ":", scopes: ["source.coffee", "keyword.operator.coffee"]
+    expect(tokens[2]).toEqual value: ":", scopes: ["source.coffee", "keyword.operator.coffee"]
+    expect(tokens[3]).toEqual value: "true", scopes: ["source.coffee"]
+
+    {tokens} = grammar.tokenizeLine("Foo::on")
+    expect(tokens[0]).toEqual value: "Foo", scopes: ["source.coffee"]
+    expect(tokens[1]).toEqual value: ":", scopes: ["source.coffee", "keyword.operator.coffee"]
+    expect(tokens[2]).toEqual value: ":", scopes: ["source.coffee", "keyword.operator.coffee"]
+    expect(tokens[3]).toEqual value: "on", scopes: ["source.coffee"]
+
+    {tokens} = grammar.tokenizeLine("Foo::yes")
+    expect(tokens[0]).toEqual value: "Foo", scopes: ["source.coffee"]
+    expect(tokens[1]).toEqual value: ":", scopes: ["source.coffee", "keyword.operator.coffee"]
+    expect(tokens[2]).toEqual value: ":", scopes: ["source.coffee", "keyword.operator.coffee"]
+    expect(tokens[3]).toEqual value: "yes", scopes: ["source.coffee"]
+
+    {tokens} = grammar.tokenizeLine("Foo::false")
+    expect(tokens[0]).toEqual value: "Foo", scopes: ["source.coffee"]
+    expect(tokens[1]).toEqual value: ":", scopes: ["source.coffee", "keyword.operator.coffee"]
+    expect(tokens[2]).toEqual value: ":", scopes: ["source.coffee", "keyword.operator.coffee"]
+    expect(tokens[3]).toEqual value: "false", scopes: ["source.coffee"]
+
+    {tokens} = grammar.tokenizeLine("Foo::off")
+    expect(tokens[0]).toEqual value: "Foo", scopes: ["source.coffee"]
+    expect(tokens[1]).toEqual value: ":", scopes: ["source.coffee", "keyword.operator.coffee"]
+    expect(tokens[2]).toEqual value: ":", scopes: ["source.coffee", "keyword.operator.coffee"]
+    expect(tokens[3]).toEqual value: "off", scopes: ["source.coffee"]
+
+    {tokens} = grammar.tokenizeLine("Foo::no")
+    expect(tokens[0]).toEqual value: "Foo", scopes: ["source.coffee"]
+    expect(tokens[1]).toEqual value: ":", scopes: ["source.coffee", "keyword.operator.coffee"]
+    expect(tokens[2]).toEqual value: ":", scopes: ["source.coffee", "keyword.operator.coffee"]
+    expect(tokens[3]).toEqual value: "no", scopes: ["source.coffee"]
+
+    {tokens} = grammar.tokenizeLine("Foo::null")
+    expect(tokens[0]).toEqual value: "Foo", scopes: ["source.coffee"]
+    expect(tokens[1]).toEqual value: ":", scopes: ["source.coffee", "keyword.operator.coffee"]
+    expect(tokens[2]).toEqual value: ":", scopes: ["source.coffee", "keyword.operator.coffee"]
+    expect(tokens[3]).toEqual value: "null", scopes: ["source.coffee"]
+
+    {tokens} = grammar.tokenizeLine("Foo::extends")
+    expect(tokens[0]).toEqual value: "Foo", scopes: ["source.coffee"]
+    expect(tokens[1]).toEqual value: ":", scopes: ["source.coffee", "keyword.operator.coffee"]
+    expect(tokens[2]).toEqual value: ":", scopes: ["source.coffee", "keyword.operator.coffee"]
+    expect(tokens[3]).toEqual value: "extends", scopes: ["source.coffee"]
