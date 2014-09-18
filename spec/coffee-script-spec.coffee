@@ -141,6 +141,11 @@ describe "CoffeeScript grammar", ->
     expect(tokens[1]).toEqual value: "*=", scopes: ["source.coffee", "variable.assignment.coffee", "variable.assignment.coffee", "keyword.operator.coffee"]
     expect(tokens[2]).toEqual value: " b", scopes: ["source.coffee"]
 
+    {tokens} = grammar.tokenizeLine("a ?= b")
+    expect(tokens[0]).toEqual value: "a ", scopes: ["source.coffee", "variable.assignment.coffee", "variable.assignment.coffee"]
+    expect(tokens[1]).toEqual value: "?=", scopes: ["source.coffee", "variable.assignment.coffee", "variable.assignment.coffee", "keyword.operator.coffee"]
+    expect(tokens[2]).toEqual value: " b", scopes: ["source.coffee"]
+
   it "does not confuse prototype properties with constants and keywords", ->
     {tokens} = grammar.tokenizeLine("Foo::true")
     expect(tokens[0]).toEqual value: "Foo", scopes: ["source.coffee"]
