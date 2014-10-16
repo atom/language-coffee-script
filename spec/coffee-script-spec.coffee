@@ -151,6 +151,30 @@ describe "CoffeeScript grammar", ->
     expect(tokens[1]).toEqual value: "==", scopes: ["source.coffee", "keyword.operator.coffee"]
     expect(tokens[2]).toEqual value: " b", scopes: ["source.coffee"]
 
+    {tokens} = grammar.tokenizeLine("false == b")
+    expect(tokens[0]).toEqual value: "false", scopes: ["source.coffee", "constant.language.boolean.false.coffee"]
+    expect(tokens[1]).toEqual value: " ", scopes: ["source.coffee"]
+    expect(tokens[2]).toEqual value: "==", scopes: ["source.coffee", "keyword.operator.coffee"]
+    expect(tokens[3]).toEqual value: " b", scopes: ["source.coffee"]
+
+    {tokens} = grammar.tokenizeLine("true == b")
+    expect(tokens[0]).toEqual value: "true", scopes: ["source.coffee", "constant.language.boolean.true.coffee"]
+    expect(tokens[1]).toEqual value: " ", scopes: ["source.coffee"]
+    expect(tokens[2]).toEqual value: "==", scopes: ["source.coffee", "keyword.operator.coffee"]
+    expect(tokens[3]).toEqual value: " b", scopes: ["source.coffee"]
+
+    {tokens} = grammar.tokenizeLine("null == b")
+    expect(tokens[0]).toEqual value: "null", scopes: ["source.coffee", "constant.language.null.coffee"]
+    expect(tokens[1]).toEqual value: " ", scopes: ["source.coffee"]
+    expect(tokens[2]).toEqual value: "==", scopes: ["source.coffee", "keyword.operator.coffee"]
+    expect(tokens[3]).toEqual value: " b", scopes: ["source.coffee"]
+
+    {tokens} = grammar.tokenizeLine("this == b")
+    expect(tokens[0]).toEqual value: "this", scopes: ["source.coffee", "variable.language.this.coffee"]
+    expect(tokens[1]).toEqual value: " ", scopes: ["source.coffee"]
+    expect(tokens[2]).toEqual value: "==", scopes: ["source.coffee", "keyword.operator.coffee"]
+    expect(tokens[3]).toEqual value: " b", scopes: ["source.coffee"]
+
   it "does not confuse prototype properties with constants and keywords", ->
     {tokens} = grammar.tokenizeLine("Foo::true")
     expect(tokens[0]).toEqual value: "Foo", scopes: ["source.coffee"]

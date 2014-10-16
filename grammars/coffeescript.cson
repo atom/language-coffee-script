@@ -232,15 +232,15 @@
     'name': 'storage.type.function.coffee'
   }
   {
-    'match': '\\b(?<!\\.|::)(true|on|yes)(?!\\s*[:=])\\b'
+    'match': '\\b(?<!\\.|::)(true|on|yes)(?!\\s*[:=][^=])\\b'
     'name': 'constant.language.boolean.true.coffee'
   }
   {
-    'match': '\\b(?<!\\.|::)(false|off|no)(?!\\s*[:=])\\b'
+    'match': '\\b(?<!\\.|::)(false|off|no)(?!\\s*[:=][^=])\\b'
     'name': 'constant.language.boolean.false.coffee'
   }
   {
-    'match': '\\b(?<!\\.|::)null(?!\\s*[:=])\\b'
+    'match': '\\b(?<!\\.|::)null(?!\\s*[:=][^=])\\b'
     'name': 'constant.language.null.coffee'
   }
   {
@@ -248,7 +248,7 @@
     'name': 'variable.language.coffee'
   }
   {
-    'match': '\\b(?<!\\.)this(?!\\s*[:=])\\b'
+    'match': '\\b(?<!\\.)this(?!\\s*[:=][^=])\\b'
     'name': 'variable.language.this.coffee'
   }
   {
