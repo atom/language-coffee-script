@@ -3,6 +3,7 @@
     'commentStart': '# '
 '.source.coffee':
   'editor':
+    'autoIndentOnPaste': false
     'increaseIndentPattern': '(?x)
       ^\\s*
       (
