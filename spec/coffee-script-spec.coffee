@@ -6,7 +6,7 @@ describe "CoffeeScript grammar", ->
       atom.packages.activatePackage("language-coffee-script")
 
     runs ->
-      grammar = atom.syntax.grammarForScopeName("source.coffee")
+      grammar = atom.grammars.grammarForScopeName("source.coffee")
 
   it "parses the grammar", ->
     expect(grammar).toBeTruthy()
