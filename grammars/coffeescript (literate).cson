@@ -19,9 +19,9 @@
     ]
   }
   {
-    'begin': '(?x)^\n\t\t\t\t(?=\t[ ]{,3}>.\n\t\t\t\t|\t[#]{1,6}\\s*+\n\t\t\t\t|\t[ ]{,3}(?<marker>[-*_])([ ]{,2}\\k<marker>){2,}[ \\t]*+$\n\t\t\t\t)'
+    'begin': '(?x)^\n\t\t\t\t(?=\t[ ]{0,3}>.\n\t\t\t\t|\t[#]{1,6}\\s*+\n\t\t\t\t|\t[ ]{0,3}(?<marker>[-*_])([ ]{0,2}\\k<marker>){2,}[ \\t]*+$\n\t\t\t\t)'
     'comment': '\n\t\t\t\tWe could also use an empty end match and set\n\t\t\t\tapplyEndPatternLast, but then we must be sure that the begin\n\t\t\t\tpattern will only match stuff matched by the sub-patterns.\n\t\t\t'
-    'end': '(?x)^\n\t\t\t\t(?!\t[ ]{,3}>.\n\t\t\t\t|\t[#]{1,6}\\s*+\n\t\t\t\t|\t[ ]{,3}(?<marker>[-*_])([ ]{,2}\\k<marker>){2,}[ \\t]*+$\n\t\t\t\t)'
+    'end': '(?x)^\n\t\t\t\t(?!\t[ ]{0,3}>.\n\t\t\t\t|\t[#]{1,6}\\s*+\n\t\t\t\t|\t[ ]{0,3}(?<marker>[-*_])([ ]{0,2}\\k<marker>){2,}[ \\t]*+$\n\t\t\t\t)'
     'name': 'meta.block-level.markdown'
     'patterns': [
       {
@@ -116,7 +116,7 @@
   }
   {
     'begin': '^(?=\\S)(?![=-]{3,}(?=$))'
-    'end': '^(?:\\s*$|(?=[ ]{,3}>.))|(?=[ \\t]*\\n)(?<=^===|^====|=====|^---|^----|-----)[ \\t]*\\n|(?=^#)'
+    'end': '^(?:\\s*$|(?=[ ]{0,3}>.))|(?=[ \\t]*\\n)(?<=^===|^====|=====|^---|^----|-----)[ \\t]*\\n|(?=^#)'
     'name': 'meta.paragraph.markdown'
     'patterns': [
       {
@@ -148,16 +148,16 @@
     'match': '&(?!([a-zA-Z0-9]+|#[0-9]+|#x[0-9a-fA-F]+);)'
     'name': 'meta.other.valid-ampersand.markdown'
   'block_quote':
-    'begin': '\\G[ ]{,3}(>)(?!$)[ ]?'
+    'begin': '\\G[ ]{0,3}(>)(?!$)[ ]?'
     'beginCaptures':
       '1':
         'name': 'punctuation.definition.blockquote.markdown'
     'comment': '\n\t\t\t\tWe terminate the block quote when seeing an empty line, a\n\t\t\t\tseparator or a line with leading > characters. The latter is\n\t\t\t\tto “reset” the quote level for quoted lines.\n\t\t\t'
-    'end': '(?x)^\n\t\t\t\t(?=\t\\s*$\n\t\t\t\t|\t[ ]{,3}(?<marker>[-*_])([ ]{,2}\\k<marker>){2,}[ \\t]*+$\n\t\t\t\t|\t[ ]{,3}>.\n\t\t\t\t)'
+    'end': '(?x)^\n\t\t\t\t(?=\t\\s*$\n\t\t\t\t|\t[ ]{0,3}(?<marker>[-*_])([ ]{0,2}\\k<marker>){2,}[ \\t]*+$\n\t\t\t\t|\t[ ]{0,3}>.\n\t\t\t\t)'
     'name': 'markup.quote.markdown'
     'patterns': [
       {
-        'begin': '(?x)\\G\n\t\t\t\t\t\t(?=\t[ ]{,3}>.\n\t\t\t\t\t\t)'
+        'begin': '(?x)\\G\n\t\t\t\t\t\t(?=\t[ ]{0,3}>.\n\t\t\t\t\t\t)'
         'end': '^'
         'patterns': [
           {
@@ -167,7 +167,7 @@
       }
       {
         'applyEndPatternLast': 1
-        'begin': '(?x)\\G\n\t\t\t\t\t\t(?=\t([ ]{4}|\\t)\n\t\t\t\t\t\t|\t[#]{1,6}\\s*+\n\t\t\t\t\t\t|\t[ ]{,3}(?<marker>[-*_])([ ]{,2}\\k<marker>){2,}[ \\t]*+$\n\t\t\t\t\t\t)'
+        'begin': '(?x)\\G\n\t\t\t\t\t\t(?=\t([ ]{4}|\\t)\n\t\t\t\t\t\t|\t[#]{1,6}\\s*+\n\t\t\t\t\t\t|\t[ ]{0,3}(?<marker>[-*_])([ ]{0,2}\\k<marker>){2,}[ \\t]*+$\n\t\t\t\t\t\t)'
         'end': '^'
         'patterns': [
           {
@@ -182,7 +182,7 @@
         ]
       }
       {
-        'begin': '(?x)\\G\n\t\t\t\t\t\t(?!\t$\n\t\t\t\t\t\t|\t[ ]{,3}>.\n\t\t\t\t\t\t|\t([ ]{4}|\\t)\n\t\t\t\t\t\t|\t[#]{1,6}\\s*+\n\t\t\t\t\t\t|\t[ ]{,3}(?<marker>[-*_])([ ]{,2}\\k<marker>){2,}[ \\t]*+$\n\t\t\t\t\t\t)'
+        'begin': '(?x)\\G\n\t\t\t\t\t\t(?!\t$\n\t\t\t\t\t\t|\t[ ]{0,3}>.\n\t\t\t\t\t\t|\t([ ]{4}|\\t)\n\t\t\t\t\t\t|\t[#]{1,6}\\s*+\n\t\t\t\t\t\t|\t[ ]{0,3}(?<marker>[-*_])([ ]{0,2}\\k<marker>){2,}[ \\t]*+$\n\t\t\t\t\t\t)'
         'end': '$|(?<=\\n)'
         'patterns': [
           {
@@ -545,6 +545,6 @@
     'match': '(`+)([^`]|(?!(?<!`)\\1(?!`))`)*+(\\1)'
     'name': 'markup.raw.inline.markdown'
   'separator':
-    'match': '\\G[ ]{,3}([-*_])([ ]{,2}\\1){2,}[ \\t]*$\\n?'
+    'match': '\\G[ ]{0,3}([-*_])([ ]{0,2}\\1){2,}[ \\t]*$\\n?'
     'name': 'meta.separator.markdown'
 'scopeName': 'source.litcoffee'
