@@ -1,3 +1,6 @@
+fs = require 'fs'
+path = require 'path'
+
 describe "CoffeeScript grammar", ->
   grammar = null
 
@@ -223,3 +226,10 @@ describe "CoffeeScript grammar", ->
     expect(tokens[1]).toEqual value: ":", scopes: ["source.coffee", "keyword.operator.coffee"]
     expect(tokens[2]).toEqual value: ":", scopes: ["source.coffee", "keyword.operator.coffee"]
     expect(tokens[3]).toEqual value: "extends", scopes: ["source.coffee"]
+
+  it "verifies that regular expressions have explicit count modifiers", ->
+    source = fs.readFileSync(path.resolve(__dirname, '..', 'grammars', 'coffeescript.cson'), 'utf8')
+    expect(source.search /{,/).toEqual -1
+
+    source = fs.readFileSync(path.resolve(__dirname, '..', 'grammars', 'coffeescript (literate).cson'), 'utf8')
+    expect(source.search /{,/).toEqual -1
