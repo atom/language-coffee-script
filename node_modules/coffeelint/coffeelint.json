@@ -1,0 +1,22 @@
+{
+    "arrow_spacing": {
+        "level": "error"
+    },
+    "line_endings": {
+        "level": "error"
+    },
+    "indentation": {
+        "value": 4
+    },
+    "space_operators": {
+        "level": "error"
+    },
+    "cyclomatic_complexity": {
+        "value": 11,
+        "level": "warn"
+    },
+    "no_debugger": {
+        "level": "error",
+        "console": true
+    }
+}

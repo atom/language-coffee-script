@@ -14,5 +14,8 @@
   },
   "bugs": {
     "url": "https://github.com/atom/language-coffee-script/issues"
+  },
+  "devDependencies": {
+    "coffeelint": "^1.10.1"
   }
 }
