@@ -78,7 +78,7 @@
     'prefix': 'pt',
     'body': '[$1, $2]'
   'Key-value pair':
-    'prefix': ':',
+    'prefix': 'kv',
     'body': '${1:\'${2:key}\'}: ${3:value}'
   'Create Jasmine spy':
     'prefix': 'spy',
