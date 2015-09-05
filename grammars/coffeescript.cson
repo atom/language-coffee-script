@@ -12,12 +12,12 @@
 'foldingStopMarker': '^\\s*$|^\\s*[}\\]]\\s*$'
 'patterns': [
   {
+    'comment': 'inline functions like: `->` or `(param1, param2) ->`'
     'captures':
       '1':
         'name': 'variable.parameter.function.coffee'
       '2':
         'name': 'storage.type.function.coffee'
-    'comment': 'match stuff like: a -> … '
     'match': '(\\([^()]*?\\))\\s*([=-]>)'
     'name': 'meta.inline.function.coffee'
   }
