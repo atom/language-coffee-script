@@ -19,7 +19,7 @@
       '2':
         'name': 'storage.type.function.coffee'
     'match': '(?x)
-      (\\([^()]*?\\))
+      (\\([^()]*?\\))?
       \\s*
       ([=-]>)
     '
@@ -235,10 +235,6 @@
   {
     'match': '@?\\b(?!class|subclass|extends|decodeURI(Component)?|encodeURI(Component)?|eval|parse(Float|Int)|require)\\w+(\\s+(?!(of|in|then|is|isnt|and|or|for|else|when|not|if)\\s)(?=(\\w+|\\->|\\-\\d|\\[|\\{|\"|\'))|(?=\\())'
     'name': 'entity.name.function.coffee'
-  }
-  {
-    'match': '[=-]>'
-    'name': 'storage.type.function.coffee'
   }
   {
     'match': '\\b(?<!\\.|::)(true|on|yes)(?!\\s*[:=][^=])\\b'

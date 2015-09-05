@@ -200,6 +200,10 @@ describe "CoffeeScript grammar", ->
       expect(tokens[0]).not.toEqual value: notOperator, scopes: ["source.coffee", "keyword.operator.coffee"]
 
   it "tokenizes inline functions", ->
+    {tokens} = grammar.tokenizeLine("->")
+
+    expect(tokens[0]).toEqual value: "->", scopes: ["source.coffee", "meta.inline.function.coffee", "storage.type.function.coffee"]
+
     {tokens} = grammar.tokenizeLine("() ->")
 
     expect(tokens[2]).toEqual value: "->", scopes: ["source.coffee", "meta.inline.function.coffee", "storage.type.function.coffee"]
