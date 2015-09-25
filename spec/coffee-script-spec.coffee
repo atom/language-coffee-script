@@ -33,7 +33,7 @@ describe "CoffeeScript grammar", ->
     expect(tokens[4]).toEqual value: "]", scopes: ["source.coffee", "meta.brace.square.coffee"]
 
     {tokens} = grammar.tokenizeLine("bar(class Foo)")
-    expect(tokens[0]).toEqual value: "bar", scopes: ["source.coffee"]
+    expect(tokens[0]).toEqual value: "bar", scopes: ["source.coffee", "entity.name.function.coffee"]
     expect(tokens[1]).toEqual value: "(", scopes: ["source.coffee", "meta.brace.round.coffee"]
     expect(tokens[2]).toEqual value: "class", scopes: ["source.coffee", "meta.class.coffee", "storage.type.class.coffee"]
     expect(tokens[3]).toEqual value: " ", scopes: ["source.coffee", "meta.class.coffee"]
@@ -247,3 +247,18 @@ describe "CoffeeScript grammar", ->
     expect(lines[0][0]).toEqual value: '`', scopes: ["source.coffee", "string.quoted.script.coffee", "punctuation.definition.string.begin.coffee"]
     expect(lines[0][1]).toEqual value: 'v', scopes: ["source.coffee", "string.quoted.script.coffee", "constant.character.escape.coffee"]
     expect(lines[1][0]).toEqual value: 'a ', scopes: ["source.coffee", "variable.assignment.coffee", "variable.assignment.coffee"]
+
+  it "tokenizes functions", ->
+    {tokens} = grammar.tokenizeLine("foo = -> 1")
+    expect(tokens[0]).toEqual value: "foo ", scopes: ["source.coffee", "meta.function.coffee", "entity.name.function.coffee"]
+
+    {tokens} = grammar.tokenizeLine("foo bar")
+    expect(tokens[0]).toEqual value: "foo ", scopes: ["source.coffee", "entity.name.function.coffee"]
+
+    {tokens} = grammar.tokenizeLine("eat food for food in foods")
+    expect(tokens[0]).toEqual value: "eat ", scopes: ["source.coffee", "entity.name.function.coffee"]
+    expect(tokens[1]).toEqual value: "food ", scopes: ["source.coffee"]
+    expect(tokens[2]).toEqual value: "for", scopes: ["source.coffee", "keyword.control.coffee"]
+    expect(tokens[3]).toEqual value: " food ", scopes: ["source.coffee"]
+    expect(tokens[4]).toEqual value: "in", scopes: ["source.coffee", "keyword.control.coffee"]
+    expect(tokens[5]).toEqual value: " foods", scopes: ["source.coffee"]
