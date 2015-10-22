@@ -199,6 +199,11 @@ describe "CoffeeScript grammar", ->
       {tokens} = grammar.tokenizeLine(notOperator)
       expect(tokens[0]).not.toEqual value: notOperator, scopes: ["source.coffee", "keyword.operator.coffee"]
 
+  it "tokenizes inline functions", ->
+    {tokens} = grammar.tokenizeLine("() ->")
+
+    expect(tokens[2]).toEqual value: "->", scopes: ["source.coffee", "meta.inline.function.coffee", "storage.type.function.coffee"]
+
   it "does not confuse prototype properties with constants and keywords", ->
     {tokens} = grammar.tokenizeLine("Foo::true")
     expect(tokens[0]).toEqual value: "Foo", scopes: ["source.coffee"]
@@ -269,7 +274,7 @@ describe "CoffeeScript grammar", ->
     expect(lines[0][1]).toEqual value: 'v', scopes: ["source.coffee", "string.quoted.script.coffee", "constant.character.escape.coffee"]
     expect(lines[1][0]).toEqual value: 'a ', scopes: ["source.coffee", "variable.assignment.coffee", "variable.assignment.coffee"]
 
-  it "tokenizes functions", ->
+  it "tokenizes functions calls", ->
     {tokens} = grammar.tokenizeLine("foo = -> 1")
     expect(tokens[0]).toEqual value: "foo ", scopes: ["source.coffee", "meta.function.coffee", "entity.name.function.coffee"]
 
