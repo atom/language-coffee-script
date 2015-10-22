@@ -199,14 +199,34 @@ describe "CoffeeScript grammar", ->
       {tokens} = grammar.tokenizeLine(notOperator)
       expect(tokens[0]).not.toEqual value: notOperator, scopes: ["source.coffee", "keyword.operator.coffee"]
 
-  it "tokenizes inline functions", ->
+  it "tokenizes functions", ->
     {tokens} = grammar.tokenizeLine("->")
 
-    expect(tokens[0]).toEqual value: "->", scopes: ["source.coffee", "meta.inline.function.coffee", "storage.type.function.coffee"]
+    expect(tokens[0]).toEqual value: "->", scopes: ["source.coffee", "meta.inline.function.without-parameters.coffee", "storage.type.function.coffee"]
 
     {tokens} = grammar.tokenizeLine("() ->")
 
-    expect(tokens[2]).toEqual value: "->", scopes: ["source.coffee", "meta.inline.function.coffee", "storage.type.function.coffee"]
+    expect(tokens[0]).toEqual value: "(", scopes: ["source.coffee", "meta.inline.function.without-parameters.coffee", "punctuation.definition.parameters.begin.coffee"]
+    expect(tokens[1]).toEqual value: ")", scopes: ["source.coffee", "meta.inline.function.without-parameters.coffee", "punctuation.definition.parameters.end.coffee"]
+    expect(tokens[3]).toEqual value: "->", scopes: ["source.coffee", "meta.inline.function.without-parameters.coffee", "storage.type.function.coffee"]
+
+    {tokens} = grammar.tokenizeLine("(param1, param2) ->")
+
+    expect(tokens[0]).toEqual value: "(", scopes: ["source.coffee", "meta.inline.function.coffee", "punctuation.definition.parameters.begin.coffee"]
+    expect(tokens[1]).toEqual value: "param1", scopes: ["source.coffee", "meta.inline.function.coffee", "variable.parameter.function.coffee"]
+    expect(tokens[2]).toEqual value: ",", scopes: ["source.coffee", "meta.inline.function.coffee", "punctuation.separator.parameters.coffee"]
+    expect(tokens[4]).toEqual value: "param2", scopes: ["source.coffee", "meta.inline.function.coffee", "variable.parameter.function.coffee"]
+    expect(tokens[5]).toEqual value: ")", scopes: ["source.coffee", "meta.inline.function.coffee", "punctuation.definition.parameters.end.coffee"]
+    expect(tokens[7]).toEqual value: "->", scopes: ["source.coffee", "meta.inline.function.coffee", "storage.type.function.coffee"]
+
+    {tokens} = grammar.tokenizeLine("(param1, @param2) =>")
+
+    expect(tokens[0]).toEqual value: "(", scopes: ["source.coffee", "meta.inline.function.coffee", "punctuation.definition.parameters.begin.coffee"]
+    expect(tokens[1]).toEqual value: "param1", scopes: ["source.coffee", "meta.inline.function.coffee", "variable.parameter.function.coffee"]
+    expect(tokens[2]).toEqual value: ",", scopes: ["source.coffee", "meta.inline.function.coffee", "punctuation.separator.parameters.coffee"]
+    expect(tokens[4]).toEqual value: "@param2", scopes: ["source.coffee", "meta.inline.function.coffee", "variable.parameter.function.readwrite.instance.coffee"]
+    expect(tokens[5]).toEqual value: ")", scopes: ["source.coffee", "meta.inline.function.coffee", "punctuation.definition.parameters.end.coffee"]
+    expect(tokens[7]).toEqual value: "=>", scopes: ["source.coffee", "meta.inline.function.coffee", "storage.type.function.coffee"]
 
   it "does not confuse prototype properties with constants and keywords", ->
     {tokens} = grammar.tokenizeLine("Foo::true")
