@@ -178,6 +178,27 @@ describe "CoffeeScript grammar", ->
     expect(tokens[2]).toEqual value: "==", scopes: ["source.coffee", "keyword.operator.coffee"]
     expect(tokens[3]).toEqual value: " b", scopes: ["source.coffee"]
 
+  it "tokenizes compound operators properly", ->
+    compoundOperators = ["and=", "or=", "==", "!=", "<=", ">=", "<<=", ">>=", ">>>=", "<>", "*=", "%=", "+=", "-=", "&=", "^="]
+
+    for compoundOperator in compoundOperators
+      {tokens} = grammar.tokenizeLine(compoundOperator)
+      expect(tokens[0]).toEqual value: compoundOperator, scopes: ["source.coffee", "keyword.operator.coffee"]
+
+  it "tokenizes operators properly", ->
+    operators = ["!", "%", "^", "*", "/", "~", "?", ":", "-", "--", "+", "++", "<", ">", "&", "&&", "..", "...", "|", "||", "instanceof", "new", "delete", "typeof", "and", "or", "is", "isnt", "not", "super"]
+
+    for operator in operators
+      {tokens} = grammar.tokenizeLine(operator)
+      expect(tokens[0]).toEqual value: operator, scopes: ["source.coffee", "keyword.operator.coffee"]
+
+  it "does not tokenize non-operators as operators", ->
+    notOperators = ["(/=", "-->", "=>"]
+
+    for notOperator in notOperators
+      {tokens} = grammar.tokenizeLine(notOperator)
+      expect(tokens[0]).not.toEqual value: notOperator, scopes: ["source.coffee", "keyword.operator.coffee"]
+
   it "does not confuse prototype properties with constants and keywords", ->
     {tokens} = grammar.tokenizeLine("Foo::true")
     expect(tokens[0]).toEqual value: "Foo", scopes: ["source.coffee"]
