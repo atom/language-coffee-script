@@ -224,7 +224,13 @@
         'name': 'variable.parameter.function.coffee'
       '4':
         'name': 'storage.type.function.coffee'
-    'match': '(?<=^|\\s)(?=@?[a-zA-Z\\$_])@?([a-zA-Z\\$_]\\w*)(\\$|:|\\.)?\\s*(?=[:=](\\s*\\(.*\\))?\\s*([=-]>))'
+    'match': '''
+              (?x)
+              (?<=^|\\s)
+              (?=@?[a-zA-Z\\$_])
+              @?([a-zA-Z\\$_]\\w*)(\\$|:|\\.)?\\s*
+              (?=[:=](\\s*\\(.*\\))?\\s*([=-]>))
+            '''
     'name': 'meta.function.coffee'
   }
   {
