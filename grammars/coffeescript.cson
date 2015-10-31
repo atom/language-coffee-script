@@ -139,11 +139,11 @@
         'name': 'punctuation.definition.string.begin.js'
   }
   {
-    'match': '(?x)\\b(?<![\\.\\$])(\n\t\t\t\t\tbreak|by|catch|continue|else|finally|for|in|of|if|return|switch|\n\t\t\t\t\tthen|throw|try|unless|when|while|until|loop|do|(?<=for)\\s+own\n\t\t\t\t)(?!\\s*:)\\b'
+    'match': '\\b(?<![\\.\\$])(break|by|catch|continue|else|finally|for|in|of|if|return|switch|then|throw|try|unless|when|while|until|loop|do|(?<=for)\\s+own)(?!\\s*:)\\b'
     'name': 'keyword.control.coffee'
   }
   {
-    'match': '(?x)and=|or=|!|%|&|\\^|\\*|\\/|(\\-)?\\-(?!>)|\\+\\+|\\+|~|==|=(?!>)|!=|<=|>=|<<=|>>=|\n\t\t\t\t>>>=|<>|<|>|!|&&|\\.\\.(\\.)?|\\?|\\||\\|\\||\\:|\\*=|(?<!\\()/=|%=|\\+=|\\-=|&=|\n\t\t\t\t\\^=|\\b(?<![\\.\\$])(instanceof|new|delete|typeof|and|or|is|isnt|not|super)(?!\\s*:)\\b'
+    'match': '(and|or|<<|>>>?|(?<!\\()\\/|[=!<>*%+\\-&^])?=(?!>)|[!%^*\\/~?:]|\\-?\\-(?!>)|\\+\\+?|<>|<|>|&&?|\\.\\.\\.?|\\|\\|?|\\b(?<![\\.\\$])(instanceof|new|delete|typeof|and|or|is|isnt|not|super)(?!\\s*:)\\b'
     'name': 'keyword.operator.coffee'
   }
   {
@@ -224,6 +224,7 @@
         'name': 'variable.parameter.function.coffee'
       '4':
         'name': 'storage.type.function.coffee'
+<<<<<<< HEAD
     'match': '''
               (?x)
               (?<=^|\\s)
@@ -231,6 +232,9 @@
               @?([a-zA-Z\\$_]\\w*)(\\$|:|\\.)?\\s*
               (?=[:=](\\s*\\(.*\\))?\\s*([=-]>))
             '''
+=======
+    'match': '(?<=^|\\s)(?=@?[a-zA-Z\\$_])(@?[a-zA-Z\\$_](\\w|\\$|:|\\.)*\\s*(?=[:=](\\s*\\(.*\\))?\\s*([=-]>)))'
+>>>>>>> master
     'name': 'meta.function.coffee'
   }
   {
@@ -292,7 +296,7 @@
     'name': 'keyword.other.coffee'
   }
   {
-    'match': '(?x)\\b(\n\t\t\t\tArray|ArrayBuffer|Blob|Boolean|Date|document|Function|\n\t\t\t\tInt(8|16|32|64)Array|Math|Map|Number|\n\t\t\t\tObject|Proxy|RegExp|Set|String|WeakMap|\n\t\t\t\twindow|Uint(8|16|32|64)Array|XMLHttpRequest\n\t\t\t)\\b'
+    'match': '\\b(Array|ArrayBuffer|Blob|Boolean|Date|document|Function|Int(8|16|32|64)Array|Math|Map|Number|Object|Proxy|RegExp|Set|String|WeakMap|window|Uint(8|16|32|64)Array|XMLHttpRequest)\\b'
     'name': 'support.class.coffee'
   }
   {
@@ -304,27 +308,27 @@
     'name': 'support.function.console.coffee'
   }
   {
-    'match': '(?x)\\b(\n\t\t\t\tdecodeURI(Component)?|encodeURI(Component)?|eval|parse(Float|Int)|require\n\t\t\t)\\b'
+    'match': '\\b(decodeURI(Component)?|encodeURI(Component)?|eval|parse(Float|Int)|require)\\b'
     'name': 'support.function.coffee'
   }
   {
-    'match': '(?x)((?<=\\.)(\n\t\t\t\tapply|call|concat|every|filter|forEach|from|hasOwnProperty|indexOf|\n\t\t\t\tisPrototypeOf|join|lastIndexOf|map|of|pop|propertyIsEnumerable|push|\n\t\t\t\treduce(Right)?|reverse|shift|slice|some|sort|splice|to(Locale)?String|\n\t\t\t\tunshift|valueOf\n\t\t\t))\\b'
+    'match': '((?<=\\.)(apply|call|concat|every|filter|forEach|from|hasOwnProperty|indexOf|isPrototypeOf|join|lastIndexOf|map|of|pop|propertyIsEnumerable|push|reduce(Right)?|reverse|shift|slice|some|sort|splice|to(Locale)?String|unshift|valueOf))\\b'
     'name': 'support.function.method.array.coffee'
   }
   {
-    'match': '(?x)((?<=Array\\.)(\n\t\t\t\tisArray\n\t\t\t))\\b'
+    'match': '((?<=Array\\.)(isArray))\\b'
     'name': 'support.function.static.array.coffee'
   }
   {
-    'match': '(?x)((?<=Object\\.)(\n\t\t\t\tcreate|definePropert(ies|y)|freeze|getOwnProperty(Descriptors?|Names)|\n\t\t\t\tgetProperty(Descriptor|Names)|getPrototypeOf|is(Extensible|Frozen|Sealed)?|\n\t\t\t\tisnt|keys|preventExtensions|seal\n\t\t\t))\\b'
+    'match': '((?<=Object\\.)(create|definePropert(ies|y)|freeze|getOwnProperty(Descriptors?|Names)|getProperty(Descriptor|Names)|getPrototypeOf|is(Extensible|Frozen|Sealed)?|isnt|keys|preventExtensions|seal))\\b'
     'name': 'support.function.static.object.coffee'
   }
   {
-    'match': '(?x)((?<=Math\\.)(\n\t\t\t\tabs|acos|acosh|asin|asinh|atan|atan2|atanh|ceil|cos|cosh|exp|expm1|floor|\n\t\t\t\thypot|log|log10|log1p|log2|max|min|pow|random|round|sign|sin|sinh|sqrt|\n\t\t\t\ttan|tanh|trunc\n\t\t\t))\\b'
+    'match': '((?<=Math\\.)(abs|acos|acosh|asin|asinh|atan|atan2|atanh|ceil|cos|cosh|exp|expm1|floor|hypot|log|log10|log1p|log2|max|min|pow|random|round|sign|sin|sinh|sqrt|tan|tanh|trunc))\\b'
     'name': 'support.function.static.math.coffee'
   }
   {
-    'match': '(?x)((?<=Number\\.)(\n\t\t\t\tis(Finite|Integer|NaN)|toInteger\n\t\t\t))\\b'
+    'match': '((?<=Number\\.)(is(Finite|Integer|NaN)|toInteger))\\b'
     'name': 'support.function.static.number.coffee'
   }
   {
