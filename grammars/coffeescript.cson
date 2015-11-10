@@ -154,11 +154,12 @@
     'captures':
       '1':
         'name': 'variable.assignment.coffee'
-      '3':
-        'name': 'punctuation.separator.key-value'
       '4':
+        'name': 'punctuation.separator.key-value'
+      '5':
         'name': 'keyword.operator.coffee'
-    'match': '([a-zA-Z\\$_])(\\w|\\$|\\.)*\\s*(?!::)(?:(:)|((?:or|and|[-+\\/&%*?])?=)(?![>=]))(?!(\\s*\\(.*\\))?\\s*([=-]>))'
+    'match': '([a-zA-Z\\$_](\\w|\\$|\\.)*\\s*(?!\\::)((:)|((?:or|and|[-+/&%*?])?=)(?![>=]))(?!(\\s*\\(.*\\))?\\s*([=-]>)))'
+    'name': 'variable.assignment.coffee'
   }
   {
     'begin': '(?<=\\s|^)(\\{)(?=.+?\\}\\s+[:=])'
@@ -224,20 +225,12 @@
         'name': 'variable.parameter.function.coffee'
       '4':
         'name': 'storage.type.function.coffee'
-    'match': '''
-              (?x)
-              (?<=^|\\s)
-              (?=@?[a-zA-Z\\$_])
-              @?([a-zA-Z\\$_]\\w*)(\\$|:|\\.)?\\s*
-              (?=[:=](\\s*\\(.*\\))?\\s*([=-]>))
-            '''
+    'match': '(?<=^|\\s)(?=@?[a-zA-Z\\$_])(@?[a-zA-Z\\$_](\\w|\\$|:|\\.)*\\s*(?=[:=](\\s*\\(.*\\))?\\s*([=-]>)))'
     'name': 'meta.function.coffee'
   }
   {
-    'captures':
-      '4':
-        'name': 'entity.name.function.coffee'
-    'match': '@?\\b(?!class|subclass|extends|decodeURI(Component)?|encodeURI(Component)?|eval|parse(Float|Int)|require)(\\w+)(?:\\s+(?!(of|in|then|is|isnt|and|or|for|else|when|not|if)\\b)(?=(\\w+|\\->|\\-\\d|\\[|\\{|\"|\'))|(?=\\())'
+    'match': '@?\\b(?!class|subclass|extends|decodeURI(Component)?|encodeURI(Component)?|eval|parse(Float|Int)|require)\\w+(\\s+(?!(of|in|then|is|isnt|and|or|for|else|when|not|if)\\s)(?=(\\w+|\\->|\\-\\d|\\[|\\{|\"|\'))|(?=\\())'
+    'name': 'entity.name.function.coffee'
   }
   {
     'match': '[=-]>'
