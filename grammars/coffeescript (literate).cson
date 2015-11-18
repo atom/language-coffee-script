@@ -129,7 +129,7 @@
         'name': 'punctuation.definition.string.begin.markdown'
       '13':
         'name': 'punctuation.definition.string.end.markdown'
-    'match': '(?x:
+    'match': '(?x)
                 \\s*                    # Leading whitespace
                 (\\[)(.+?)(\\])(:)      # Reference name
                 [ \\t]*                 # Optional whitespace
@@ -141,7 +141,7 @@
                 )?                      # Title is optional
                 \\s*                    # Optional whitespace
                 $
-              )'
+              '
     'name': 'meta.link.reference.def.markdown'
   }
   {
@@ -396,7 +396,7 @@
         'name': 'punctuation.definition.string.markdown'
       '16':
         'name': 'punctuation.definition.metadata.markdown'
-    'match': '(?x:
+    'match': '(?x)
               \\!                       # Images start with !
               (\\[)((?<square>[^\\[\\]\\\\]|\\\\.|\\[\\g<square>*+\\])*+)(\\])
                                         # Match the link text.
@@ -410,7 +410,7 @@
                 )?                      # Title is optional
                 \\s*                    # Optional whitespace
               (\\))
-             )'
+             '
     'name': 'meta.image.inline.markdown'
   'image-ref':
     'captures':
@@ -624,7 +624,7 @@
         'name': 'punctuation.definition.string.end.markdown'
       '16':
         'name': 'punctuation.definition.metadata.markdown'
-    'match': '(?x:
+    'match': '(?x)
               (\\[)((?<square>[^\\[\\]\\\\]|\\\\.|\\[\\g<square>*+\\])*+)(\\])
                                         # Match the link text.
               ([ ])?                    # Space not allowed
@@ -636,8 +636,7 @@
                   | ((").+?("))         # or in quotes.
                 )?                      # Title is optional
                 \\s*                    # Optional whitespace
-              (\\))
-             )'
+              (\\))'
     'name': 'meta.link.inline.markdown'
   'link-ref':
     'captures':
