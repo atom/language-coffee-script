@@ -229,7 +229,7 @@
     'name': 'meta.function.coffee'
   }
   {
-    'match': '@?\\b(?!class|subclass|extends|decodeURI(Component)?|encodeURI(Component)?|eval|parse(Float|Int)|require)\\w+(\\s+(?!(of|in|then|is|isnt|and|or|for|else|when|not|if)\\s)(?=(\\w+|\\->|\\-\\d|\\[|\\{|\"|\'))|(?=\\())'
+    'match': '@?\\b(?!class|subclass|extends|decodeURI(Component)?|encodeURI(Component)?|eval|parse(Float|Int)|require)\\w+(\\s+(?!(of|in|then|is|isnt|and|or|for|else|when|not|if)\\s)(?=(\\@?\\w+|\\->|\\-\\d|\\[|\\{|\"|\'))|(?=\\())'
     'name': 'entity.name.function.coffee'
   }
   {
