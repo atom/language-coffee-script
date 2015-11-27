@@ -283,3 +283,12 @@ describe "CoffeeScript grammar", ->
     expect(tokens[3]).toEqual value: " food ", scopes: ["source.coffee"]
     expect(tokens[4]).toEqual value: "in", scopes: ["source.coffee", "keyword.control.coffee"]
     expect(tokens[5]).toEqual value: " foods", scopes: ["source.coffee"]
+
+    {tokens} = grammar.tokenizeLine("foo @bar")
+    expect(tokens[0]).toEqual value: "foo ", scopes: ["source.coffee", "entity.name.function.coffee"]
+    expect(tokens[1]).toEqual value: "@bar", scopes: ["source.coffee", "variable.other.readwrite.instance.coffee"]
+
+    {tokens} = grammar.tokenizeLine("foo baz, @bar")
+    expect(tokens[0]).toEqual value: "foo ", scopes: ["source.coffee", "entity.name.function.coffee"]
+    expect(tokens[1]).toEqual value: "baz", scopes: ["source.coffee"]
+    expect(tokens[3]).toEqual value: "@bar", scopes: ["source.coffee", "variable.other.readwrite.instance.coffee"]
