@@ -229,20 +229,20 @@
     'name': 'meta.function.coffee'
   }
   {
-    'match': '@?\\b(?!class|subclass|extends|decodeURI(Component)?|encodeURI(Component)?|eval|parse(Float|Int)|require)\\w+(\\s+(?!(of|in|then|is|isnt|and|or|for|else|when|not|if)\\s)(?=(@?\\w+|\\->|\\-\\d|\\[|\\{|\"|\'))|(?=\\())'
-    'name': 'entity.name.function.coffee'
-  }
-  {
-    'match': '[=-]>'
-    'name': 'storage.type.function.coffee'
-  }
-  {
     'match': '\\b(?<!\\.|::)(true|on|yes)(?!\\s*[:=][^=])\\b'
     'name': 'constant.language.boolean.true.coffee'
   }
   {
     'match': '\\b(?<!\\.|::)(false|off|no)(?!\\s*[:=][^=])\\b'
     'name': 'constant.language.boolean.false.coffee'
+  }
+  {
+    'match': '@?\\b(?!class|subclass|extends|decodeURI(Component)?|encodeURI(Component)?|eval|parse(Float|Int)|require)\\w+(\\s+(?!(of|in|then|is|isnt|and|or|for|else|when|not|if)\\s)(?=(@?\\w+|\\->|\\-\\d|\\[|\\{|\"|\'))|(?=\\())'
+    'name': 'entity.name.function.coffee'
+  }
+  {
+    'match': '[=-]>'
+    'name': 'storage.type.function.coffee'
   }
   {
     'match': '\\b(?<!\\.|::)null(?!\\s*[:=][^=])\\b'
