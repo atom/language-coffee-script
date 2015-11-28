@@ -12,14 +12,66 @@
 'foldingStopMarker': '^\\s*$|^\\s*[}\\]]\\s*$'
 'patterns': [
   {
+    'comment': 'functions without parameters: `->`'
     'captures':
       '1':
-        'name': 'variable.parameter.function.coffee'
+        'name': 'punctuation.definition.parameters.begin.coffee'
+      '2':
+        'name': 'punctuation.definition.parameters.end.coffee'
+      '3':
+        'name': 'storage.type.function.coffee'
+    'match': '(?x)
+      (?:
+        (\\()
+        \\s*
+        (\\))
+        \\s*
+      )?
+      ([=-]>)
+    '
+    'name': 'meta.inline.function.without-parameters.coffee'
+  }
+  {
+    'comment': 'functions with parameters: `(param1, @param2) ->`'
+    'begin': '(?x)
+    (\\()
+    (?=
+      (?:
+        @?[a-zA-Z\\$_]\\w*|,|\\s
+      )*
+      \\)
+      \\s*
+      [=-]>
+    )
+    '
+    'beginCaptures':
+      '1':
+        'name': 'punctuation.definition.parameters.begin.coffee'
+    'end': '(\\))\\s*([=-]>)'
+    'endCaptures':
+      '1':
+        'name': 'punctuation.definition.parameters.end.coffee'
       '2':
         'name': 'storage.type.function.coffee'
-    'comment': 'match stuff like: a -> … '
-    'match': '(\\([^()]*?\\))\\s*([=-]>)'
     'name': 'meta.inline.function.coffee'
+    'patterns': [
+      {
+        'match': '(?x)
+          (@[a-zA-Z_\\$][\\w]*)|([a-zA-Z_\\$][\\w]*)
+          \\s*
+          (?:
+            (,)|(?=\\))
+          )
+        '
+        'captures':
+          '1':
+            'name': 'variable.parameter.function.readwrite.instance.coffee'
+          '2':
+            'name': 'variable.parameter.function.coffee'
+          '3':
+            'name': 'punctuation.separator.parameters.coffee'
+      }
+    ]
   }
   {
     'captures':
@@ -231,10 +283,6 @@
   {
     'match': '@?\\b(?!class|subclass|extends|decodeURI(Component)?|encodeURI(Component)?|eval|parse(Float|Int)|require)\\w+(\\s+(?!(of|in|then|is|isnt|and|or|for|else|when|not|if)\\s)(?=(@?\\w+|\\->|\\-\\d|\\[|\\{|\"|\'))|(?=\\())'
     'name': 'entity.name.function.coffee'
-  }
-  {
-    'match': '[=-]>'
-    'name': 'storage.type.function.coffee'
   }
   {
     'match': '\\b(?<!\\.|::)(true|on|yes)(?!\\s*[:=][^=])\\b'
