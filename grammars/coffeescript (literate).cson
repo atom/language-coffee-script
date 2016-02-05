@@ -51,7 +51,7 @@
     'captures':
       '1':
         'name': 'punctuation.definition.list_item.markdown'
-    'end': '^(?=\\S)'
+    'end': '^(?=\\S|[ ]{4,})|(?!\\G)'
     'name': 'markup.list.unnumbered.markdown'
     'patterns': [
       {
@@ -64,7 +64,7 @@
     'captures':
       '1':
         'name': 'punctuation.definition.list_item.markdown'
-    'end': '^(?=\\S)'
+    'end': '^(?=\\S|[ ]{4,})|(?!\\G)'
     'name': 'markup.list.numbered.markdown'
     'patterns': [
       {
