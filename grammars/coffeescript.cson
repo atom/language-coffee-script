@@ -162,13 +162,15 @@
     'name': 'variable.assignment.coffee'
   }
   {
-    'begin': '(?<=\\s|^)(\\{)(?=.+?\\}\\s+[:=])'
+    'begin': '(?<=\\s|^)({)(?=[^\'"#]+?}\\s+=)'
     'beginCaptures':
-      '0':
-        'name': 'keyword.operator.coffee'
-    'end': '(\\}\\s*[:=])'
+      '1':
+        'name': 'punctuation.definition.destructuring.begin.bracket.curly.coffee'
+    'end': '(})\\s*(=)'
     'endCaptures':
-      '0':
+      '1':
+        'name': 'punctuation.definition.destructuring.end.bracket.curly.coffee'
+      '2':
         'name': 'keyword.operator.coffee'
     'name': 'meta.variable.assignment.destructured.object.coffee'
     'patterns': [
@@ -190,13 +192,15 @@
     ]
   }
   {
-    'begin': '(?<=\\s|^)(\\[)(?=.+?\\]\\s+[:=])'
+    'begin': '(?<=\\s|^)(\\[)(?=[^\'"#]+?\\]\\s+=)'
     'beginCaptures':
-      '0':
-        'name': 'keyword.operator.coffee'
-    'end': '(\\]\\s*[:=])'
+      '1':
+        'name': 'punctuation.definition.destructuring.begin.bracket.curly.coffee'
+    'end': '(\\])\\s*(=)'
     'endCaptures':
-      '0':
+      '1':
+        'name': 'punctuation.definition.destructuring.end.bracket.curly.coffee'
+      '2':
         'name': 'keyword.operator.coffee'
     'name': 'meta.variable.assignment.destructured.array.coffee'
     'patterns': [

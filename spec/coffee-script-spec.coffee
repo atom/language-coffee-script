@@ -303,3 +303,14 @@ describe "CoffeeScript grammar", ->
     expect(tokens[0]).toEqual value: "true", scopes: ["source.coffee", "constant.language.boolean.true.coffee"]
     expect(tokens[2]).toEqual value: "if", scopes: ["source.coffee", "keyword.control.coffee"]
     expect(tokens[4]).toEqual value: "false", scopes: ["source.coffee", "constant.language.boolean.false.coffee"]
+
+  it "tokenizes destructuring assignments", ->
+    {tokens} = grammar.tokenizeLine("{something} = hi")
+    expect(tokens[0]).toEqual value: "{", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "punctuation.definition.destructuring.begin.bracket.curly.coffee"]
+    expect(tokens[1]).toEqual value: "something", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "variable.assignment.coffee", "variable.assignment.coffee"]
+    expect(tokens[2]).toEqual value: "}", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "punctuation.definition.destructuring.end.bracket.curly.coffee"]
+    expect(tokens[4]).toEqual value: "=", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "keyword.operator.coffee"]
+    expect(tokens[5]).toEqual value: " hi", scopes: ["source.coffee"]
+
+    {tokens} = grammar.tokenizeLine("{'} ='}") # Make sure this *isn't* tokenized as a destructuring assignment
+    expect(tokens[0]).not.toEqual value: "{", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "punctuation.definition.destructuring.begin.bracket.curly.coffee"]
