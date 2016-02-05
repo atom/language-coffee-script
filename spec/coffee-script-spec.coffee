@@ -82,6 +82,17 @@ describe "CoffeeScript grammar", ->
     expect(tokens[1]).toEqual value: " ", scopes: ["source.coffee", "meta.class.instance.constructor"]
     expect(tokens[2]).toEqual value: "Foo", scopes: ["source.coffee", "meta.class.instance.constructor", "entity.name.type.instance.coffee"]
 
+  it "tokenizes comments", ->
+    {tokens} = grammar.tokenizeLine("# I am a comment")
+
+    expect(tokens[0]).toEqual value: "#", scopes: ["source.coffee", "comment.line.number-sign.coffee", "punctuation.definition.comment.coffee"]
+    expect(tokens[1]).toEqual value: " I am a comment", scopes: ["source.coffee", "comment.line.number-sign.coffee"]
+
+    {tokens} = grammar.tokenizeLine("\#{Comment}")
+
+    expect(tokens[0]).toEqual value: "#", scopes: ["source.coffee", "comment.line.number-sign.coffee", "punctuation.definition.comment.coffee"]
+    expect(tokens[1]).toEqual value: "{Comment}", scopes: ["source.coffee", "comment.line.number-sign.coffee"]
+
   it "tokenizes annotations in block comments", ->
     lines = grammar.tokenizeLines """
       ###

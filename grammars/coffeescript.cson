@@ -97,12 +97,11 @@
     ]
   }
   {
-    'begin': '(#)(?!\\{)'
-    'beginCaptures':
+    'match': '(#).*$'
+    'name': 'comment.line.number-sign.coffee'
+    'captures':
       '1':
         'name': 'punctuation.definition.comment.coffee'
-    'end': '\\n'
-    'name': 'comment.line.number-sign.coffee'
   }
   {
     'begin': '/{3}'
