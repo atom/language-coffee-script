@@ -301,7 +301,7 @@
     'name': 'support.function.coffee'
   }
   {
-    'match': '((?<=\\.)(apply|call|concat|every|filter|forEach|from|hasOwnProperty|indexOf|isPrototypeOf|join|lastIndexOf|map|of|pop|propertyIsEnumerable|push|reduce(Right)?|reverse|shift|slice|some|sort|splice|to(Locale)?String|unshift|valueOf))\\b'
+    'match': '((?<=\\.)(concat|copyWithin|entries|every|fill|filter|find|findIndex|forEach|includes|indexOf|join|keys|lastIndexOf|map|pop|push|reduce(Right)?|reverse|shift|slice|some|sort|splice|to(Locale)?String|unshift|values))\\b'
     'name': 'support.function.method.array.coffee'
   }
   {
