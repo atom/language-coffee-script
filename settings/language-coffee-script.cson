@@ -1,6 +1,8 @@
 '.source.coffee, .source.litcoffee, .source.coffee.md':
   'editor':
     'commentStart': '# '
+    'softTabs': true
+    'tabLength': 2
 '.source.coffee':
   'editor':
     'autoIndentOnPaste': false
