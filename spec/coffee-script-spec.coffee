@@ -303,3 +303,26 @@ describe "CoffeeScript grammar", ->
     expect(tokens[0]).toEqual value: "true", scopes: ["source.coffee", "constant.language.boolean.true.coffee"]
     expect(tokens[2]).toEqual value: "if", scopes: ["source.coffee", "keyword.control.coffee"]
     expect(tokens[4]).toEqual value: "false", scopes: ["source.coffee", "constant.language.boolean.false.coffee"]
+
+  it "tokenizes Oniguruma-regex comments in strings", ->
+    {tokens} = grammar.tokenizeLine('\"a (?# X Y\\\" Z \\\\\\\" 123) ABC\"')
+    expect(tokens[0]).toEqual  value: "\"",   scopes: ["source.coffee", "string.quoted.double.coffee", "punctuation.definition.string.begin.coffee"]
+    expect(tokens[1]).toEqual  value: "a ",   scopes: ["source.coffee", "string.quoted.double.coffee"]
+    expect(tokens[2]).toEqual  value: "(?#",  scopes: ["source.coffee", "string.quoted.double.coffee", "comment.block.oniguruma.coffee", "punctuation.definition.comment.begin.coffee"]
+    expect(tokens[3]).toEqual  value: " X Y", scopes: ["source.coffee", "string.quoted.double.coffee", "comment.block.oniguruma.coffee"]
+    expect(tokens[4]).toEqual  value: "\\\"", scopes: ["source.coffee", "string.quoted.double.coffee", "comment.block.oniguruma.coffee", "constant.character.escape.backslash.coffee"]
+    expect(tokens[5]).toEqual  value: " Z ",  scopes: ["source.coffee", "string.quoted.double.coffee", "comment.block.oniguruma.coffee"]
+    expect(tokens[6]).toEqual  value: "\\\\", scopes: ["source.coffee", "string.quoted.double.coffee", "comment.block.oniguruma.coffee", "constant.character.escape.backslash.coffee"]
+    expect(tokens[7]).toEqual  value: "\\\"", scopes: ["source.coffee", "string.quoted.double.coffee", "comment.block.oniguruma.coffee", "constant.character.escape.backslash.coffee"]
+    expect(tokens[8]).toEqual  value: " 123", scopes: ["source.coffee", "string.quoted.double.coffee", "comment.block.oniguruma.coffee"]
+    expect(tokens[9]).toEqual  value: ")",    scopes: ["source.coffee", "string.quoted.double.coffee", "comment.block.oniguruma.coffee", "punctuation.definition.comment.end.coffee"]
+    expect(tokens[10]).toEqual value: " ABC", scopes: ["source.coffee", "string.quoted.double.coffee"]
+    expect(tokens[11]).toEqual value: "\"",   scopes: ["source.coffee", "string.quoted.double.coffee", "punctuation.definition.string.end.coffee"]
+
+  it "does not ignore closing quote of unterminated Oniguruma comments", ->
+    {tokens} = grammar.tokenizeLine('\'a (?#\' z')
+    expect(tokens[0]).toEqual  value: "'",    scopes: ["source.coffee", "string.quoted.single.coffee", "punctuation.definition.string.begin.coffee"]
+    expect(tokens[1]).toEqual  value: "a ",   scopes: ["source.coffee", "string.quoted.single.coffee"]
+    expect(tokens[2]).toEqual  value: "(?#",  scopes: ["source.coffee", "string.quoted.single.coffee", "comment.block.oniguruma.coffee", "punctuation.definition.comment.begin.coffee"]
+    expect(tokens[3]).toEqual  value: "'",    scopes: ["source.coffee", "string.quoted.single.coffee", "punctuation.definition.string.end.coffee"]
+    expect(tokens[4]).toEqual  value: " z",   scopes: ["source.coffee"]
