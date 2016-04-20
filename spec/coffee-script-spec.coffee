@@ -278,12 +278,11 @@ describe "CoffeeScript grammar", ->
 
     {tokens} = grammar.tokenizeLine("eat food for food in foods")
     expect(tokens[0]).toEqual value: "eat", scopes: ["source.coffee", "entity.name.function.coffee"]
-    expect(tokens[1]).toEqual value: " ", scopes: ["source.coffee"]
-    expect(tokens[2]).toEqual value: "food ", scopes: ["source.coffee"]
-    expect(tokens[3]).toEqual value: "for", scopes: ["source.coffee", "keyword.control.coffee"]
-    expect(tokens[4]).toEqual value: " food ", scopes: ["source.coffee"]
-    expect(tokens[5]).toEqual value: "in", scopes: ["source.coffee", "keyword.control.coffee"]
-    expect(tokens[6]).toEqual value: " foods", scopes: ["source.coffee"]
+    expect(tokens[1]).toEqual value: " food ", scopes: ["source.coffee"]
+    expect(tokens[2]).toEqual value: "for", scopes: ["source.coffee", "keyword.control.coffee"]
+    expect(tokens[3]).toEqual value: " food ", scopes: ["source.coffee"]
+    expect(tokens[4]).toEqual value: "in", scopes: ["source.coffee", "keyword.control.coffee"]
+    expect(tokens[5]).toEqual value: " foods", scopes: ["source.coffee"]
 
     {tokens} = grammar.tokenizeLine("foo @bar")
     expect(tokens[0]).toEqual value: "foo", scopes: ["source.coffee", "entity.name.function.coffee"]
@@ -291,7 +290,8 @@ describe "CoffeeScript grammar", ->
 
     {tokens} = grammar.tokenizeLine("foo baz, @bar")
     expect(tokens[0]).toEqual value: "foo", scopes: ["source.coffee", "entity.name.function.coffee"]
-    expect(tokens[2]).toEqual value: "baz", scopes: ["source.coffee"]
+    expect(tokens[1]).toEqual value: " baz", scopes: ["source.coffee"]
+    expect(tokens[2]).toEqual value: ",", scopes: ["source.coffee", "meta.delimiter.object.comma.coffee"]
     expect(tokens[4]).toEqual value: "@bar", scopes: ["source.coffee", "variable.other.readwrite.instance.coffee"]
 
   it "does not tokenize booleans as functions", ->
