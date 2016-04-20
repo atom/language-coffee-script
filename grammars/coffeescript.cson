@@ -195,11 +195,11 @@
     'begin': '(?<=\\s|^)(\\[)(?=[^\'"#]+?\\]\\s+=)'
     'beginCaptures':
       '1':
-        'name': 'punctuation.definition.destructuring.begin.bracket.curly.coffee'
+        'name': 'punctuation.definition.destructuring.begin.bracket.square.coffee'
     'end': '(\\])\\s*(=)'
     'endCaptures':
       '1':
-        'name': 'punctuation.definition.destructuring.end.bracket.curly.coffee'
+        'name': 'punctuation.definition.destructuring.end.bracket.square.coffee'
       '2':
         'name': 'keyword.operator.coffee'
     'name': 'meta.variable.assignment.destructured.array.coffee'
