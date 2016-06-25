@@ -95,11 +95,12 @@
     ]
   }
   {
-    'match': '(#).*$'
-    'name': 'comment.line.number-sign.coffee'
-    'captures':
-      '1':
+    'begin': '#'
+    'beginCaptures':
+      '0':
         'name': 'punctuation.definition.comment.coffee'
+    'end': '$'
+    'name': 'comment.line.number-sign.coffee'
   }
   {
     'begin': '/{3}'
