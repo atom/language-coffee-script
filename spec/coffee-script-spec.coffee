@@ -315,3 +315,10 @@ describe "CoffeeScript grammar", ->
     expect(tokens[0]).toEqual value: "true", scopes: ["source.coffee", "constant.language.boolean.true.coffee"]
     expect(tokens[2]).toEqual value: "if", scopes: ["source.coffee", "keyword.control.coffee"]
     expect(tokens[4]).toEqual value: "false", scopes: ["source.coffee", "constant.language.boolean.false.coffee"]
+
+  it "tokenizes inline constant followed by unless statement correctly", ->
+    {tokens} = grammar.tokenizeLine("return 0 unless true")
+    expect(tokens[0]).toEqual value: "return", scopes: ["source.coffee", "keyword.control.coffee"]
+    expect(tokens[2]).toEqual value: "0", scopes: ["source.coffee", "constant.numeric.coffee"]
+    expect(tokens[4]).toEqual value: "unless", scopes: ["source.coffee", "keyword.control.coffee"]
+    expect(tokens[6]).toEqual value: "true", scopes: ["source.coffee", "constant.language.boolean.true.coffee"]
