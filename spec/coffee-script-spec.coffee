@@ -322,3 +322,116 @@ describe "CoffeeScript grammar", ->
     expect(tokens[2]).toEqual value: "0", scopes: ["source.coffee", "constant.numeric.coffee"]
     expect(tokens[4]).toEqual value: "unless", scopes: ["source.coffee", "keyword.control.coffee"]
     expect(tokens[6]).toEqual value: "true", scopes: ["source.coffee", "constant.language.boolean.true.coffee"]
+
+  describe "firstLineMatch", ->
+    it "recognises interpreter directives", ->
+      valid = """
+        #!/usr/sbin/coffee foo
+        #!/usr/bin/coffee foo=bar/
+        #!/usr/sbin/coffee
+        #!/usr/sbin/coffee foo bar baz
+        #!/usr/bin/coffee perl
+        #!/usr/bin/coffee bin/perl
+        #!/usr/bin/coffee
+        #!/bin/coffee
+        #!/usr/bin/coffee --script=usr/bin
+        #! /usr/bin/env A=003 B=149 C=150 D=xzd E=base64 F=tar G=gz H=head I=tail coffee
+        #!\t/usr/bin/env --foo=bar coffee --quu=quux
+        #! /usr/bin/coffee
+        #!/usr/bin/env coffee
+      """
+      for line in valid.split /\n/
+        expect(grammar.firstLineRegex.scanner.findNextMatchSync(line)).not.toBeNull()
+
+      invalid = """
+        \x20#!/usr/sbin/coffee
+        \t#!/usr/sbin/coffee
+        #!/usr/bin/env-coffee/node-env/
+        #!/usr/bin/env-coffee
+        #! /usr/bincoffee
+        #!\t/usr/bin/env --coffee=bar
+      """
+      for line in invalid.split /\n/
+        expect(grammar.firstLineRegex.scanner.findNextMatchSync(line)).toBeNull()
+
+    it "recognises Emacs modelines", ->
+      valid = """
+        #-*- coffee -*-
+        #-*- mode: Coffee -*-
+        /* -*-coffee-*- */
+        // -*- Coffee -*-
+        /* -*- mode:Coffee -*- */
+        // -*- font:bar;mode:Coffee -*-
+        // -*- font:bar;mode:Coffee;foo:bar; -*-
+        // -*-font:mode;mode:COFFEE-*-
+        // -*- foo:bar mode: coffee bar:baz -*-
+        " -*-foo:bar;mode:cOFFEE;bar:foo-*- ";
+        " -*-font-mode:foo;mode:coFFeE;foo-bar:quux-*-"
+        "-*-font:x;foo:bar; mode : Coffee; bar:foo;foooooo:baaaaar;fo:ba;-*-";
+        "-*- font:x;foo : bar ; mode : Coffee ; bar : foo ; foooooo:baaaaar;fo:ba-*-";
+      """
+      for line in valid.split /\n/
+        expect(grammar.firstLineRegex.scanner.findNextMatchSync(line)).not.toBeNull()
+
+      invalid = """
+        /* --*coffee-*- */
+        /* -*-- coffee -*-
+        /* -*- -- Coffee -*-
+        /* -*- Coffee -;- -*-
+        // -*- freeCoffee -*-
+        // -*- Coffee; -*-
+        // -*- coffee-sugar -*-
+        /* -*- model:coffee -*-
+        /* -*- indent-mode:coffee -*-
+        // -*- font:mode;Coffee -*-
+        // -*- mode: -*- Coffee
+        // -*- mode: jfc-give-me-coffee -*-
+        // -*-font:mode;mode:coffee--*-
+      """
+      for line in invalid.split /\n/
+        expect(grammar.firstLineRegex.scanner.findNextMatchSync(line)).toBeNull()
+
+    it "recognises Vim modelines", ->
+      valid = """
+        vim: se filetype=coffee:
+        # vim: se ft=coffee:
+        # vim: set ft=COFFEE:
+        # vim: set filetype=CoffEE:
+        # vim: ft=CoffEE
+        # vim: syntax=CoffEE
+        # vim: se syntax=CoffEE:
+        # ex: syntax=CoffEE
+        # vim:ft=coffee
+        # vim600: ft=coffee
+        # vim>600: set ft=coffee:
+        # vi:noai:sw=3 ts=6 ft=coffee
+        # vi::::::::::noai:::::::::::: ft=COFFEE
+        # vim:ts=4:sts=4:sw=4:noexpandtab:ft=cOfFeE
+        # vi:: noai : : : : sw   =3 ts   =6 ft  =coFFEE
+        # vim: ts=4: pi sts=4: ft=cofFeE: noexpandtab: sw=4:
+        # vim: ts=4 sts=4: ft=coffee noexpandtab:
+        # vim:noexpandtab sts=4 ft=coffEE ts=4
+        # vim:noexpandtab:ft=cOFFEe
+        # vim:ts=4:sts=4 ft=cofFeE:noexpandtab:\x20
+        # vim:noexpandtab titlestring=hi\|there\\\\ ft=cOFFEe ts=4
+      """
+      for line in valid.split /\n/
+        expect(grammar.firstLineRegex.scanner.findNextMatchSync(line)).not.toBeNull()
+
+      invalid = """
+        ex: se filetype=coffee:
+        _vi: se filetype=coffee:
+         vi: se filetype=coffee
+        # vim set ft=coffee
+        # vim: soft=coffee
+        # vim: clean-syntax=coffee:
+        # vim set ft=coffee:
+        # vim: setft=coffee:
+        # vim: se ft=coffee backupdir=tmp
+        # vim: set ft=coffee set cmdheight=1
+        # vim:noexpandtab sts:4 ft:coffee ts:4
+        # vim:noexpandtab titlestring=hi\\|there\\ ft=coffee ts=4
+        # vim:noexpandtab titlestring=hi\\|there\\\\\\ ft=coffee ts=4
+      """
+      for line in invalid.split /\n/
+        expect(grammar.firstLineRegex.scanner.findNextMatchSync(line)).toBeNull()
