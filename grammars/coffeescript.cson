@@ -121,16 +121,15 @@
     'name': 'comment.line.number-sign.coffee'
   }
   {
-    'begin': '/{3}'
-    'end': '(/{3})[imgy]{0,4}'
+    'begin': '///'
+    'end': '(///)[gimuy]*'
     'name': 'string.regexp.coffee'
     'beginCaptures':
       '0':
         'name': 'punctuation.definition.string.begin.js'
     'endCaptures':
       '1':
-        'name': 'punctuation.definition.string.begin.js'
-
+        'name': 'punctuation.definition.string.end.js'
     'patterns': [
       {
         'include': '#heregexp'
@@ -139,20 +138,20 @@
 
   }
   {
-    'begin': '/(?=(?![/*+?])([^\\\\]|\\\\.)*?/[igmy]{0,4}(?![a-zA-Z0-9]))'
-    'end': '(/)[imgy]{0,4}'
+    'begin': '/(?=(?![/*+?])([^\\\\]|\\\\.)*?/[gimuy]*(?![a-zA-Z0-9]))'
+    'beginCaptures':
+      '0':
+        'name': 'punctuation.definition.string.begin.js'
+    'end': '(/)[gimuy]*'
+    'endCaptures':
+      '1':
+        'name': 'punctuation.definition.string.end.js'
     'name': 'string.regexp.coffee'
     'patterns': [
       {
         'include': 'source.js.regexp'
       }
     ]
-    'beginCaptures':
-      '0':
-        'name': 'punctuation.definition.string.begin.js'
-    'endCaptures':
-      '1':
-        'name': 'punctuation.definition.string.begin.js'
   }
   {
     'match': '\\b(?<![\\.\\$])(break|by|catch|continue|else|finally|for|in|of|if|return|switch|then|throw|try|unless|when|while|until|loop|do|(?<=for)\\s+own)(?!\\s*:)\\b'
