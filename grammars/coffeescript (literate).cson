@@ -6,6 +6,25 @@
 ]
 'name': 'CoffeeScript (Literate)'
 'scopeName': 'source.litcoffee'
+'firstLineMatch': '''(?x)
+  # Hashbang
+  ^\\#!.*(?:\\s|\\/)
+    coffee(?:\\s.+?)?\\s(?:-l|--literate)
+  (?:\\s|$)
+  |
+  # Modeline
+  (?i:
+    # Emacs
+    -\\*-(?:\\s*(?=[^:;\\s]+\\s*-\\*-)|(?:.*?[;\\s]|(?<=-\\*-))mode\\s*:\\s*)
+      litcoffee
+    (?=[\\s;]|(?<![-*])-\\*-).*?-\\*-
+    |
+    # Vim
+    (?:(?:\\s|^)vi(?:m[<=>]?\\d+|m)?|\\sex)(?=:(?=\\s*set?\\s[^\\n:]+:)|:(?!\\s*set?\\s))(?:(?:\\s|\\s*:\\s*)\\w*(?:\\s*=(?:[^\\n\\\\\\s]|\\\\.)*)?)*[\\s:](?:filetype|ft|syntax)\\s*=
+      litcoffee
+    (?=\\s|:|$)
+  )
+'''
 'patterns': [
   {
     'begin': '^(?=([ ]{4}|\\t)(?!$))'
@@ -51,7 +70,7 @@
     'captures':
       '1':
         'name': 'punctuation.definition.list_item.markdown'
-    'end': '^(?=\\S)'
+    'end': '^(?=\\S|[ ]{4,})|(?!\\G)'
     'name': 'markup.list.unnumbered.markdown'
     'patterns': [
       {
@@ -64,7 +83,7 @@
     'captures':
       '1':
         'name': 'punctuation.definition.list_item.markdown'
-    'end': '^(?=\\S)'
+    'end': '^(?=\\S|[ ]{4,})|(?!\\G)'
     'name': 'markup.list.numbered.markdown'
     'patterns': [
       {

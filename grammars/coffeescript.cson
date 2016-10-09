@@ -7,9 +7,25 @@
   'cson'
   '_coffee'
 ]
-'firstLineMatch': '^#!.*\\bcoffee'
-'foldingStartMarker': '^\\s*class\\s+\\S.*$|.*(->|=>)\\s*$|.*[\\[{]\\s*$'
-'foldingStopMarker': '^\\s*$|^\\s*[}\\]]\\s*$'
+'firstLineMatch': '''(?x)
+  # Hashbang
+  ^\\#!.*(?:\\s|\\/)
+    coffee
+  (?:$|\\s)
+  |
+  # Modeline
+  (?i:
+    # Emacs
+    -\\*-(?:\\s*(?=[^:;\\s]+\\s*-\\*-)|(?:.*?[;\\s]|(?<=-\\*-))mode\\s*:\\s*)
+      coffee
+    (?=[\\s;]|(?<![-*])-\\*-).*?-\\*-
+    |
+    # Vim
+    (?:(?:\\s|^)vi(?:m[<=>]?\\d+|m)?|\\sex)(?=:(?=\\s*set?\\s[^\\n:]+:)|:(?!\\s*set?\\s))(?:(?:\\s|\\s*:\\s*)\\w*(?:\\s*=(?:[^\\n\\\\\\s]|\\\\.)*)?)*[\\s:](?:filetype|ft|syntax)\\s*=
+      coffee
+    (?=\\s|:|$)
+  )
+'''
 'patterns': [
   {
     'captures':
@@ -97,11 +113,11 @@
     ]
   }
   {
-    'begin': '(#)(?!\\{)'
+    'begin': '#'
     'beginCaptures':
-      '1':
+      '0':
         'name': 'punctuation.definition.comment.coffee'
-    'end': '\\n'
+    'end': '$'
     'name': 'comment.line.number-sign.coffee'
   }
   {
@@ -151,15 +167,14 @@
     'name': 'keyword.reserved.coffee'
   }
   {
+    'match': '([a-zA-Z$_][\\w$]*)\\s*(?!::)(?:(:)|((?:or|and|[-+\\/&%*?])?=)(?![>=]))(?!(\\s*\\(.*\\))?\\s*([=-]>))'
     'captures':
       '1':
         'name': 'variable.assignment.coffee'
-      '4':
+      '2':
         'name': 'punctuation.separator.key-value'
-      '5':
+      '3':
         'name': 'keyword.operator.coffee'
-    'match': '([a-zA-Z\\$_](\\w|\\$|\\.)*\\s*(?!\\::)((:)|((?:or|and|[-+/&%*?])?=)(?![>=]))(?!(\\s*\\(.*\\))?\\s*([=-]>)))'
-    'name': 'variable.assignment.coffee'
   }
   {
     'begin': '(?<=\\s|^)({)(?=[^\'"#]+?}\\s+=)'
@@ -222,6 +237,12 @@
     ]
   }
   {
+    'match': '''(?x)
+                (?<=^|\\s)
+                (?=@?[a-zA-Z\\$_])
+                @?([a-zA-Z\\$_]\\w*)(\\$|:|\\.)?\\s*
+                (?=[:=](\\s*\\(.*\\))?\\s*([=-]>))
+              '''
     'captures':
       '1':
         'name': 'entity.name.function.coffee'
@@ -229,7 +250,6 @@
         'name': 'variable.parameter.function.coffee'
       '4':
         'name': 'storage.type.function.coffee'
-    'match': '(?<=^|\\s)(?=@?[a-zA-Z\\$_])(@?[a-zA-Z\\$_](\\w|\\$|:|\\.)*\\s*(?=[:=](\\s*\\(.*\\))?\\s*([=-]>)))'
     'name': 'meta.function.coffee'
   }
   {
@@ -241,8 +261,10 @@
     'name': 'constant.language.boolean.false.coffee'
   }
   {
-    'match': '@?\\b(?!class|subclass|extends|decodeURI(Component)?|encodeURI(Component)?|eval|parse(Float|Int)|require)\\w+(\\s+(?!(of|in|then|is|isnt|and|or|for|else|when|not|if)\\s)(?=(@?\\w+|\\->|\\-\\d|\\[|\\{|\"|\'))|(?=\\())'
-    'name': 'entity.name.function.coffee'
+    'match': '@?\\b(?!class|subclass|extends|decodeURI(Component)?|encodeURI(Component)?|eval|parse(Float|Int)|require)(\\w+)(?=\\s+(?!(of|in|then|is|isnt|and|or|for|else|when|not|if|unless)\\b)(?=(@?\\w+|\\->|\\-\\d|\\[|\\{|\"|\'))|(?=\\())'
+    'captures':
+      '4':
+        'name': 'entity.name.function.coffee'
   }
   {
     'match': '[=-]>'
@@ -337,7 +359,7 @@
     'name': 'punctuation.terminator.statement.coffee'
   }
   {
-    'match': ',[ |\\t]*'
+    'match': ','
     'name': 'meta.delimiter.object.comma.coffee'
   }
   {
