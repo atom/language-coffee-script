@@ -345,15 +345,37 @@
     'name': 'meta.delimiter.method.period.coffee'
   }
   {
-    'match': '\\{|\\}'
-    'name': 'meta.brace.curly.coffee'
+    'begin': '{'
+    'beginCaptures':
+      '0':
+        'name': 'meta.brace.curly.coffee'
+    'end': '}'
+    'endCaptures':
+      '0':
+        'name': 'meta.brace.curly.coffee'
+    'patterns': [
+      {
+        'include': '$self'
+      }
+    ]
   }
   {
-    'match': '\\(|\\)'
-    'name': 'meta.brace.round.coffee'
+    'begin': '\\('
+    'beginCaptures':
+      '0':
+        'name': 'meta.brace.round.coffee'
+    'end': '\\)'
+    'endCaptures':
+      '0':
+        'name': 'meta.brace.round.coffee'
+    'patterns': [
+      {
+        'include': '$self'
+      }
+    ]
   }
   {
-    'match': '\\[|\\]\\s*'
+    'match': '\\[|\\]'
     'name': 'meta.brace.square.coffee'
   }
   {
