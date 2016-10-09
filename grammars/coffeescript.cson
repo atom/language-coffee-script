@@ -405,7 +405,7 @@
         'beginCaptures':
           '0':
             'name': 'punctuation.definition.arguments.begin.bracket.round.coffee'
-        'end': '\\)|(?=\\s*(of|in|then|is|isnt|and|or|for|else|when|not|if|unless))|(?=\\s*$)'
+        'end': '\\)|(?=\\s*\\b(of|in|then|is|isnt|and|or|for|else|when|not|if|unless)\\b)|(?=\\s*(#|$))'
         'endCaptures':
           '0':
             'name': 'punctuation.definition.arguments.end.bracket.round.coffee'
@@ -447,7 +447,7 @@
         'begin': '''(?x)
           (@)?([\\w$]+)
           \\s*
-          (?=\\s+(?!(of|in|then|is|isnt|and|or|for|else|when|not|if|unless)\\b)(?=(@?\\w+|[=-]>|\\-\\d|\\[|\\{|\"|\'))|(?=\\())
+          (?=\\s+(?!\\b(of|in|then|is|isnt|and|or|for|else|when|not|if|unless)\\b)(?=(@?\\w+|[=-]>|\\-\\d|\\[|\\{|\"|\'))|(?=\\())
         '''
         'beginCaptures':
           '1':
@@ -471,7 +471,7 @@
                 'name': 'invalid.illegal.identifier.coffee'
               }
             ]
-        'end': '(?<=\\))|(?=\\s*(of|in|then|is|isnt|and|or|for|else|when|not|if|unless))|(?=\\s*$)'
+        'end': '(?<=\\))|(?=\\s*\\b(of|in|then|is|isnt|and|or|for|else|when|not|if|unless)\\b)|(?=\\s*(#|$))'
         'name': 'meta.function-call.coffee'
         'patterns': [
           {
