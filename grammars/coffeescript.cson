@@ -126,10 +126,10 @@
     'name': 'string.regexp.coffee'
     'beginCaptures':
       '0':
-        'name': 'punctuation.definition.string.begin.js'
+        'name': 'punctuation.definition.string.begin.coffee'
     'endCaptures':
       '1':
-        'name': 'punctuation.definition.string.begin.js'
+        'name': 'punctuation.definition.string.begin.coffee'
 
     'patterns': [
       {
@@ -149,10 +149,10 @@
     ]
     'beginCaptures':
       '0':
-        'name': 'punctuation.definition.string.begin.js'
+        'name': 'punctuation.definition.string.begin.coffee'
     'endCaptures':
       '1':
-        'name': 'punctuation.definition.string.begin.js'
+        'name': 'punctuation.definition.string.begin.coffee'
   }
   {
     'match': '\\b(?<![\\.\\$])(break|by|catch|continue|else|finally|for|in|of|if|return|switch|then|throw|try|unless|when|while|until|loop|do|(?<=for)\\s+own)(?!\\s*:)\\b'
