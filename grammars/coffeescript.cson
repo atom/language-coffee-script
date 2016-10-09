@@ -30,16 +30,6 @@
   {
     'captures':
       '1':
-        'name': 'variable.parameter.function.coffee'
-      '2':
-        'name': 'storage.type.function.coffee'
-    'comment': 'match stuff like: a -> … '
-    'match': '(\\([^()]*?\\))\\s*([=-]>)'
-    'name': 'meta.inline.function.coffee'
-  }
-  {
-    'captures':
-      '1':
         'name': 'keyword.operator.new.coffee'
       '4':
         'name': 'storage.type.class.coffee'
@@ -167,6 +157,8 @@
     'name': 'keyword.reserved.coffee'
   }
   {
+    # a: -> ...
+    # a: (args) -> ...
     'begin': '''(?x)
       \\b((@)?[a-zA-Z_$][\\w$]*)
       \\s*([:=])\\s*
@@ -184,6 +176,22 @@
       '0':
         'name': 'storage.type.function.coffee'
     'name': 'meta.function.coffee'
+    'patterns': [
+      {
+        'include': '#function_params'
+      }
+    ]
+  }
+  {
+    # a -> ...
+    # (args) -> ...
+    # -> ...
+    'begin': '(?=(\\(([^\\(\\)]*)?\\))?\\s*[=-]>)'
+    'end': '[=-]>'
+    'endCaptures':
+      '0':
+        'name': 'storage.type.function.coffee'
+    'name': 'meta.function.inline.coffee'
     'patterns': [
       {
         'include': '#function_params'
