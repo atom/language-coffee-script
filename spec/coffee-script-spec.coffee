@@ -321,11 +321,23 @@ describe "CoffeeScript grammar", ->
     expect(tokens[0]).toEqual value: "{", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "punctuation.definition.destructuring.begin.bracket.curly.coffee"]
     expect(tokens[1]).toEqual value: "something", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "variable.assignment.coffee", "variable.assignment.coffee"]
     expect(tokens[2]).toEqual value: "}", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "punctuation.definition.destructuring.end.bracket.curly.coffee"]
-    expect(tokens[4]).toEqual value: "=", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "keyword.operator.coffee"]
+    expect(tokens[3]).toEqual value: " ", scopes: ["source.coffee"]
+    expect(tokens[4]).toEqual value: "=", scopes: ["source.coffee", "keyword.operator.coffee"]
     expect(tokens[5]).toEqual value: " hi", scopes: ["source.coffee"]
 
     {tokens} = grammar.tokenizeLine("{'} ='}") # Make sure this *isn't* tokenized as a destructuring assignment
     expect(tokens[0]).not.toEqual value: "{", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "punctuation.definition.destructuring.begin.bracket.curly.coffee"]
+
+  it "tokenizes nested destructuring assignments", ->
+    {tokens} = grammar.tokenizeLine("{poet: {name, address: [street, city]}} = futurists")
+    expect(tokens[0]).toEqual value: "{", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "punctuation.definition.destructuring.begin.bracket.curly.coffee"]
+    expect(tokens[4]).toEqual value: "{", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "meta.variable.assignment.destructured.object.coffee", "punctuation.definition.destructuring.begin.bracket.curly.coffee"]
+    expect(tokens[11]).toEqual value: "[", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "meta.variable.assignment.destructured.object.coffee", "meta.variable.assignment.destructured.array.coffee", "punctuation.definition.destructuring.begin.bracket.square.coffee"]
+    expect(tokens[16]).toEqual value: "]", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "meta.variable.assignment.destructured.object.coffee", "meta.variable.assignment.destructured.array.coffee", "punctuation.definition.destructuring.end.bracket.square.coffee"]
+    expect(tokens[17]).toEqual value: "}", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "meta.variable.assignment.destructured.object.coffee", "punctuation.definition.destructuring.end.bracket.curly.coffee"]
+    expect(tokens[18]).toEqual value: "}", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "punctuation.definition.destructuring.end.bracket.curly.coffee"]
+    expect(tokens[19]).toEqual value: " ", scopes: ["source.coffee"]
+    expect(tokens[20]).toEqual value: "=", scopes: ["source.coffee", "keyword.operator.coffee"]
 
   it "tokenizes inline constant followed by unless statement correctly", ->
     {tokens} = grammar.tokenizeLine("return 0 unless true")
