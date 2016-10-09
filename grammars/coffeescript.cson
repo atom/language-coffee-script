@@ -177,58 +177,40 @@
         'name': 'keyword.operator.coffee'
   }
   {
-    'begin': '(?<=\\s|^)(\\{)(?=.+?\\}\\s+[:=])'
+    'begin': '(?<=\\s|^)({)(?=[^\'"#]+?}\\s*(\\]|}|=))'
     'beginCaptures':
-      '0':
-        'name': 'keyword.operator.coffee'
-    'end': '(\\}\\s*[:=])'
+      '1':
+        'name': 'punctuation.definition.destructuring.begin.bracket.curly.coffee'
+    'end': '(})(?=\\s*(}|\\]|=))'
     'endCaptures':
-      '0':
-        'name': 'keyword.operator.coffee'
+      '1':
+        'name': 'punctuation.definition.destructuring.end.bracket.curly.coffee'
     'name': 'meta.variable.assignment.destructured.object.coffee'
     'patterns': [
       {
+        'include': '$self'
+      }
+      {
         'include': '#variable_name'
-      }
-      {
-        'include': '#instance_variable'
-      }
-      {
-        'include': '#single_quoted_string'
-      }
-      {
-        'include': '#double_quoted_string'
-      }
-      {
-        'include': '#numeric'
       }
     ]
   }
   {
-    'begin': '(?<=\\s|^)(\\[)(?=.+?\\]\\s+[:=])'
+    'begin': '(?<=\\s|^)(\\[)(?=[^\'"#]+?\\]\\s*(\\]|}|=))'
     'beginCaptures':
-      '0':
-        'name': 'keyword.operator.coffee'
-    'end': '(\\]\\s*[:=])'
+      '1':
+        'name': 'punctuation.definition.destructuring.begin.bracket.square.coffee'
+    'end': '(\\])(?=\\s*(}|\\]|=))'
     'endCaptures':
-      '0':
-        'name': 'keyword.operator.coffee'
+      '1':
+        'name': 'punctuation.definition.destructuring.end.bracket.square.coffee'
     'name': 'meta.variable.assignment.destructured.array.coffee'
     'patterns': [
       {
+        'include': '$self'
+      }
+      {
         'include': '#variable_name'
-      }
-      {
-        'include': '#instance_variable'
-      }
-      {
-        'include': '#single_quoted_string'
-      }
-      {
-        'include': '#double_quoted_string'
-      }
-      {
-        'include': '#numeric'
       }
     ]
   }
