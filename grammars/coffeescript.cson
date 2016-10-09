@@ -126,10 +126,10 @@
     'name': 'string.regexp.coffee'
     'beginCaptures':
       '0':
-        'name': 'punctuation.definition.string.begin.js'
+        'name': 'punctuation.definition.string.begin.coffee'
     'endCaptures':
       '1':
-        'name': 'punctuation.definition.string.end.js'
+        'name': 'punctuation.definition.string.end.coffee'
     'patterns': [
       {
         'include': '#heregexp'
@@ -141,11 +141,11 @@
     'begin': '/(?=(?![/*+?])([^\\\\]|\\\\.)*?/[gimuy]*(?![a-zA-Z0-9]))'
     'beginCaptures':
       '0':
-        'name': 'punctuation.definition.string.begin.js'
+        'name': 'punctuation.definition.string.begin.coffee'
     'end': '(/)[gimuy]*'
     'endCaptures':
       '1':
-        'name': 'punctuation.definition.string.end.js'
+        'name': 'punctuation.definition.string.end.coffee'
     'name': 'string.regexp.coffee'
     'patterns': [
       {
