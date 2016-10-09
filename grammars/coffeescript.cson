@@ -138,7 +138,7 @@
 
   }
   {
-    'begin': '/(?=(?![/*+?])([^\\\\]|\\\\.)*?/[gimuy]*(?![a-zA-Z0-9]))'
+    'begin': '/(?![/*+?])(?=([^\\\\]|\\\\.)*?/[gimuy]*)'
     'beginCaptures':
       '0':
         'name': 'punctuation.definition.string.begin.coffee'
