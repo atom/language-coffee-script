@@ -167,7 +167,11 @@
     'name': 'keyword.reserved.coffee'
   }
   {
-    'begin': '(?<=^|\\s)((@)?[a-zA-Z_$][\\w$]*)\\s*([:=])\\s*(?=\\(|[=-]>)'
+    'begin': '''(?x)
+      \\b((@)?[a-zA-Z_$][\\w$]*)
+      \\s*([:=])\\s*
+      (?=(\\(([^\\(\\)]*)?\\))|[=-]>)
+    '''
     'beginCaptures':
       '1':
         'name': 'entity.name.function.coffee'
