@@ -215,20 +215,24 @@
     ]
   }
   {
-    'match': '''(?x)
-                (?<=^|\\s)
-                (?=@?[a-zA-Z\\$_])
-                @?([a-zA-Z\\$_]\\w*)(\\$|:|\\.)?\\s*
-                (?=[:=](\\s*\\(.*\\))?\\s*([=-]>))
-              '''
+    'match': '(?<=^|\\s)((@)?[a-zA-Z_$][\\w$]*)\\s*([:=])\\s*(.*)?\\s*([=-]>)'
     'captures':
+      '0':
+        'name': 'meta.function.coffee'
       '1':
         'name': 'entity.name.function.coffee'
+      '2':
+        'name': 'variable.other.readwrite.instance.coffee'
       '3':
-        'name': 'variable.parameter.function.coffee'
+        'name': 'keyword.operator.assignment.coffee'
       '4':
+        'patterns': [
+          {
+            'include': '#function_params'
+          }
+        ]
+      '5':
         'name': 'storage.type.function.coffee'
-    'name': 'meta.function.coffee'
   }
   {
     'match': '\\b(?<!\\.|::)(true|on|yes)(?!\\s*[:=][^=])\\b'
@@ -411,6 +415,35 @@
           }
           {
             'include': '#interpolated_coffee'
+          }
+        ]
+      }
+    ]
+  'function_params':
+    'patterns': [
+      {
+        'begin': '\\('
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.definition.parameters.begin.bracket.round.coffee'
+        'end': '\\)'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.parameters.end.bracket.round.coffee'
+        'name': 'meta.parameters.coffee'
+        'patterns': [
+          {
+            'include': '$self'
+          }
+          {
+            'match': '(@)?[a-zA-Z_$][\\w$]*(\\.\\.\\.)?'
+            'captures':
+              '0':
+                'name': 'variable.parameter.function.coffee'
+              '1': # FIXME: Doesn't work yet: the instance_variable include overrides this
+                'name': 'variable.other.readwrite.instance.coffee'
+              '2':
+                'name': 'keyword.operator.splat.coffee'
           }
         ]
       }
