@@ -554,7 +554,7 @@
     'patterns': [
       {
         # .methodCall(arg1, "arg2", [...])
-        'begin': '(\\.)\\s*([\\w$]+)\\s*(?=\\s+(?!(of|in|then|is|isnt|and|or|for|else|when|not|if|unless)\\b)(?=(@?\\w+|[=-]>|\\-\\d|\\[|\\{|\"|\'))|(?=\\())'
+        'begin': '(\\.)\\s*([\\w$]+)\\s*(?=\\s+(?!\\b(of|in|then|is|isnt|and|or|for|else|when|not|if|unless)\\b)(?=(@?\\w+|[=-]>|\\-\\d|\\[|\\{|\"|\'))|(?=\\())'
         'beginCaptures':
           '1':
             'name': 'meta.delimiter.method.period.coffee'
@@ -653,7 +653,7 @@
                 'name': 'invalid.illegal.identifier.coffee'
               }
             ]
-        'end': '(?<=\\))|$'
+        'end': '(?<=\\))|(?=\\s*\\b(of|in|then|is|isnt|and|or|for|else|when|not|if|unless)\\b)|(?=\\s*(#|$))'
         'name': 'meta.method-call.coffee'
         'patterns': [
           {
