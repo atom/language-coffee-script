@@ -170,7 +170,7 @@
       '2':
         'name': 'variable.other.readwrite.instance.coffee'
       '3':
-        'name': 'keyword.operator.assignment.coffee'
+        'name': 'keyword.operator.coffee'
     'end': '[=-]>'
     'endCaptures':
       '0':

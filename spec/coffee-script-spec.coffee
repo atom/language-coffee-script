@@ -287,7 +287,7 @@ describe "CoffeeScript grammar", ->
     {tokens} = grammar.tokenizeLine("foo = -> 1")
     expect(tokens[0]).toEqual value: "foo", scopes: ["source.coffee", "meta.function.coffee", "entity.name.function.coffee"]
     expect(tokens[1]).toEqual value: " ", scopes: ["source.coffee", "meta.function.coffee"]
-    expect(tokens[2]).toEqual value: "=", scopes: ["source.coffee", "meta.function.coffee", "keyword.operator.assignment.coffee"]
+    expect(tokens[2]).toEqual value: "=", scopes: ["source.coffee", "meta.function.coffee", "keyword.operator.coffee"]
     expect(tokens[3]).toEqual value: " ", scopes: ["source.coffee", "meta.function.coffee"]
     expect(tokens[4]).toEqual value: "->", scopes: ["source.coffee", "meta.function.coffee", "storage.type.function.coffee"]
     expect(tokens[5]).toEqual value: " ", scopes: ["source.coffee"]
