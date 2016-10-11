@@ -502,17 +502,23 @@
         'name': 'meta.parameters.coffee'
         'patterns': [
           {
-            'include': '$self'
-          }
-          {
-            'match': '(@)?[a-zA-Z_$][\\w$]*(\\.\\.\\.)?'
+            'match': '([a-zA-Z_$][\\w$]*)(\\.\\.\\.)?'
             'captures':
-              '0':
+              '1':
                 'name': 'variable.parameter.function.coffee'
-              '1': # FIXME: Doesn't work yet: the instance_variable include overrides this
-                'name': 'variable.other.readwrite.instance.coffee'
               '2':
                 'name': 'keyword.operator.splat.coffee'
+          }
+          {
+            'match': '(@(?:[a-zA-Z_$][\\w$]*)?)(\\.\\.\\.)?'
+            'captures':
+              '1':
+                'name': 'variable.parameter.function.readwrite.instance.coffee'
+              '2':
+                'name': 'keyword.operator.splat.coffee'
+          }
+          {
+            'include': '$self'
           }
         ]
       }
