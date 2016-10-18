@@ -177,11 +177,11 @@
         'name': 'keyword.operator.coffee'
   }
   {
-    'begin': '(?<=\\s|^)({)(?=[^\'"#]+?}\\s*(\\]|}|=))'
+    'begin': '(?<=\\s|^)({)(?=[^\'"#]+?}[\\s\\]}]*=)'
     'beginCaptures':
       '1':
         'name': 'punctuation.definition.destructuring.begin.bracket.curly.coffee'
-    'end': '(})(?=\\s*(}|\\]|=))'
+    'end': '(})(?=[\\s\\]}]*=)'
     'endCaptures':
       '1':
         'name': 'punctuation.definition.destructuring.end.bracket.curly.coffee'
@@ -196,11 +196,11 @@
     ]
   }
   {
-    'begin': '(?<=\\s|^)(\\[)(?=[^\'"#]+?\\]\\s*(\\]|}|=))'
+    'begin': '(?<=\\s|^)(\\[)(?=[^\'"#]+?}[\\s\\]}]*=)'
     'beginCaptures':
       '1':
         'name': 'punctuation.definition.destructuring.begin.bracket.square.coffee'
-    'end': '(\\])(?=\\s*(}|\\]|=))'
+    'end': '(\\])(?=[\\s\\]}]*=)'
     'endCaptures':
       '1':
         'name': 'punctuation.definition.destructuring.end.bracket.square.coffee'
