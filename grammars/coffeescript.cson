@@ -111,16 +111,15 @@
     'name': 'comment.line.number-sign.coffee'
   }
   {
-    'begin': '/{3}'
-    'end': '(/{3})[imgy]{0,4}'
+    'begin': '///'
+    'end': '(///)[gimuy]*'
     'name': 'string.regexp.coffee'
     'beginCaptures':
       '0':
-        'name': 'punctuation.definition.string.begin.js'
+        'name': 'punctuation.definition.string.begin.coffee'
     'endCaptures':
       '1':
-        'name': 'punctuation.definition.string.begin.js'
-
+        'name': 'punctuation.definition.string.end.coffee'
     'patterns': [
       {
         'include': '#heregexp'
@@ -129,20 +128,20 @@
 
   }
   {
-    'begin': '/(?=(?![ /*+?])([^\\\\]|\\\\.)*?/[igmy]{0,4}(?![a-zA-Z0-9]))'
-    'end': '(/)[imgy]{0,4}'
+    'begin': '/(?![/*+?])(?=([^\\\\]|\\\\.)*?/[gimuy]*)'
+    'beginCaptures':
+      '0':
+        'name': 'punctuation.definition.string.begin.coffee'
+    'end': '(/)[gimuy]*'
+    'endCaptures':
+      '1':
+        'name': 'punctuation.definition.string.end.coffee'
     'name': 'string.regexp.coffee'
     'patterns': [
       {
         'include': 'source.js.regexp'
       }
     ]
-    'beginCaptures':
-      '0':
-        'name': 'punctuation.definition.string.begin.js'
-    'endCaptures':
-      '1':
-        'name': 'punctuation.definition.string.begin.js'
   }
   {
     'match': '\\b(?<![\\.\\$])(break|by|catch|continue|else|finally|for|in|of|if|return|switch|then|throw|try|unless|when|while|until|loop|do|(?<=for)\\s+own)(?!\\s*:)\\b'
@@ -209,11 +208,11 @@
         'name': 'keyword.operator.coffee'
   }
   {
-    'begin': '(?<=\\s|^)({)(?=[^\'"#]+?}\\s*(\\]|}|=))'
+    'begin': '(?<=\\s|^)({)(?=[^\'"#]+?}[\\s\\]}]*=)'
     'beginCaptures':
       '1':
         'name': 'punctuation.definition.destructuring.begin.bracket.curly.coffee'
-    'end': '(})(?=\\s*(}|\\]|=))'
+    'end': '(})(?=[\\s\\]}]*=)'
     'endCaptures':
       '1':
         'name': 'punctuation.definition.destructuring.end.bracket.curly.coffee'
@@ -228,11 +227,11 @@
     ]
   }
   {
-    'begin': '(?<=\\s|^)(\\[)(?=[^\'"#]+?\\]\\s*(\\]|}|=))'
+    'begin': '(?<=\\s|^)(\\[)(?=[^\'"#]+?}[\\s\\]}]*=)'
     'beginCaptures':
       '1':
         'name': 'punctuation.definition.destructuring.begin.bracket.square.coffee'
-    'end': '(\\])(?=\\s*(}|\\]|=))'
+    'end': '(\\])(?=[\\s\\]}]*=)'
     'endCaptures':
       '1':
         'name': 'punctuation.definition.destructuring.end.bracket.square.coffee'

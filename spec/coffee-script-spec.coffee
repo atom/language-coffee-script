@@ -338,6 +338,7 @@ describe "CoffeeScript grammar", ->
 
     {tokens} = grammar.tokenizeLine("{'} ='}") # Make sure this *isn't* tokenized as a destructuring assignment
     expect(tokens[0]).not.toEqual value: "{", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "punctuation.definition.destructuring.begin.bracket.curly.coffee"]
+    expect(tokens[0]).toEqual value: "{", scopes: ["source.coffee", "meta.brace.curly.coffee"]
 
   it "tokenizes nested destructuring assignments", ->
     {tokens} = grammar.tokenizeLine("{poet: {name, address: [street, city]}} = futurists")
@@ -349,6 +350,11 @@ describe "CoffeeScript grammar", ->
     expect(tokens[18]).toEqual value: "}", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "punctuation.definition.destructuring.end.bracket.curly.coffee"]
     expect(tokens[19]).toEqual value: " ", scopes: ["source.coffee"]
     expect(tokens[20]).toEqual value: "=", scopes: ["source.coffee", "keyword.operator.coffee"]
+
+  it "doesn't tokenize nested brackets as destructuring assignments", ->
+    {tokens} = grammar.tokenizeLine("[Point(0, 1), [Point(0, 0), Point(0, 1)]]")
+    expect(tokens[0]).not.toEqual value: "[", scopes: ["source.coffee", "meta.variable.assignment.destructured.array.coffee", "punctuation.definition.destructuring.begin.bracket.square.coffee"]
+    expect(tokens[0]).toEqual value: "[", scopes: ["source.coffee", "meta.brace.square.coffee"]
 
   it "tokenizes inline constant followed by unless statement correctly", ->
     {tokens} = grammar.tokenizeLine("return 0 unless true")
