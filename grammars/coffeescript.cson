@@ -148,72 +148,8 @@
     'name': 'keyword.control.coffee'
   }
   {
-    'match': '''(?x)
-      (?:
-        ((?:and|or|&&|\\|\\||(?<!\\()\\/|[*%+\\-])=) # compound assignment
-        |
-        ((?:<<|>>>?|&|\\^|\\|)=) # compound bitwise assignment
-        |
-        ([=!<>]=) # comparison
-        |
-        (=) # assignment
-      )(?!>) # prevent => from matching
-      |
-      (&&|!|\\|\\|) # logical
-      |
-      (&|\\||\\^|~) # bitwise
-      |
-      (<|>) # comparison
-      |
-      (--) # decrement
-      |
-      (\\+\\+) # increment
-      |
-      (\\.\\.\\.) # splat
-      |
-      (::) # prototype
-      |
-      (%|\\*|/|-(?!>)|\\+)
-      |
-      \\b(?<![\\.\\$])
-      (?:
-        (delete|instanceof|new|typeof)| # name of operator
-        (and|or|not)| # logical
-        (is|isnt) # comparison
-      )
-      (?!\\s*:)\\b
-    '''
-    'captures':
-      '1':
-        'name': 'keyword.operator.assignment.compound.coffee'
-      '2':
-        'name': 'keyword.operator.assignment.compound.bitwise.coffee'
-      '3':
-        'name': 'keyword.operator.comparison.coffee'
-      '4':
-        'name': 'keyword.operator.assignment.coffee'
-      '5':
-        'name': 'keyword.operator.logical.coffee'
-      '6':
-        'name': 'keyword.operator.bitwise.coffee'
-      '7':
-        'name': 'keyword.operator.comparison.coffee'
-      '8':
-        'name': 'keyword.operator.decrement.coffee'
-      '9':
-        'name': 'keyword.operator.increment.coffee'
-      '10':
-        'name': 'keyword.operator.splat.coffee'
-      '11':
-        'name': 'keyword.operator.prototype.coffee'
-      '12':
-        'name': 'keyword.operator.coffee'
-      '13':
-        'name': 'keyword.operator.$13.coffee'
-      '14':
-        'name': 'keyword.operator.logical.coffee'
-      '15':
-        'name': 'keyword.operator.comparison.coffee'
+    'match': '\\b(?<![\\.\\$])(delete|instanceof|new|typeof)(?!\\s*:)\\b'
+    'name': 'keyword.operator.$1.coffee'
   }
   {
     'match': '\\b(?<![\\.\\$])(case|default|function|var|void|with|const|let|enum|export|import|native|__hasProp|__extends|__slice|__bind|__indexOf|implements|interface|package|private|protected|public|static|yield)(?!\\s*:)\\b'
@@ -262,14 +198,7 @@
     ]
   }
   {
-    'match': '([a-zA-Z$_][\\w$]*)\\s*(?!::)(?:(:)|((?:or|and|[-+\\/&%*?])?=)(?![>=]))'
-    'captures':
-      '1':
-        'name': 'variable.assignment.coffee'
-      '2':
-        'name': 'keyword.operator.assignment.coffee'
-      '3':
-        'name': 'keyword.operator.assignment.coffee'
+    'include': '#operators'
   }
   {
     'begin': '(?<=\\s|^)({)(?=[^\'"#]+?}[\\s\\]}]*=)'
@@ -790,6 +719,84 @@
         # obj in obj.prop, obj.methodCall()
         'match': '[a-zA-Z_$][\\w$]*(?=\\s*\\.\\s*[a-zA-Z_$]\\w*)'
         'name': 'variable.other.object.coffee'
+      }
+    ]
+  'operators':
+    'patterns': [
+      {
+        'match': '([a-zA-Z$_][\\w$]*)?\\s*(%=|\\+=|-=|\\*=|and=|or=|&&=|\\|\\|=|\\?=|(?<!\\()/=)'
+        'captures':
+          '1':
+            'name': 'variable.assignment.coffee'
+          '2':
+            'name': 'keyword.operator.assignment.compound.coffee'
+      }
+      {
+        'match': '([a-zA-Z$_][\\w$]*)?\\s*(&=|\\^=|<<=|>>=|>>>=|\\|=)'
+        'captures':
+          '1':
+            'name': 'variable.assignment.coffee'
+          '2':
+            'name': 'keyword.operator.assignment.compound.bitwise.coffee'
+      }
+      {
+        'match': '<<|>>>|>>'
+        'name': 'keyword.operator.bitwise.shift.coffee'
+      }
+      {
+        'match': '!=|<=|>=|==|<|>'
+        'name': 'keyword.operator.comparison.coffee'
+      }
+      {
+        'match': '&&|!|\\|\\|'
+        'name': 'keyword.operator.logical.coffee'
+      }
+      {
+        'match': '&|\\||\\^|~'
+        'name': 'keyword.operator.bitwise.coffee'
+      }
+      {
+        'match': '::'
+        'name': 'keyword.operator.prototype.coffee'
+      }
+      {
+        'match': '([a-zA-Z$_][\\w$]*)?\\s*(=|:(?!:))(?![>=])'
+        'captures':
+          '1':
+            'name': 'variable.assignment.coffee'
+          '2':
+            'name': 'keyword.operator.assignment.coffee'
+      }
+      {
+        'match': '--'
+        'name': 'keyword.operator.decrement.coffee'
+      }
+      {
+        'match': '\\+\\+'
+        'name': 'keyword.operator.increment.coffee'
+      }
+      {
+        'match': '\\.\\.\\.'
+        'name': 'keyword.operator.splat.coffee'
+      }
+      {
+        'match': '%|\\*|/|-|\\+'
+        'name': 'keyword.operator.coffee'
+      }
+      {
+        'match': '''(?x)
+          \\b(?<![\\.\\$])
+          (?:
+            (and|or|not)| # logical
+            (is|isnt) # comparison
+          )
+          (?!\\s*:)\\b
+        '''
+        'captures':
+          '1':
+            'name': 'keyword.operator.logical.coffee'
+          '2':
+            'name': 'keyword.operator.comparison.coffee'
       }
     ]
   'properties':
