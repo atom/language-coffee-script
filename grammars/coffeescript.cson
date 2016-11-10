@@ -198,9 +198,6 @@
     ]
   }
   {
-    'include': '#operators'
-  }
-  {
     'begin': '(?<=\\s|^)({)(?=[^\'"#]+?}[\\s\\]}]*=)'
     'beginCaptures':
       '1':
@@ -325,6 +322,9 @@
   {
     'match': '\\b(Infinity|NaN|undefined)\\b'
     'name': 'constant.language.coffee'
+  }
+  {
+    'include': '#operators'
   }
   {
     'include': '#method_calls'
