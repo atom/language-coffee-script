@@ -19,7 +19,7 @@ describe "CoffeeScript (Literate) grammar", ->
 
           1 + 2
     '''
-    expect(tokens[3][1]).toEqual value: "1", scopes: ["source.litcoffee", "markup.raw.block.markdown", "constant.numeric.coffee"]
+    expect(tokens[3][1]).toEqual value: "1", scopes: ["source.litcoffee", "markup.raw.block.markdown", "constant.numeric.decimal.coffee"]
 
   describe "firstLineMatch", ->
     it "recognises interpreter directives", ->

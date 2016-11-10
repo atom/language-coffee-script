@@ -148,8 +148,72 @@
     'name': 'keyword.control.coffee'
   }
   {
-    'match': '(and|or|<<|>>>?|(?<!\\()\\/|[=!<>*%+\\-&^])?=(?!>)|[!%^*\\/~?:]|\\-?\\-(?!>)|\\+\\+?|<>|<|>|&&?|\\.\\.\\.?|\\|\\|?|\\b(?<![\\.\\$])(instanceof|new|delete|typeof|and|or|is|isnt|not|super)(?!\\s*:)\\b'
-    'name': 'keyword.operator.coffee'
+    'match': '''(?x)
+      (?:
+        ((?:and|or|&&|\\|\\||(?<!\\()\\/|[*%+\\-])=) # compound assignment
+        |
+        ((?:<<|>>>?|&|\\^|\\|)=) # compound bitwise assignment
+        |
+        ([=!<>]=) # comparison
+        |
+        (=) # assignment
+      )(?!>) # prevent => from matching
+      |
+      (&&|!|\\|\\|) # logical
+      |
+      (&|\\||\\^|~) # bitwise
+      |
+      (<|>) # comparison
+      |
+      (--) # decrement
+      |
+      (\\+\\+) # increment
+      |
+      (\\.\\.\\.) # splat
+      |
+      (::) # prototype
+      |
+      (%|\\*|/|-(?!>)|\\+)
+      |
+      \\b(?<![\\.\\$])
+      (?:
+        (delete|instanceof|new|typeof)| # name of operator
+        (and|or|not)| # logical
+        (is|isnt) # comparison
+      )
+      (?!\\s*:)\\b
+    '''
+    'captures':
+      '1':
+        'name': 'keyword.operator.assignment.compound.coffee'
+      '2':
+        'name': 'keyword.operator.assignment.compound.bitwise.coffee'
+      '3':
+        'name': 'keyword.operator.comparison.coffee'
+      '4':
+        'name': 'keyword.operator.assignment.coffee'
+      '5':
+        'name': 'keyword.operator.logical.coffee'
+      '6':
+        'name': 'keyword.operator.bitwise.coffee'
+      '7':
+        'name': 'keyword.operator.comparison.coffee'
+      '8':
+        'name': 'keyword.operator.decrement.coffee'
+      '9':
+        'name': 'keyword.operator.increment.coffee'
+      '10':
+        'name': 'keyword.operator.splat.coffee'
+      '11':
+        'name': 'keyword.operator.prototype.coffee'
+      '12':
+        'name': 'keyword.operator.coffee'
+      '13':
+        'name': 'keyword.operator.$13.coffee'
+      '14':
+        'name': 'keyword.operator.logical.coffee'
+      '15':
+        'name': 'keyword.operator.comparison.coffee'
   }
   {
     'match': '\\b(?<![\\.\\$])(case|default|function|var|void|with|const|let|enum|export|import|native|__hasProp|__extends|__slice|__bind|__indexOf|implements|interface|package|private|protected|public|static|yield)(?!\\s*:)\\b'
@@ -203,9 +267,9 @@
       '1':
         'name': 'variable.assignment.coffee'
       '2':
-        'name': 'punctuation.separator.key-value'
+        'name': 'keyword.operator.assignment.coffee'
       '3':
-        'name': 'keyword.operator.coffee'
+        'name': 'keyword.operator.assignment.coffee'
   }
   {
     'begin': '(?<=\\s|^)({)(?=[^\'"#]+?}[\\s\\]}]*=)'
@@ -262,8 +326,8 @@
     'name': 'variable.language.coffee'
   }
   {
-    'match': '\\b(?<!\\.)this(?!\\s*[:=][^=])\\b'
-    'name': 'variable.language.this.coffee'
+    'match': '(?<!\\.)\\b(?<!\\$)(super|this|arguments)(?!\\s*[:=][^=]|\\$)\\b'
+    'name': 'variable.language.$1.coffee'
   }
   {
     'captures':
@@ -340,13 +404,20 @@
     'include': '#function_calls'
   }
   {
+    'include': '#numbers'
+  }
+  {
     'include': '#objects'
   }
   {
     'include': '#properties'
   }
   {
-    'match': '\\;'
+    'match': '(?<!\\$)\\b[0-9]+[\\w$]*'
+    'name': 'invalid.illegal.identifier.coffee'
+  }
+  {
+    'match': ';'
     'name': 'punctuation.terminator.statement.coffee'
   }
   {
@@ -399,9 +470,6 @@
   }
   {
     'include': '#double_quoted_string'
-  }
-  {
-    'include': '#numeric'
   }
 ]
 'repository':
@@ -667,11 +735,48 @@
         ]
       }
     ]
-  'numeric':
+  'numbers':
     'patterns': [
       {
-        'match': '(?<!\\$)\\b((0([box])[0-9a-fA-F]+)|([0-9]+(\\.[0-9]+)?(e[+\\-]?[0-9]+)?))\\b'
-        'name': 'constant.numeric.coffee'
+        'match': '\\b(?<!\\$)0(x|X)[0-9a-fA-F]+\\b(?!\\$)'
+        'name': 'constant.numeric.hex.coffee'
+      }
+      {
+        'match': '\\b(?<!\\$)0(b|B)[01]+\\b(?!\\$)'
+        'name': 'constant.numeric.binary.coffee'
+      }
+      {
+        'match': '\\b(?<!\\$)0(o|O)?[0-7]+\\b(?!\\$)'
+        'name': 'constant.numeric.octal.coffee'
+      }
+      {
+        'match': '''(?x)
+          (?<!\\$)(?:
+            (?:\\b[0-9]+(\\.)[0-9]+[eE][+-]?[0-9]+\\b)| # 1.1E+3
+            (?:\\b[0-9]+(\\.)[eE][+-]?[0-9]+\\b)|       # 1.E+3
+            (?:\\B(\\.)[0-9]+[eE][+-]?[0-9]+\\b)|       # .1E+3
+            (?:\\b[0-9]+[eE][+-]?[0-9]+\\b)|            # 1E+3
+            (?:\\b[0-9]+(\\.)[0-9]+\\b)|                # 1.1
+            (?:\\b[0-9]+(\\.)\\B)|                      # 1.
+            (?:\\B(\\.)[0-9]+\\b)|                      # .1
+            (?:\\b[0-9]+\\b(?!\\.))                     # 1
+          )(?!\\$)
+        '''
+        'captures':
+          '0':
+            'name': 'constant.numeric.decimal.coffee'
+          '1':
+            'name': 'meta.delimiter.decimal.period.coffee'
+          '2':
+            'name': 'meta.delimiter.decimal.period.coffee'
+          '3':
+            'name': 'meta.delimiter.decimal.period.coffee'
+          '4':
+            'name': 'meta.delimiter.decimal.period.coffee'
+          '5':
+            'name': 'meta.delimiter.decimal.period.coffee'
+          '6':
+            'name': 'meta.delimiter.decimal.period.coffee'
       }
     ]
   'objects':
