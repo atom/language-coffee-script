@@ -613,26 +613,81 @@ describe "CoffeeScript grammar", ->
       expect(tokens[9]).toEqual value: ' p ', scopes: ['source.coffee', 'meta.function-call.coffee', 'meta.arguments.coffee']
       expect(tokens[10]).toEqual value: ')', scopes: ['source.coffee', 'meta.function-call.coffee', 'meta.arguments.coffee', 'punctuation.definition.arguments.end.bracket.round.coffee']
 
-  it "tokenizes functions", ->
-    {tokens} = grammar.tokenizeLine("foo = -> 1")
-    expect(tokens[0]).toEqual value: "foo", scopes: ["source.coffee", "meta.function.coffee", "entity.name.function.coffee"]
-    expect(tokens[1]).toEqual value: " ", scopes: ["source.coffee", "meta.function.coffee"]
-    expect(tokens[2]).toEqual value: "=", scopes: ["source.coffee", "meta.function.coffee", "keyword.operator.coffee"]
-    expect(tokens[3]).toEqual value: " ", scopes: ["source.coffee", "meta.function.coffee"]
-    expect(tokens[4]).toEqual value: "->", scopes: ["source.coffee", "meta.function.coffee", "storage.type.function.coffee"]
-    expect(tokens[5]).toEqual value: " ", scopes: ["source.coffee"]
-    expect(tokens[6]).toEqual value: "1", scopes: ["source.coffee", "constant.numeric.decimal.coffee"]
+    it "does not tokenize booleans as functions", ->
+      {tokens} = grammar.tokenizeLine("false unless true")
+      expect(tokens[0]).toEqual value: "false", scopes: ["source.coffee", "constant.language.boolean.false.coffee"]
+      expect(tokens[2]).toEqual value: "unless", scopes: ["source.coffee", "keyword.control.coffee"]
+      expect(tokens[4]).toEqual value: "true", scopes: ["source.coffee", "constant.language.boolean.true.coffee"]
 
-  it "does not tokenize booleans as functions", ->
-    {tokens} = grammar.tokenizeLine("false unless true")
-    expect(tokens[0]).toEqual value: "false", scopes: ["source.coffee", "constant.language.boolean.false.coffee"]
-    expect(tokens[2]).toEqual value: "unless", scopes: ["source.coffee", "keyword.control.coffee"]
-    expect(tokens[4]).toEqual value: "true", scopes: ["source.coffee", "constant.language.boolean.true.coffee"]
+      {tokens} = grammar.tokenizeLine("true if false")
+      expect(tokens[0]).toEqual value: "true", scopes: ["source.coffee", "constant.language.boolean.true.coffee"]
+      expect(tokens[2]).toEqual value: "if", scopes: ["source.coffee", "keyword.control.coffee"]
+      expect(tokens[4]).toEqual value: "false", scopes: ["source.coffee", "constant.language.boolean.false.coffee"]
 
-    {tokens} = grammar.tokenizeLine("true if false")
-    expect(tokens[0]).toEqual value: "true", scopes: ["source.coffee", "constant.language.boolean.true.coffee"]
-    expect(tokens[2]).toEqual value: "if", scopes: ["source.coffee", "keyword.control.coffee"]
-    expect(tokens[4]).toEqual value: "false", scopes: ["source.coffee", "constant.language.boolean.false.coffee"]
+  describe "functions", ->
+    it "tokenizes functions", ->
+      {tokens} = grammar.tokenizeLine("foo = -> 1")
+      expect(tokens[0]).toEqual value: "foo", scopes: ["source.coffee", "meta.function.coffee", "entity.name.function.coffee"]
+      expect(tokens[1]).toEqual value: " ", scopes: ["source.coffee", "meta.function.coffee"]
+      expect(tokens[2]).toEqual value: "=", scopes: ["source.coffee", "meta.function.coffee", "keyword.operator.assignment.coffee"]
+      expect(tokens[3]).toEqual value: " ", scopes: ["source.coffee", "meta.function.coffee"]
+      expect(tokens[4]).toEqual value: "->", scopes: ["source.coffee", "meta.function.coffee", "storage.type.function.coffee"]
+      expect(tokens[5]).toEqual value: " ", scopes: ["source.coffee"]
+      expect(tokens[6]).toEqual value: "1", scopes: ["source.coffee", "constant.numeric.decimal.coffee"]
+
+      {tokens} = grammar.tokenizeLine("@foo = -> 1")
+      expect(tokens[0]).toEqual value: "@", scopes: ["source.coffee", "meta.function.coffee", "entity.name.function.coffee", "variable.other.readwrite.instance.coffee"]
+      expect(tokens[1]).toEqual value: "foo", scopes: ["source.coffee", "meta.function.coffee", "entity.name.function.coffee"]
+      expect(tokens[3]).toEqual value: "=", scopes: ["source.coffee", "meta.function.coffee", "keyword.operator.assignment.coffee"]
+
+      {tokens} = grammar.tokenizeLine("$ = -> 1")
+      expect(tokens[0]).toEqual value: "$", scopes: ["source.coffee", "meta.function.coffee", "entity.name.function.coffee"]
+      expect(tokens[2]).toEqual value: "=", scopes: ["source.coffee", "meta.function.coffee", "keyword.operator.assignment.coffee"]
+
+      {tokens} = grammar.tokenizeLine("foo: -> 1")
+      expect(tokens[0]).toEqual value: "foo", scopes: ["source.coffee", "meta.function.coffee", "entity.name.function.coffee"]
+      expect(tokens[1]).toEqual value: ":", scopes: ["source.coffee", "meta.function.coffee", "keyword.operator.assignment.coffee"]
+      expect(tokens[2]).toEqual value: " ", scopes: ["source.coffee", "meta.function.coffee"]
+      expect(tokens[3]).toEqual value: "->", scopes: ["source.coffee", "meta.function.coffee", "storage.type.function.coffee"]
+      expect(tokens[4]).toEqual value: " ", scopes: ["source.coffee"]
+      expect(tokens[5]).toEqual value: "1", scopes: ["source.coffee", "constant.numeric.decimal.coffee"]
+
+      {tokens} = grammar.tokenizeLine("hello: (a) -> 1")
+      expect(tokens[0]).toEqual value: "hello", scopes: ["source.coffee", "meta.function.coffee", "entity.name.function.coffee"]
+      expect(tokens[1]).toEqual value: ":", scopes: ["source.coffee", "meta.function.coffee", "keyword.operator.assignment.coffee"]
+      expect(tokens[2]).toEqual value: " ", scopes: ["source.coffee", "meta.function.coffee"]
+      expect(tokens[3]).toEqual value: "(", scopes: ["source.coffee", "meta.function.coffee", "meta.parameters.coffee", "punctuation.definition.parameters.begin.bracket.round.coffee"]
+      expect(tokens[4]).toEqual value: "a", scopes: ["source.coffee", "meta.function.coffee", "meta.parameters.coffee", "variable.parameter.function.coffee"]
+      expect(tokens[5]).toEqual value: ")", scopes: ["source.coffee", "meta.function.coffee", "meta.parameters.coffee", "punctuation.definition.parameters.end.bracket.round.coffee"]
+      expect(tokens[6]).toEqual value: " ", scopes: ["source.coffee", "meta.function.coffee"]
+      expect(tokens[7]).toEqual value: "->", scopes: ["source.coffee", "meta.function.coffee", "storage.type.function.coffee"]
+      expect(tokens[9]).toEqual value: "1", scopes: ["source.coffee", "constant.numeric.decimal.coffee"]
+
+      {tokens} = grammar.tokenizeLine("hello: (a, b, {c, d}, e = 'test', f = 3, g = -> 4) -> 1")
+      expect(tokens[0]).toEqual value: "hello", scopes: ["source.coffee", "meta.function.coffee", "entity.name.function.coffee"]
+      expect(tokens[1]).toEqual value: ":", scopes: ["source.coffee", "meta.function.coffee", "keyword.operator.assignment.coffee"]
+      expect(tokens[3]).toEqual value: "(", scopes: ["source.coffee", "meta.function.coffee", "meta.parameters.coffee", "punctuation.definition.parameters.begin.bracket.round.coffee"]
+      expect(tokens[4]).toEqual value: "a", scopes: ["source.coffee", "meta.function.coffee", "meta.parameters.coffee", "variable.parameter.function.coffee"]
+      expect(tokens[5]).toEqual value: ",", scopes: ["source.coffee", "meta.function.coffee", "meta.parameters.coffee", "meta.delimiter.object.comma.coffee"]
+      expect(tokens[6]).toEqual value: " ", scopes: ["source.coffee", "meta.function.coffee", "meta.parameters.coffee"]
+      expect(tokens[7]).toEqual value: "b", scopes: ["source.coffee", "meta.function.coffee", "meta.parameters.coffee", "variable.parameter.function.coffee"]
+      expect(tokens[8]).toEqual value: ",", scopes: ["source.coffee", "meta.function.coffee", "meta.parameters.coffee", "meta.delimiter.object.comma.coffee"]
+      expect(tokens[10]).toEqual value: "{", scopes: ["source.coffee", "meta.function.coffee", "meta.parameters.coffee", "meta.brace.curly.coffee"]
+      expect(tokens[11]).toEqual value: "c", scopes: ["source.coffee", "meta.function.coffee", "meta.parameters.coffee"]
+      expect(tokens[12]).toEqual value: ",", scopes: ["source.coffee", "meta.function.coffee", "meta.parameters.coffee", "meta.delimiter.object.comma.coffee"]
+      expect(tokens[13]).toEqual value: " d", scopes: ["source.coffee", "meta.function.coffee", "meta.parameters.coffee"]
+      expect(tokens[14]).toEqual value: "}", scopes: ["source.coffee", "meta.function.coffee", "meta.parameters.coffee", "meta.brace.curly.coffee"]
+      expect(tokens[17]).toEqual value: "e", scopes: ["source.coffee", "meta.function.coffee", "meta.parameters.coffee", "variable.parameter.function.coffee"]
+      expect(tokens[19]).toEqual value: "=", scopes: ["source.coffee", "meta.function.coffee", "meta.parameters.coffee", "keyword.operator.assignment.coffee"]
+      expect(tokens[21]).toEqual value: "'", scopes: ["source.coffee", "meta.function.coffee", "meta.parameters.coffee", "string.quoted.single.coffee", "punctuation.definition.string.begin.coffee"]
+      expect(tokens[24]).toEqual value: ",", scopes: ["source.coffee", "meta.function.coffee", "meta.parameters.coffee", "meta.delimiter.object.comma.coffee"]
+      expect(tokens[26]).toEqual value: "f", scopes: ["source.coffee", "meta.function.coffee", "meta.parameters.coffee", "variable.parameter.function.coffee"]
+      expect(tokens[30]).toEqual value: "3", scopes: ["source.coffee", "meta.function.coffee", "meta.parameters.coffee", "constant.numeric.decimal.coffee"]
+      expect(tokens[33]).toEqual value: "g", scopes: ["source.coffee", "meta.function.coffee", "meta.parameters.coffee", "variable.parameter.function.coffee"]
+      expect(tokens[35]).toEqual value: "=", scopes: ["source.coffee", "meta.function.coffee", "meta.parameters.coffee", "keyword.operator.assignment.coffee"]
+      expect(tokens[37]).toEqual value: "->", scopes: ["source.coffee", "meta.function.coffee", "meta.parameters.coffee", "meta.function.inline.coffee", "storage.type.function.coffee"]
+      expect(tokens[40]).toEqual value: ")", scopes: ["source.coffee", "meta.function.coffee", "meta.parameters.coffee", "punctuation.definition.parameters.end.bracket.round.coffee"]
+      expect(tokens[42]).toEqual value: "->", scopes: ["source.coffee", "meta.function.coffee", "storage.type.function.coffee"]
 
   it "tokenizes destructuring assignments", ->
     {tokens} = grammar.tokenizeLine("{something} = hi")

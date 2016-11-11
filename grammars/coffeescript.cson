@@ -159,7 +159,7 @@
     # a: -> ...
     # a: (args) -> ...
     'begin': '''(?x)
-      \\b((@)?[a-zA-Z_$][\\w$]*)
+      (?<=\\s|^)((@)?[a-zA-Z_$][\\w$]*)
       \\s*([:=])\\s*
       (?=(\\([^\\(\\)]*\\))?\\s*[=-]>)
     '''
@@ -169,7 +169,7 @@
       '2':
         'name': 'variable.other.readwrite.instance.coffee'
       '3':
-        'name': 'keyword.operator.coffee'
+        'name': 'keyword.operator.assignment.coffee'
     'end': '[=-]>'
     'endCaptures':
       '0':
