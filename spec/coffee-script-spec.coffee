@@ -689,6 +689,18 @@ describe "CoffeeScript grammar", ->
       expect(tokens[40]).toEqual value: ")", scopes: ["source.coffee", "meta.function.coffee", "meta.parameters.coffee", "punctuation.definition.parameters.end.bracket.round.coffee"]
       expect(tokens[42]).toEqual value: "->", scopes: ["source.coffee", "meta.function.coffee", "storage.type.function.coffee"]
 
+      {tokens} = grammar.tokenizeLine("grade = (student, period=(if b? then 7 else 6), messages) ->")
+      expect(tokens[0]).toEqual value: "grade", scopes: ["source.coffee", "meta.function.coffee", "entity.name.function.coffee"]
+      expect(tokens[4]).toEqual value: "(", scopes: ["source.coffee", "meta.function.coffee", "meta.parameters.coffee", "punctuation.definition.parameters.begin.bracket.round.coffee"]
+      expect(tokens[8]).toEqual value: "period", scopes: ["source.coffee", "meta.function.coffee", "meta.parameters.coffee", "variable.parameter.function.coffee"]
+      expect(tokens[9]).toEqual value: "=", scopes: ["source.coffee", "meta.function.coffee", "meta.parameters.coffee", "keyword.operator.assignment.coffee"]
+      expect(tokens[10]).toEqual value: "(", scopes: ["source.coffee", "meta.function.coffee", "meta.parameters.coffee", "meta.brace.round.coffee"]
+      expect(tokens[11]).toEqual value: "if", scopes: ["source.coffee", "meta.function.coffee", "meta.parameters.coffee", "keyword.control.coffee"]
+      expect(tokens[20]).toEqual value: ")", scopes: ["source.coffee", "meta.function.coffee", "meta.parameters.coffee", "meta.brace.round.coffee"]
+      expect(tokens[21]).toEqual value: ",", scopes: ["source.coffee", "meta.function.coffee", "meta.parameters.coffee", "meta.delimiter.object.comma.coffee"]
+      expect(tokens[24]).toEqual value: ")", scopes: ["source.coffee", "meta.function.coffee", "meta.parameters.coffee", "punctuation.definition.parameters.end.bracket.round.coffee"]
+      expect(tokens[26]).toEqual value: "->", scopes: ["source.coffee", "meta.function.coffee", "storage.type.function.coffee"]
+
   describe "method calls", ->
     it "tokenizes method calls", ->
       {tokens} = grammar.tokenizeLine('a.b(1+1)')
