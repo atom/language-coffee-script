@@ -107,6 +107,70 @@ describe "CoffeeScript grammar", ->
     expect(lines[1][1]).toEqual value: '@foo', scopes: ["source.coffee", "comment.block.coffee", "storage.type.annotation.coffee"]
     expect(lines[2][0]).toEqual value: '@bar', scopes: ["source.coffee", "comment.block.coffee", "storage.type.annotation.coffee"]
 
+  describe "numbers", ->
+    it "tokenizes hexadecimals", ->
+      {tokens} = grammar.tokenizeLine('0x1D306')
+      expect(tokens[0]).toEqual value: '0x1D306', scopes: ['source.coffee', 'constant.numeric.hex.coffee']
+
+      {tokens} = grammar.tokenizeLine('0X1D306')
+      expect(tokens[0]).toEqual value: '0X1D306', scopes: ['source.coffee', 'constant.numeric.hex.coffee']
+
+    it "tokenizes binary literals", ->
+      {tokens} = grammar.tokenizeLine('0b011101110111010001100110')
+      expect(tokens[0]).toEqual value: '0b011101110111010001100110', scopes: ['source.coffee', 'constant.numeric.binary.coffee']
+
+      {tokens} = grammar.tokenizeLine('0B011101110111010001100110')
+      expect(tokens[0]).toEqual value: '0B011101110111010001100110', scopes: ['source.coffee', 'constant.numeric.binary.coffee']
+
+    it "tokenizes octal literals", ->
+      {tokens} = grammar.tokenizeLine('0o1411')
+      expect(tokens[0]).toEqual value: '0o1411', scopes: ['source.coffee', 'constant.numeric.octal.coffee']
+
+      {tokens} = grammar.tokenizeLine('0O1411')
+      expect(tokens[0]).toEqual value: '0O1411', scopes: ['source.coffee', 'constant.numeric.octal.coffee']
+
+      {tokens} = grammar.tokenizeLine('0010')
+      expect(tokens[0]).toEqual value: '0010', scopes: ['source.coffee', 'constant.numeric.octal.coffee']
+
+    it "tokenizes decimals", ->
+      {tokens} = grammar.tokenizeLine('1234')
+      expect(tokens[0]).toEqual value: '1234', scopes: ['source.coffee', 'constant.numeric.decimal.coffee']
+
+      {tokens} = grammar.tokenizeLine('5e-10')
+      expect(tokens[0]).toEqual value: '5e-10', scopes: ['source.coffee', 'constant.numeric.decimal.coffee']
+
+      {tokens} = grammar.tokenizeLine('5E+5')
+      expect(tokens[0]).toEqual value: '5E+5', scopes: ['source.coffee', 'constant.numeric.decimal.coffee']
+
+      {tokens} = grammar.tokenizeLine('9.')
+      expect(tokens[0]).toEqual value: '9', scopes: ['source.coffee', 'constant.numeric.decimal.coffee']
+      expect(tokens[1]).toEqual value: '.', scopes: ['source.coffee', 'constant.numeric.decimal.coffee', 'meta.delimiter.decimal.period.coffee']
+
+      {tokens} = grammar.tokenizeLine('.9')
+      expect(tokens[0]).toEqual value: '.', scopes: ['source.coffee', 'constant.numeric.decimal.coffee', 'meta.delimiter.decimal.period.coffee']
+      expect(tokens[1]).toEqual value: '9', scopes: ['source.coffee', 'constant.numeric.decimal.coffee']
+
+      {tokens} = grammar.tokenizeLine('9.9')
+      expect(tokens[0]).toEqual value: '9', scopes: ['source.coffee', 'constant.numeric.decimal.coffee']
+      expect(tokens[1]).toEqual value: '.', scopes: ['source.coffee', 'constant.numeric.decimal.coffee', 'meta.delimiter.decimal.period.coffee']
+      expect(tokens[2]).toEqual value: '9', scopes: ['source.coffee', 'constant.numeric.decimal.coffee']
+
+      {tokens} = grammar.tokenizeLine('.1e-23')
+      expect(tokens[0]).toEqual value: '.', scopes: ['source.coffee', 'constant.numeric.decimal.coffee', 'meta.delimiter.decimal.period.coffee']
+      expect(tokens[1]).toEqual value: '1e-23', scopes: ['source.coffee', 'constant.numeric.decimal.coffee']
+
+      {tokens} = grammar.tokenizeLine('1.E3')
+      expect(tokens[0]).toEqual value: '1', scopes: ['source.coffee', 'constant.numeric.decimal.coffee']
+      expect(tokens[1]).toEqual value: '.', scopes: ['source.coffee', 'constant.numeric.decimal.coffee', 'meta.delimiter.decimal.period.coffee']
+      expect(tokens[2]).toEqual value: 'E3', scopes: ['source.coffee', 'constant.numeric.decimal.coffee']
+
+    it "does not tokenize numbers that are part of a variable", ->
+      {tokens} = grammar.tokenizeLine('hi$1')
+      expect(tokens[0]).toEqual value: 'hi$1', scopes: ['source.coffee']
+
+      {tokens} = grammar.tokenizeLine('hi_1')
+      expect(tokens[0]).toEqual value: 'hi_1', scopes: ['source.coffee']
+
   it "tokenizes variable assignments", ->
     {tokens} = grammar.tokenizeLine("something = b")
     expect(tokens[0]).toEqual value: "something", scopes: ["source.coffee", "variable.assignment.coffee"]
