@@ -689,6 +689,58 @@ describe "CoffeeScript grammar", ->
       expect(tokens[40]).toEqual value: ")", scopes: ["source.coffee", "meta.function.coffee", "meta.parameters.coffee", "punctuation.definition.parameters.end.bracket.round.coffee"]
       expect(tokens[42]).toEqual value: "->", scopes: ["source.coffee", "meta.function.coffee", "storage.type.function.coffee"]
 
+  describe "method calls", ->
+    it "tokenizes method calls", ->
+      {tokens} = grammar.tokenizeLine('a.b(1+1)')
+      expect(tokens[0]).toEqual value: 'a', scopes: ['source.coffee', 'variable.other.object.coffee']
+      expect(tokens[1]).toEqual value: '.', scopes: ['source.coffee', 'meta.method-call.coffee', 'meta.delimiter.method.period.coffee']
+      expect(tokens[2]).toEqual value: 'b', scopes: ['source.coffee', 'meta.method-call.coffee', 'entity.name.function.coffee']
+      expect(tokens[3]).toEqual value: '(', scopes: ['source.coffee', 'meta.method-call.coffee', 'meta.arguments.coffee', 'punctuation.definition.arguments.begin.bracket.round.coffee']
+      expect(tokens[4]).toEqual value: '1', scopes: ['source.coffee', 'meta.method-call.coffee', 'meta.arguments.coffee', 'constant.numeric.decimal.coffee']
+      expect(tokens[5]).toEqual value: '+', scopes: ['source.coffee', 'meta.method-call.coffee', 'meta.arguments.coffee', 'keyword.operator.coffee']
+      expect(tokens[6]).toEqual value: '1', scopes: ['source.coffee', 'meta.method-call.coffee', 'meta.arguments.coffee', 'constant.numeric.decimal.coffee']
+      expect(tokens[7]).toEqual value: ')', scopes: ['source.coffee', 'meta.method-call.coffee', 'meta.arguments.coffee', 'punctuation.definition.arguments.end.bracket.round.coffee']
+
+      {tokens} = grammar.tokenizeLine('a . b(1+1)')
+      expect(tokens[2]).toEqual value: '.', scopes: ['source.coffee', 'meta.method-call.coffee', 'meta.delimiter.method.period.coffee']
+      expect(tokens[4]).toEqual value: 'b', scopes: ['source.coffee', 'meta.method-call.coffee', 'entity.name.function.coffee']
+      expect(tokens[5]).toEqual value: '(', scopes: ['source.coffee', 'meta.method-call.coffee', 'meta.arguments.coffee', 'punctuation.definition.arguments.begin.bracket.round.coffee']
+
+      {tokens} = grammar.tokenizeLine('a.$abc$()')
+      expect(tokens[2]).toEqual value: '$abc$', scopes: ['source.coffee', 'meta.method-call.coffee', 'entity.name.function.coffee']
+
+      {tokens} = grammar.tokenizeLine('a.$$()')
+      expect(tokens[2]).toEqual value: '$$', scopes: ['source.coffee', 'meta.method-call.coffee', 'entity.name.function.coffee']
+
+      {tokens} = grammar.tokenizeLine('a.b c')
+      expect(tokens[0]).toEqual value: 'a', scopes: ['source.coffee', 'variable.other.object.coffee']
+      expect(tokens[1]).toEqual value: '.', scopes: ['source.coffee', 'meta.method-call.coffee', 'meta.delimiter.method.period.coffee']
+      expect(tokens[2]).toEqual value: 'b', scopes: ['source.coffee', 'meta.method-call.coffee', 'entity.name.function.coffee']
+      expect(tokens[3]).toEqual value: ' ', scopes: ['source.coffee', 'meta.method-call.coffee']
+      expect(tokens[4]).toEqual value: 'c', scopes: ['source.coffee', 'meta.method-call.coffee', 'meta.arguments.coffee']
+
+      {tokens} = grammar.tokenizeLine('a.b 1+1')
+      expect(tokens[0]).toEqual value: 'a', scopes: ['source.coffee', 'variable.other.object.coffee']
+      expect(tokens[1]).toEqual value: '.', scopes: ['source.coffee', 'meta.method-call.coffee', 'meta.delimiter.method.period.coffee']
+      expect(tokens[2]).toEqual value: 'b', scopes: ['source.coffee', 'meta.method-call.coffee', 'entity.name.function.coffee']
+      expect(tokens[3]).toEqual value: ' ', scopes: ['source.coffee', 'meta.method-call.coffee']
+      expect(tokens[4]).toEqual value: '1', scopes: ['source.coffee', 'meta.method-call.coffee', 'meta.arguments.coffee', 'constant.numeric.decimal.coffee']
+      expect(tokens[5]).toEqual value: '+', scopes: ['source.coffee', 'meta.method-call.coffee', 'meta.arguments.coffee', 'keyword.operator.coffee']
+      expect(tokens[6]).toEqual value: '1', scopes: ['source.coffee', 'meta.method-call.coffee', 'meta.arguments.coffee', 'constant.numeric.decimal.coffee']
+
+      {tokens} = grammar.tokenizeLine('a.$abc$ "q"')
+      expect(tokens[2]).toEqual value: '$abc$', scopes: ['source.coffee', 'meta.method-call.coffee', 'entity.name.function.coffee']
+
+      {tokens} = grammar.tokenizeLine('a.$$ 4')
+      expect(tokens[2]).toEqual value: '$$', scopes: ['source.coffee', 'meta.method-call.coffee', 'entity.name.function.coffee']
+
+      {tokens} = grammar.tokenizeLine('a.b @$')
+      expect(tokens[0]).toEqual value: 'a', scopes: ['source.coffee', 'variable.other.object.coffee']
+      expect(tokens[1]).toEqual value: '.', scopes: ['source.coffee', 'meta.method-call.coffee', 'meta.delimiter.method.period.coffee']
+      expect(tokens[2]).toEqual value: 'b', scopes: ['source.coffee', 'meta.method-call.coffee', 'entity.name.function.coffee']
+      expect(tokens[3]).toEqual value: ' ', scopes: ['source.coffee', 'meta.method-call.coffee']
+      expect(tokens[4]).toEqual value: '@$', scopes: ['source.coffee', 'meta.method-call.coffee', 'meta.arguments.coffee', 'variable.other.readwrite.instance.coffee']
+
   it "tokenizes destructuring assignments", ->
     {tokens} = grammar.tokenizeLine("{something} = hi")
     expect(tokens[0]).toEqual value: "{", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "punctuation.definition.destructuring.begin.bracket.curly.coffee"]
