@@ -405,7 +405,7 @@
   'arguments':
     'patterns': [
       {
-        'begin': '(?=(@?\\w+|[=-]>|\\-\\d|\\[|\\{|\"|\'))|\\('
+        'begin': '(?=(@?[\\w$]+|[=-]>|\\-\\d|\\[|\\{|\"|\'))|\\('
         'beginCaptures':
           '0':
             'name': 'punctuation.definition.arguments.begin.bracket.round.coffee'
@@ -451,7 +451,7 @@
         'begin': '''(?x)
           (@)?([\\w$]+)
           \\s*
-          (?=\\s+(?!\\b(of|in|then|is|isnt|and|or|for|else|when|not|if|unless)\\b)(?=(@?\\w+|[=-]>|\\-\\d|\\[|\\{|\"|\'))|(?=\\())
+          (?=\\s+(?!\\b(of|in|then|is|isnt|and|or|for|else|when|not|if|unless)\\b)(?=(@?[\\w$]+|[=-]>|\\-\\d|\\[|\\{|\"|\'))|(?=\\())
         '''
         'beginCaptures':
           '1':
@@ -556,7 +556,7 @@
     'patterns': [
       {
         # .methodCall(arg1, "arg2", [...])
-        'begin': '(\\.)\\s*([\\w$]+)\\s*(?=\\s+(?!\\b(of|in|then|is|isnt|and|or|for|else|when|not|if|unless)\\b)(?=(@?\\w+|[=-]>|\\-\\d|\\[|\\{|\"|\'))|(?=\\())'
+        'begin': '(\\.)\\s*([\\w$]+)\\s*(?=\\s+(?!\\b(of|in|then|is|isnt|and|or|for|else|when|not|if|unless)\\b)(?=(@?[\\w$]+|[=-]>|\\-\\d|\\[|\\{|\"|\'))|(?=\\())'
         'beginCaptures':
           '1':
             'name': 'meta.delimiter.method.period.coffee'
