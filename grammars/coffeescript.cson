@@ -125,7 +125,6 @@
         'include': '#heregexp'
       }
     ]
-
   }
   {
     'begin': '/(?![/*+?])(?=([^\\\\]|\\\\.)*?/[gimuy]*)'
@@ -778,6 +777,10 @@
       {
         'match': '\\.\\.\\.'
         'name': 'keyword.operator.splat.coffee'
+      }
+      {
+        'match': '\\?'
+        'name': 'keyword.operator.existential.coffee'
       }
       {
         'match': '%|\\*|/|-|\\+'

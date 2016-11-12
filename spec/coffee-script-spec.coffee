@@ -177,6 +177,11 @@ describe "CoffeeScript grammar", ->
     expect(tokens[2]).toEqual value: "=", scopes: ["source.coffee", "keyword.operator.assignment.coffee"]
     expect(tokens[3]).toEqual value: " b", scopes: ["source.coffee"]
 
+    {tokens} = grammar.tokenizeLine("something : b")
+    expect(tokens[0]).toEqual value: "something", scopes: ["source.coffee", "variable.assignment.coffee"]
+    expect(tokens[2]).toEqual value: ":", scopes: ["source.coffee", "keyword.operator.assignment.coffee"]
+    expect(tokens[3]).toEqual value: " b", scopes: ["source.coffee"]
+
     {tokens} = grammar.tokenizeLine("a and= b")
     expect(tokens[0]).toEqual value: "a", scopes: ["source.coffee", "variable.assignment.coffee"]
     expect(tokens[2]).toEqual value: "and=", scopes: ["source.coffee", "keyword.operator.assignment.compound.coffee"]
@@ -275,9 +280,9 @@ describe "CoffeeScript grammar", ->
     decrementOperators = ["--"]
     incrementOperators = ["++"]
     splatOperators = ["..."]
+    existentialOperators = ["?"]
     operators = ["%", "*", "/", "-", "+"]
     keywords = ["delete", "instanceof", "new", "typeof"]
-    # , "?", ":"
 
     for logicalOperator in logicalOperators
       {tokens} = grammar.tokenizeLine(logicalOperator)
@@ -303,12 +308,20 @@ describe "CoffeeScript grammar", ->
       {tokens} = grammar.tokenizeLine(splatOperator)
       expect(tokens[0]).toEqual value: splatOperator, scopes: ["source.coffee", "keyword.operator.splat.coffee"]
 
+    for existentialOperator in existentialOperators
+      {tokens} = grammar.tokenizeLine(existentialOperator)
+      expect(tokens[0]).toEqual value: existentialOperator, scopes: ["source.coffee", "keyword.operator.existential.coffee"]
+
+    for operator in operators
+      {tokens} = grammar.tokenizeLine(operator)
+      expect(tokens[0]).toEqual value: operator, scopes: ["source.coffee", "keyword.operator.coffee"]
+
     for keyword in keywords
       {tokens} = grammar.tokenizeLine(keyword)
       expect(tokens[0]).toEqual value: keyword, scopes: ["source.coffee", "keyword.operator.#{keyword}.coffee"]
 
   it "does not tokenize non-operators as operators", ->
-    notOperators = ["(/=", "-->", "=>"]
+    notOperators = ["(/=", "-->", "=>", "->"]
 
     for notOperator in notOperators
       {tokens} = grammar.tokenizeLine(notOperator)
@@ -696,10 +709,10 @@ describe "CoffeeScript grammar", ->
       expect(tokens[9]).toEqual value: "=", scopes: ["source.coffee", "meta.function.coffee", "meta.parameters.coffee", "keyword.operator.assignment.coffee"]
       expect(tokens[10]).toEqual value: "(", scopes: ["source.coffee", "meta.function.coffee", "meta.parameters.coffee", "meta.brace.round.coffee"]
       expect(tokens[11]).toEqual value: "if", scopes: ["source.coffee", "meta.function.coffee", "meta.parameters.coffee", "keyword.control.coffee"]
-      expect(tokens[20]).toEqual value: ")", scopes: ["source.coffee", "meta.function.coffee", "meta.parameters.coffee", "meta.brace.round.coffee"]
-      expect(tokens[21]).toEqual value: ",", scopes: ["source.coffee", "meta.function.coffee", "meta.parameters.coffee", "meta.delimiter.object.comma.coffee"]
-      expect(tokens[24]).toEqual value: ")", scopes: ["source.coffee", "meta.function.coffee", "meta.parameters.coffee", "punctuation.definition.parameters.end.bracket.round.coffee"]
-      expect(tokens[26]).toEqual value: "->", scopes: ["source.coffee", "meta.function.coffee", "storage.type.function.coffee"]
+      expect(tokens[22]).toEqual value: ")", scopes: ["source.coffee", "meta.function.coffee", "meta.parameters.coffee", "meta.brace.round.coffee"]
+      expect(tokens[23]).toEqual value: ",", scopes: ["source.coffee", "meta.function.coffee", "meta.parameters.coffee", "meta.delimiter.object.comma.coffee"]
+      expect(tokens[26]).toEqual value: ")", scopes: ["source.coffee", "meta.function.coffee", "meta.parameters.coffee", "punctuation.definition.parameters.end.bracket.round.coffee"]
+      expect(tokens[28]).toEqual value: "->", scopes: ["source.coffee", "meta.function.coffee", "storage.type.function.coffee"]
 
   describe "method calls", ->
     it "tokenizes method calls", ->
