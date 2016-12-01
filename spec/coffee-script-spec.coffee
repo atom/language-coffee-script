@@ -340,6 +340,17 @@ describe "CoffeeScript grammar", ->
     expect(tokens[19]).toEqual value: " ", scopes: ["source.coffee"]
     expect(tokens[20]).toEqual value: "=", scopes: ["source.coffee", "keyword.operator.coffee"]
 
+  it "tokenizes multiple nested destructuring assignments", ->
+    {tokens} = grammar.tokenizeLine("{start: {row: startRow}, end: {row: endRow}} = range")
+    expect(tokens[0]).toEqual value: "{", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "punctuation.definition.destructuring.begin.bracket.curly.coffee"]
+    expect(tokens[4]).toEqual value: "{", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "meta.variable.assignment.destructured.object.coffee", "punctuation.definition.destructuring.begin.bracket.curly.coffee"]
+    expect(tokens[9]).toEqual value: "}", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "meta.variable.assignment.destructured.object.coffee", "punctuation.definition.destructuring.end.bracket.curly.coffee"]
+    expect(tokens[15]).toEqual value: "{", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "meta.variable.assignment.destructured.object.coffee", "punctuation.definition.destructuring.begin.bracket.curly.coffee"]
+    expect(tokens[20]).toEqual value: "}", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "meta.variable.assignment.destructured.object.coffee", "punctuation.definition.destructuring.end.bracket.curly.coffee"]
+    expect(tokens[21]).toEqual value: "}", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "punctuation.definition.destructuring.end.bracket.curly.coffee"]
+    expect(tokens[22]).toEqual value: " ", scopes: ["source.coffee"]
+    expect(tokens[23]).toEqual value: "=", scopes: ["source.coffee", "keyword.operator.coffee"]
+
   it "doesn't tokenize nested brackets as destructuring assignments", ->
     {tokens} = grammar.tokenizeLine("[Point(0, 1), [Point(0, 0), Point(0, 1)]]")
     expect(tokens[0]).not.toEqual value: "[", scopes: ["source.coffee", "meta.variable.assignment.destructured.array.coffee", "punctuation.definition.destructuring.begin.bracket.square.coffee"]
