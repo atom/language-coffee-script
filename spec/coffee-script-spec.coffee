@@ -872,7 +872,7 @@ describe "CoffeeScript grammar", ->
     expect(tokens[20]).toEqual value: "}", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "meta.variable.assignment.destructured.object.coffee", "punctuation.definition.destructuring.end.bracket.curly.coffee"]
     expect(tokens[21]).toEqual value: "}", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "punctuation.definition.destructuring.end.bracket.curly.coffee"]
     expect(tokens[22]).toEqual value: " ", scopes: ["source.coffee"]
-    expect(tokens[23]).toEqual value: "=", scopes: ["source.coffee", "keyword.operator.coffee"]
+    expect(tokens[23]).toEqual value: "=", scopes: ["source.coffee", "keyword.operator.assignment.coffee"]
 
   it "doesn't tokenize nested brackets as destructuring assignments", ->
     {tokens} = grammar.tokenizeLine("[Point(0, 1), [Point(0, 0), Point(0, 1)]]")
