@@ -344,6 +344,15 @@ describe "CoffeeScript grammar", ->
       expect(tokens[1]).toEqual value: '.', scopes: ['source.coffee', 'meta.delimiter.property.period.coffee']
       expect(tokens[2]).toEqual value: 'Property', scopes: ['source.coffee', 'variable.other.property.coffee']
 
+      {tokens} = grammar.tokenizeLine('obj.prop1?.prop2?')
+      expect(tokens[0]).toEqual value: 'obj', scopes: ['source.coffee', 'variable.other.object.coffee']
+      expect(tokens[1]).toEqual value: '.', scopes: ['source.coffee', 'meta.delimiter.property.period.coffee']
+      expect(tokens[2]).toEqual value: 'prop1', scopes: ['source.coffee', 'variable.other.object.property.coffee']
+      expect(tokens[3]).toEqual value: '?', scopes: ['source.coffee', 'keyword.operator.existential.coffee']
+      expect(tokens[4]).toEqual value: '.', scopes: ['source.coffee', 'meta.delimiter.property.period.coffee']
+      expect(tokens[5]).toEqual value: 'prop2', scopes: ['source.coffee', 'variable.other.property.coffee']
+      expect(tokens[6]).toEqual value: '?', scopes: ['source.coffee', 'keyword.operator.existential.coffee']
+
       {tokens} = grammar.tokenizeLine('obj.$abc$')
       expect(tokens[2]).toEqual value: '$abc$', scopes: ['source.coffee', 'variable.other.property.coffee']
 
@@ -465,6 +474,10 @@ describe "CoffeeScript grammar", ->
 
         {tokens} = grammar.tokenizeLine('$$.prop')
         expect(tokens[0]).toEqual value: '$$', scopes: ['source.coffee', 'variable.other.object.coffee']
+
+        {tokens} = grammar.tokenizeLine('obj?.prop')
+        expect(tokens[0]).toEqual value: 'obj', scopes: ['source.coffee', 'variable.other.object.coffee']
+        expect(tokens[1]).toEqual value: '?', scopes: ['source.coffee', 'keyword.operator.existential.coffee']
 
       it "tokenizes illegal objects", ->
         {tokens} = grammar.tokenizeLine('1.prop')

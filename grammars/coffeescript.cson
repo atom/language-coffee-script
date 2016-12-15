@@ -710,12 +710,12 @@
     'patterns': [
       {
         # OBJ in OBJ.prop, OBJ.methodCall()
-        'match': '[A-Z][A-Z0-9_$]*(?=\\s*\\.\\s*[a-zA-Z_$]\\w*)'
+        'match': '[A-Z][A-Z0-9_$]*(?=\\s*\\??\\.\\s*[a-zA-Z_$]\\w*)'
         'name': 'constant.other.object.coffee'
       }
       {
         # obj in obj.prop, obj.methodCall()
-        'match': '[a-zA-Z_$][\\w$]*(?=\\s*\\.\\s*[a-zA-Z_$]\\w*)'
+        'match': '[a-zA-Z_$][\\w$]*(?=\\s*\\??\\.\\s*[a-zA-Z_$]\\w*)'
         'name': 'variable.other.object.coffee'
       }
     ]
@@ -805,7 +805,7 @@
     'patterns': [
       {
         # PROP1 in obj.PROP1.prop2, func().PROP1.prop2
-        'match': '(\\.)\\s*([A-Z][A-Z0-9_$]*\\b\\$*)(?=\\s*\\.\\s*[a-zA-Z_$]\\w*)'
+        'match': '(\\.)\\s*([A-Z][A-Z0-9_$]*\\b\\$*)(?=\\s*\\??\\.\\s*[a-zA-Z_$]\\w*)'
         'captures':
           '1':
             'name': 'meta.delimiter.property.period.coffee'
@@ -814,7 +814,7 @@
       }
       {
         # prop1 in obj.prop1.prop2, func().prop1.prop2
-        'match': '(\\.)\\s*(\\$*[a-zA-Z_$][\\w$]*)(?=\\s*\\.\\s*[a-zA-Z_$]\\w*)'
+        'match': '(\\.)\\s*(\\$*[a-zA-Z_$][\\w$]*)(?=\\s*\\??\\.\\s*[a-zA-Z_$]\\w*)'
         'captures':
           '1':
             'name': 'meta.delimiter.property.period.coffee'
