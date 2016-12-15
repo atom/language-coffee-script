@@ -181,6 +181,44 @@
     ]
   }
   {
+    # "a": -> ...
+    # "a": (args) -> ...
+    'begin': '''(?x)
+      (?<=\\s|^)(?:((\')([^\']*?)(\'))|((")([^"]*?)(")))
+      \\s*([:=])\\s*
+      (?=(\\(.*\\)\\s*)?[=-]>)
+    '''
+    'beginCaptures':
+      '1':
+        'name': 'string.quoted.single.coffee'
+      '2':
+        'name': 'punctuation.definition.string.begin.coffee'
+      '3':
+        'name': 'entity.name.function.coffee'
+      '4':
+        'name': 'punctuation.definition.string.end.coffee'
+      '5':
+        'name': 'string.quoted.double.coffee'
+      '6':
+        'name': 'punctuation.definition.string.begin.coffee'
+      '7':
+        'name': 'entity.name.function.coffee'
+      '8':
+        'name': 'punctuation.definition.string.end.coffee'
+      '9':
+        'name': 'keyword.operator.assignment.coffee'
+    'end': '[=-]>'
+    'endCaptures':
+      '0':
+        'name': 'storage.type.function.coffee'
+    'name': 'meta.function.coffee'
+    'patterns': [
+      {
+        'include': '#function_params'
+      }
+    ]
+  }
+  {
     # (args) -> ...
     # -> ...
     'begin': '(?=(\\([^\\(\\)]*\\)\\s*)?[=-]>)'
