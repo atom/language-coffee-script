@@ -822,6 +822,10 @@ describe "CoffeeScript grammar", ->
       expect(tokens[5]).toEqual value: '+', scopes: ['source.coffee', 'meta.method-call.coffee', 'meta.arguments.coffee', 'keyword.operator.coffee']
       expect(tokens[6]).toEqual value: '1', scopes: ['source.coffee', 'meta.method-call.coffee', 'meta.arguments.coffee', 'constant.numeric.decimal.coffee']
 
+      {tokens} = grammar.tokenizeLine('a.b @')
+      expect(tokens[2]).toEqual value: 'b', scopes: ['source.coffee', 'meta.method-call.coffee', 'entity.name.function.coffee']
+      expect(tokens[4]).toEqual value: '@', scopes: ['source.coffee', 'meta.method-call.coffee', 'meta.arguments.coffee', 'variable.other.readwrite.instance.coffee']
+
       {tokens} = grammar.tokenizeLine('a.$abc$ "q"')
       expect(tokens[2]).toEqual value: '$abc$', scopes: ['source.coffee', 'meta.method-call.coffee', 'entity.name.function.coffee']
 
