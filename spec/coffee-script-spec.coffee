@@ -767,6 +767,9 @@ describe "CoffeeScript grammar", ->
       expect(tokens[1]).toEqual value: "->", scopes: ["source.coffee", "meta.function.inline.coffee", "storage.type.function.coffee"]
       expect(tokens[2]).toEqual value: " ", scopes: ["source.coffee"]
 
+      {tokens} = grammar.tokenizeLine("->true")
+      expect(tokens[0]).toEqual value: "->", scopes: ["source.coffee", "meta.function.inline.coffee", "storage.type.function.coffee"]
+
       {tokens} = grammar.tokenizeLine("(arg) -> true")
       expect(tokens[0]).toEqual value: "(", scopes: ["source.coffee", "meta.function.inline.coffee", "meta.parameters.coffee", "punctuation.definition.parameters.begin.bracket.round.coffee"]
       expect(tokens[1]).toEqual value: "arg", scopes: ["source.coffee", "meta.function.inline.coffee", "meta.parameters.coffee", "variable.parameter.function.coffee"]
