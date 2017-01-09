@@ -827,7 +827,8 @@
         'match': '''(?x)
           \\b(?<![\\.\\$])
           (?:
-            (and|or|not)| # logical
+            (and|or|not) # logical
+            |
             (is|isnt) # comparison
           )
           (?!\\s*:)\\b
