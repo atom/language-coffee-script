@@ -14,5 +14,6 @@
         | \\b(try|finally|catch|((catch|switch)\\s+\\S.*))\\b\\s*$
         | .*[-=]>\\s*$
         | .*[\\{\\[]\\s*$
+        | .*:\\s*$
       )'
     'decreaseIndentPattern': '^\\s*(\\}|\\]|\\b(else|catch|finally)\\b)$'
