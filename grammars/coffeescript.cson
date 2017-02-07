@@ -238,9 +238,9 @@
     'beginCaptures':
       '1':
         'name': 'punctuation.definition.destructuring.begin.bracket.curly.coffee'
-    'end': '(})'
+    'end': '}'
     'endCaptures':
-      '1':
+      '0':
         'name': 'punctuation.definition.destructuring.end.bracket.curly.coffee'
     'name': 'meta.variable.assignment.destructured.object.coffee'
     'patterns': [
@@ -258,9 +258,9 @@
     'beginCaptures':
       '1':
         'name': 'punctuation.definition.destructuring.begin.bracket.square.coffee'
-    'end': '(\\])'
+    'end': '\\]'
     'endCaptures':
-      '1':
+      '0':
         'name': 'punctuation.definition.destructuring.end.bracket.square.coffee'
     'name': 'meta.variable.assignment.destructured.array.coffee'
     'patterns': [
