@@ -248,7 +248,8 @@
         'include': '$self'
       }
       {
-        'include': '#variable_name'
+        'match': '[a-zA-Z$_]\\w*'
+        'name': 'variable.assignment.coffee'
       }
     ]
   }
@@ -267,7 +268,8 @@
         'include': '$self'
       }
       {
-        'include': '#variable_name'
+        'match': '[a-zA-Z$_]\\w*'
+        'name': 'variable.assignment.coffee'
       }
     ]
   }
@@ -906,16 +908,6 @@
             'name': 'constant.character.escape.coffee'
           }
         ]
-      }
-    ]
-  'variable_name':
-    'patterns': [
-      {
-        'captures':
-          '1':
-            'name': 'variable.assignment.coffee'
-        'match': '([a-zA-Z\\$_]\\w*(\\.\\w+)*)'
-        'name': 'variable.assignment.coffee'
       }
     ]
   'regex-character-class':
