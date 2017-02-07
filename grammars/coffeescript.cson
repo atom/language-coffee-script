@@ -253,7 +253,7 @@
     ]
   }
   {
-    'begin': '(?<=\\s|^)(\\[)(?=[^\'"#]+?}[\\s\\]}]*=)'
+    'begin': '(?<=\\s|^)(\\[)(?=[^\'"#]+?\\][\\s\\]}]*=)'
     'beginCaptures':
       '1':
         'name': 'punctuation.definition.destructuring.begin.bracket.square.coffee'
