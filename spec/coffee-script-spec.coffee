@@ -433,6 +433,19 @@ describe "CoffeeScript grammar", ->
       {tokens} = grammar.tokenizeLine("a / b + c / d")
       expect(tokens[1]).toEqual value: "/", scopes: ["source.coffee", "keyword.operator.coffee"]
       expect(tokens[2]).toEqual value: " b ", scopes: ["source.coffee"]
+      expect(tokens[5]).toEqual value: "/", scopes: ["source.coffee", "keyword.operator.coffee"]
+
+      {tokens} = grammar.tokenizeLine("a / 2 / (3)")
+      expect(tokens[1]).toEqual value: "/", scopes: ["source.coffee", "keyword.operator.coffee"]
+      expect(tokens[3]).toEqual value: "2", scopes: ["source.coffee", "constant.numeric.coffee"]
+      expect(tokens[5]).toEqual value: "/", scopes: ["source.coffee", "keyword.operator.coffee"]
+
+    it "does not tokenize comments with URLs in them as regex", ->
+      # Disclaimer: This does not fix when comments contain only slashes, such as `a / something # comment /`
+      {tokens} = grammar.tokenizeLine("canvas.width/2 # https://github.com/atom/language-coffee-script/issues/112")
+      expect(tokens[3]).toEqual value: "/", scopes: ["source.coffee", "keyword.operator.coffee"]
+      expect(tokens[6]).toEqual value: "#", scopes: ["source.coffee", "comment.line.number-sign.coffee", "punctuation.definition.comment.coffee"]
+      expect(tokens[7]).toEqual value: " https://github.com/atom/language-coffee-script/issues/112", scopes: ["source.coffee", "comment.line.number-sign.coffee"]
 
   describe "firstLineMatch", ->
     it "recognises interpreter directives", ->

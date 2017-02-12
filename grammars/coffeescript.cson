@@ -137,7 +137,7 @@
     ]
   }
   {
-    'match': '(/)(?![/*+?])(.+)(/)[gimuy]*(?!\\s*[\\w$])'
+    'match': '(?<![\\w$])(/)(?![/*+?])(.+)(/)[gimuy]*(?!\\s*[\\w$/(])'
     'captures':
       '1':
         'name': 'punctuation.definition.string.begin.coffee'
