@@ -970,8 +970,8 @@ describe "CoffeeScript grammar", ->
 
       {tokens} = grammar.tokenizeLine("[1, /test/]")
       expect(tokens[0]).toEqual value: "[", scopes: ["source.coffee", "meta.brace.square.coffee"]
-      expect(tokens[1]).toEqual value: "1", scopes: ["source.coffee", "constant.numeric.coffee"]
-      expect(tokens[2]).toEqual value: ",", scopes: ["source.coffee", "meta.delimiter.object.comma.coffee"]
+      expect(tokens[1]).toEqual value: "1", scopes: ["source.coffee", "constant.numeric.decimal.coffee"]
+      expect(tokens[2]).toEqual value: ",", scopes: ["source.coffee", "punctuation.separator.delimiter.coffee"]
       expect(tokens[3]).toEqual value: " ", scopes: ["source.coffee"]
       expect(tokens[4]).toEqual value: "/", scopes: ["source.coffee", "string.regexp.coffee", "punctuation.definition.string.begin.coffee"]
       expect(tokens[5]).toEqual value: "test", scopes: ["source.coffee", "string.regexp.coffee"]
@@ -987,7 +987,7 @@ describe "CoffeeScript grammar", ->
 
       {tokens} = grammar.tokenizeLine("a / 2 / (3)")
       expect(tokens[1]).toEqual value: "/", scopes: ["source.coffee", "keyword.operator.coffee"]
-      expect(tokens[3]).toEqual value: "2", scopes: ["source.coffee", "constant.numeric.coffee"]
+      expect(tokens[3]).toEqual value: "2", scopes: ["source.coffee", "constant.numeric.decimal.coffee"]
       expect(tokens[5]).toEqual value: "/", scopes: ["source.coffee", "keyword.operator.coffee"]
 
     it "does not tokenize comments with URLs in them as regex", ->
