@@ -924,6 +924,79 @@ describe "CoffeeScript grammar", ->
     expect(tokens[4]).toEqual value: "unless", scopes: ["source.coffee", "keyword.control.coffee"]
     expect(tokens[6]).toEqual value: "true", scopes: ["source.coffee", "constant.language.boolean.true.coffee"]
 
+  describe "regular expressions", ->
+    beforeEach ->
+      waitsForPromise ->
+        atom.packages.activatePackage("language-javascript") # Provides the regexp subgrammar
+
+    it "tokenizes regular expressions", ->
+      {tokens} = grammar.tokenizeLine("/test/")
+      expect(tokens[0]).toEqual value: "/", scopes: ["source.coffee", "string.regexp.coffee", "punctuation.definition.string.begin.coffee"]
+      expect(tokens[1]).toEqual value: "test", scopes: ["source.coffee", "string.regexp.coffee"]
+      expect(tokens[2]).toEqual value: "/", scopes: ["source.coffee", "string.regexp.coffee", "punctuation.definition.string.end.coffee"]
+
+      {tokens} = grammar.tokenizeLine("/{'}/")
+      expect(tokens[0]).toEqual value: "/", scopes: ["source.coffee", "string.regexp.coffee", "punctuation.definition.string.begin.coffee"]
+      expect(tokens[2]).toEqual value: "/", scopes: ["source.coffee", "string.regexp.coffee", "punctuation.definition.string.end.coffee"]
+
+      {tokens} = grammar.tokenizeLine("foo + /test/")
+      expect(tokens[0]).toEqual value: "foo ", scopes: ["source.coffee"]
+      expect(tokens[1]).toEqual value: "+", scopes: ["source.coffee", "keyword.operator.coffee"]
+      expect(tokens[2]).toEqual value: " ", scopes: ["source.coffee"]
+      expect(tokens[3]).toEqual value: "/", scopes: ["source.coffee", "string.regexp.coffee", "punctuation.definition.string.begin.coffee"]
+      expect(tokens[4]).toEqual value: "test", scopes: ["source.coffee", "string.regexp.coffee"]
+      expect(tokens[5]).toEqual value: "/", scopes: ["source.coffee", "string.regexp.coffee", "punctuation.definition.string.end.coffee"]
+
+    it "tokenizes regular expressions containing spaces", ->
+      {tokens} = grammar.tokenizeLine("/ te st /")
+      expect(tokens[0]).toEqual value: "/", scopes: ["source.coffee", "string.regexp.coffee", "punctuation.definition.string.begin.coffee"]
+      expect(tokens[1]).toEqual value: " te st ", scopes: ["source.coffee", "string.regexp.coffee"]
+      expect(tokens[2]).toEqual value: "/", scopes: ["source.coffee", "string.regexp.coffee", "punctuation.definition.string.end.coffee"]
+
+    it "tokenizes regular expressions containing escaped forward slashes", ->
+      {tokens} = grammar.tokenizeLine("/test\\//")
+      expect(tokens[0]).toEqual value: "/", scopes: ["source.coffee", "string.regexp.coffee", "punctuation.definition.string.begin.coffee"]
+      expect(tokens[1]).toEqual value: "test", scopes: ["source.coffee", "string.regexp.coffee"]
+      expect(tokens[2]).toEqual value: "\\/", scopes: ["source.coffee", "string.regexp.coffee", "constant.character.escape.backslash.regexp"]
+      expect(tokens[3]).toEqual value: "/", scopes: ["source.coffee", "string.regexp.coffee", "punctuation.definition.string.end.coffee"]
+
+    it "tokenizes regular expressions inside arrays", ->
+      {tokens} = grammar.tokenizeLine("[/test/]")
+      expect(tokens[0]).toEqual value: "[", scopes: ["source.coffee", "meta.brace.square.coffee"]
+      expect(tokens[1]).toEqual value: "/", scopes: ["source.coffee", "string.regexp.coffee", "punctuation.definition.string.begin.coffee"]
+      expect(tokens[2]).toEqual value: "test", scopes: ["source.coffee", "string.regexp.coffee"]
+      expect(tokens[3]).toEqual value: "/", scopes: ["source.coffee", "string.regexp.coffee", "punctuation.definition.string.end.coffee"]
+      expect(tokens[4]).toEqual value: "]", scopes: ["source.coffee", "meta.brace.square.coffee"]
+
+      {tokens} = grammar.tokenizeLine("[1, /test/]")
+      expect(tokens[0]).toEqual value: "[", scopes: ["source.coffee", "meta.brace.square.coffee"]
+      expect(tokens[1]).toEqual value: "1", scopes: ["source.coffee", "constant.numeric.coffee"]
+      expect(tokens[2]).toEqual value: ",", scopes: ["source.coffee", "meta.delimiter.object.comma.coffee"]
+      expect(tokens[3]).toEqual value: " ", scopes: ["source.coffee"]
+      expect(tokens[4]).toEqual value: "/", scopes: ["source.coffee", "string.regexp.coffee", "punctuation.definition.string.begin.coffee"]
+      expect(tokens[5]).toEqual value: "test", scopes: ["source.coffee", "string.regexp.coffee"]
+      expect(tokens[6]).toEqual value: "/", scopes: ["source.coffee", "string.regexp.coffee", "punctuation.definition.string.end.coffee"]
+      expect(tokens[7]).toEqual value: "]", scopes: ["source.coffee", "meta.brace.square.coffee"]
+
+    it "does not tokenize multiple division as regex", ->
+      # https://github.com/atom/language-coffee-script/issues/112
+      {tokens} = grammar.tokenizeLine("a / b + c / d")
+      expect(tokens[1]).toEqual value: "/", scopes: ["source.coffee", "keyword.operator.coffee"]
+      expect(tokens[2]).toEqual value: " b ", scopes: ["source.coffee"]
+      expect(tokens[5]).toEqual value: "/", scopes: ["source.coffee", "keyword.operator.coffee"]
+
+      {tokens} = grammar.tokenizeLine("a / 2 / (3)")
+      expect(tokens[1]).toEqual value: "/", scopes: ["source.coffee", "keyword.operator.coffee"]
+      expect(tokens[3]).toEqual value: "2", scopes: ["source.coffee", "constant.numeric.coffee"]
+      expect(tokens[5]).toEqual value: "/", scopes: ["source.coffee", "keyword.operator.coffee"]
+
+    it "does not tokenize comments with URLs in them as regex", ->
+      # Disclaimer: This does not fix when comments contain only slashes, such as `a / something # comment /`
+      {tokens} = grammar.tokenizeLine("canvas.width/2 # https://github.com/atom/language-coffee-script/issues/112")
+      expect(tokens[3]).toEqual value: "/", scopes: ["source.coffee", "keyword.operator.coffee"]
+      expect(tokens[6]).toEqual value: "#", scopes: ["source.coffee", "comment.line.number-sign.coffee", "punctuation.definition.comment.coffee"]
+      expect(tokens[7]).toEqual value: " https://github.com/atom/language-coffee-script/issues/112", scopes: ["source.coffee", "comment.line.number-sign.coffee"]
+
   describe "firstLineMatch", ->
     it "recognises interpreter directives", ->
       valid = """
