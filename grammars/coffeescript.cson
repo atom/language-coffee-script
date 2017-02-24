@@ -135,23 +135,21 @@
         'include': '#heregexp'
       }
     ]
-
   }
   {
-    'begin': '/(?![/*+?])(?=([^\\\\]|\\\\.)*?/[gimuy]*)'
-    'beginCaptures':
-      '0':
-        'name': 'punctuation.definition.string.begin.coffee'
-    'end': '(/)[gimuy]*'
-    'endCaptures':
+    'match': '(?<![\\w$])(/)(?![/*+?])(.+)(/)[gimuy]*(?!\\s*[\\w$/(])'
+    'captures':
       '1':
+        'name': 'punctuation.definition.string.begin.coffee'
+      '2':
+        'patterns': [
+          {
+            'include': 'source.js.regexp'
+          }
+        ]
+      '3':
         'name': 'punctuation.definition.string.end.coffee'
     'name': 'string.regexp.coffee'
-    'patterns': [
-      {
-        'include': 'source.js.regexp'
-      }
-    ]
   }
   {
     'match': '\\b(?<![\\.\\$])(break|by|catch|continue|else|finally|for|in|of|if|return|switch|then|throw|try|unless|when|while|until|loop|do|(?<=for)\\s+own)(?!\\s*:)\\b'
