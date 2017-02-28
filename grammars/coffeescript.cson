@@ -60,6 +60,15 @@
       '0':
         'name': 'punctuation.definition.string.end.coffee'
     'name': 'string.quoted.heredoc.coffee'
+    'patterns': [
+      {
+        'captures':
+          '1':
+            'name': 'punctuation.definition.escape.backslash.coffee'
+        'match': '(\\\\).'
+        'name': 'constant.character.escape.backslash.coffee'
+      }
+    ]
   }
   {
     'begin': '"""'
@@ -73,8 +82,11 @@
     'name': 'string.quoted.double.heredoc.coffee'
     'patterns': [
       {
-        'match': '\\\\.'
-        'name': 'constant.character.escape.coffee'
+        'captures':
+          '1':
+            'name': 'punctuation.definition.escape.backslash.coffee'
+        'match': '(\\\\).'
+        'name': 'constant.character.escape.backslash.coffee'
       }
       {
         'include': '#interpolated_coffee'
@@ -381,7 +393,10 @@
         'name': 'string.quoted.double.coffee'
         'patterns': [
           {
-            'match': '\\\\(x\\h{2}|[0-2][0-7]{0,2}|3[0-6][0-7]|37[0-7]?|[4-7][0-7]?|.)'
+            'captures':
+              '1':
+                'name': 'punctuation.definition.escape.backslash.coffee'
+            'match': '(\\\\)(x\\h{2}|[0-2][0-7]{0,2}|3[0-6][0-7]|37[0-7]?|[4-7][0-7]?|.)'
             'name': 'constant.character.escape.coffee'
           }
           {
@@ -444,8 +459,11 @@
         'name': 'string.quoted.single.coffee'
         'patterns': [
           {
-            'match': '\\\\(x\\h{2}|[0-2][0-7]{0,2}|3[0-6][0-7]?|37[0-7]?|[4-7][0-7]?|.)'
-            'name': 'constant.character.escape.coffee'
+            'captures':
+              '1':
+                'name': 'punctuation.definition.escape.backslash.coffee'
+            'match': '(\\\\)(x\\h{2}|[0-2][0-7]{0,2}|3[0-6][0-7]?|37[0-7]?|[4-7][0-7]?|.)'
+            'name': 'constant.character.escape.backslash.coffee'
           }
         ]
       }
