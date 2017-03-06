@@ -430,6 +430,17 @@ describe "CoffeeScript grammar", ->
       expect(tokens[1]).toEqual value: "::", scopes: ["source.coffee", "keyword.operator.prototype.coffee"]
       expect(tokens[2]).toEqual value: "extends", scopes: ["source.coffee", "variable.other.property.coffee"]
 
+      {tokens} = grammar.tokenizeLine("Foo :: something :: else")
+      expect(tokens[0]).toEqual value: "Foo", scopes: ["source.coffee", "variable.other.object.coffee"]
+      expect(tokens[1]).toEqual value: " ", scopes: ["source.coffee"]
+      expect(tokens[2]).toEqual value: "::", scopes: ["source.coffee", "keyword.operator.prototype.coffee"]
+      expect(tokens[3]).toEqual value: " ", scopes: ["source.coffee"]
+      expect(tokens[4]).toEqual value: "something", scopes: ["source.coffee", "variable.other.object.property.coffee"]
+      expect(tokens[5]).toEqual value: " ", scopes: ["source.coffee"]
+      expect(tokens[6]).toEqual value: "::", scopes: ["source.coffee", "keyword.operator.prototype.coffee"]
+      expect(tokens[7]).toEqual value: " ", scopes: ["source.coffee"]
+      expect(tokens[8]).toEqual value: "else", scopes: ["source.coffee", "variable.other.property.coffee"]
+
       {tokens} = grammar.tokenizeLine("Foo::toString()")
       expect(tokens[0]).toEqual value: "Foo", scopes: ["source.coffee", "variable.other.object.coffee"]
       expect(tokens[1]).toEqual value: "::", scopes: ["source.coffee", "meta.method-call.coffee", "keyword.operator.prototype.coffee"]
@@ -662,7 +673,7 @@ describe "CoffeeScript grammar", ->
       expect(tokens[9]).toEqual value: ' p ', scopes: ['source.coffee', 'meta.function-call.coffee', 'meta.arguments.coffee']
       expect(tokens[10]).toEqual value: ')', scopes: ['source.coffee', 'meta.function-call.coffee', 'meta.arguments.coffee', 'punctuation.definition.arguments.end.bracket.round.coffee']
 
-    it "does not tokenize booleans as functions", ->
+    it "does not tokenize booleans as function calls", ->
       {tokens} = grammar.tokenizeLine("false unless true")
       expect(tokens[0]).toEqual value: "false", scopes: ["source.coffee", "constant.language.boolean.false.coffee"]
       expect(tokens[2]).toEqual value: "unless", scopes: ["source.coffee", "keyword.control.coffee"]
@@ -672,6 +683,12 @@ describe "CoffeeScript grammar", ->
       expect(tokens[0]).toEqual value: "true", scopes: ["source.coffee", "constant.language.boolean.true.coffee"]
       expect(tokens[2]).toEqual value: "if", scopes: ["source.coffee", "keyword.control.coffee"]
       expect(tokens[4]).toEqual value: "false", scopes: ["source.coffee", "constant.language.boolean.false.coffee"]
+
+    it "does not tokenize comparison operators as function calls", ->
+      {tokens} = grammar.tokenizeLine("if a is b")
+      expect(tokens[1]).toEqual value: " a ", scopes: ["source.coffee"]
+      expect(tokens[2]).toEqual value: "is", scopes: ["source.coffee", "keyword.operator.comparison.coffee"]
+      expect(tokens[3]).toEqual value: " b", scopes: ["source.coffee"]
 
   describe "functions", ->
     it "tokenizes regular functions", ->
