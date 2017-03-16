@@ -458,7 +458,7 @@
         'beginCaptures':
           '0':
             'name': 'punctuation.definition.arguments.begin.bracket.round.coffee'
-        'end': '\\)|(?=\\s*\\b(of|in|then|is|isnt|and|or|for|else|when|not|if|unless)\\b)|(?=\\s*(#|$))'
+        'end': '\\)|(?=\\s*\\b(of|in|then|is|isnt|and|or|for|else|when|if|unless)\\b)|(?=\\s*(#|$))'
         'endCaptures':
           '0':
             'name': 'punctuation.definition.arguments.end.bracket.round.coffee'
@@ -503,7 +503,7 @@
         'begin': '''(?x)
           (@)?([\\w$]+)
           \\s*
-          (?=\\s+(?!(?<![\\w$])(of|in|then|is|isnt|and|or|for|else|when|not|if|unless)(?![\\w$]))(?=(@?[\\w$]+|[=-]>|\\-\\d|\\[|\\{|\"|\'))|(?=\\())
+          (?=\\s+(?!(?<![\\w$])(of|in|then|is|isnt|and|or|for|else|when|if|unless)(?![\\w$]))(?=(@?[\\w$]+|[=-]>|\\-\\d|\\[|\\{|\"|\'))|(?=\\())
         '''
         'beginCaptures':
           '1':
@@ -527,7 +527,7 @@
                 'name': 'invalid.illegal.identifier.coffee'
               }
             ]
-        'end': '(?<=\\))|(?=\\s*(?<![\\w$])(of|in|then|is|isnt|and|or|for|else|when|not|if|unless)(?![\\w$]))|(?=\\s*(#|$))'
+        'end': '(?<=\\))|(?=\\s*(?<![\\w$])(of|in|then|is|isnt|and|or|for|else|when|if|unless)(?![\\w$]))|(?=\\s*(#|$))'
         'name': 'meta.function-call.coffee'
         'patterns': [
           {
@@ -608,7 +608,7 @@
     'patterns': [
       {
         # .methodCall(arg1, "arg2", [...])
-        'begin': '(?:(\\.)|(::))\\s*([\\w$]+)\\s*(?=\\s+(?!(?<![\\w$])(of|in|then|is|isnt|and|or|for|else|when|not|if|unless)(?![\\w$]))(?=(@|@?[\\w$]+|[=-]>|\\-\\d|\\[|\\{|\"|\'))|(?=\\())'
+        'begin': '(?:(\\.)|(::))\\s*([\\w$]+)\\s*(?=\\s+(?!(?<![\\w$])(of|in|then|is|isnt|and|or|for|else|when|if|unless)(?![\\w$]))(?=(@|@?[\\w$]+|[=-]>|\\-\\d|\\[|\\{|\"|\'))|(?=\\())'
         'beginCaptures':
           '1':
             'name': 'punctuation.separator.method.period.coffee'
@@ -709,7 +709,7 @@
                 'name': 'invalid.illegal.identifier.coffee'
               }
             ]
-        'end': '(?<=\\))|(?=\\s*(?<![\\w$])(of|in|then|is|isnt|and|or|for|else|when|not|if|unless)(?![\\w$]))|(?=\\s*(#|$))'
+        'end': '(?<=\\))|(?=\\s*(?<![\\w$])(of|in|then|is|isnt|and|or|for|else|when|if|unless)(?![\\w$]))|(?=\\s*(#|$))'
         'name': 'meta.method-call.coffee'
         'patterns': [
           {
