@@ -1014,6 +1014,71 @@ describe "CoffeeScript grammar", ->
       expect(tokens[6]).toEqual value: "#", scopes: ["source.coffee", "comment.line.number-sign.coffee", "punctuation.definition.comment.coffee"]
       expect(tokens[7]).toEqual value: " https://github.com/atom/language-coffee-script/issues/112", scopes: ["source.coffee", "comment.line.number-sign.coffee"]
 
+    it "stops tokenizing regex at the first non-escaped forwards slash", ->
+      {tokens} = grammar.tokenizeLine("path.replace(/\\\\/g, '/')")
+      expect(tokens[4]).toEqual value: "/", scopes: ["source.coffee", "string.regexp.coffee", "punctuation.definition.string.begin.coffee"]
+      expect(tokens[6]).toEqual value: "/", scopes: ["source.coffee", "string.regexp.coffee", "punctuation.definition.string.end.coffee"]
+      expect(tokens[11]).toEqual value: "/", scopes: ["source.coffee", "string.quoted.single.coffee"]
+
+      {tokens} = grammar.tokenizeLine("path.replace(/\\\\\\//g, '/')")
+      expect(tokens[4]).toEqual value: "/", scopes: ["source.coffee", "string.regexp.coffee", "punctuation.definition.string.begin.coffee"]
+      expect(tokens[6]).toEqual value: "\\/", scopes: ["source.coffee", "string.regexp.coffee", "constant.character.escape.backslash.regexp"]
+      expect(tokens[7]).toEqual value: "/", scopes: ["source.coffee", "string.regexp.coffee", "punctuation.definition.string.end.coffee"]
+      expect(tokens[12]).toEqual value: "/", scopes: ["source.coffee", "string.quoted.single.coffee"]
+
+  describe "escape sequences in strings", ->
+    it "tokenises leading backslashes in double-quoted strings", ->
+      {tokens} = grammar.tokenizeLine('"a\\\\b\\\\\\\\c"')
+      expect(tokens[0]).toEqual value: '"', scopes: ['source.coffee', 'string.quoted.double.coffee', 'punctuation.definition.string.begin.coffee']
+      expect(tokens[1]).toEqual value: 'a', scopes: ['source.coffee', 'string.quoted.double.coffee']
+      expect(tokens[2]).toEqual value: '\\', scopes: ['source.coffee', 'string.quoted.double.coffee', 'constant.character.escape.backslash.coffee', 'punctuation.definition.escape.backslash.coffee']
+      expect(tokens[3]).toEqual value: '\\', scopes: ['source.coffee', 'string.quoted.double.coffee', 'constant.character.escape.backslash.coffee']
+      expect(tokens[4]).toEqual value: 'b', scopes: ['source.coffee', 'string.quoted.double.coffee']
+      expect(tokens[5]).toEqual value: '\\', scopes: ['source.coffee', 'string.quoted.double.coffee', 'constant.character.escape.backslash.coffee', 'punctuation.definition.escape.backslash.coffee']
+      expect(tokens[6]).toEqual value: '\\', scopes: ['source.coffee', 'string.quoted.double.coffee', 'constant.character.escape.backslash.coffee']
+      expect(tokens[7]).toEqual value: '\\', scopes: ['source.coffee', 'string.quoted.double.coffee', 'constant.character.escape.backslash.coffee', 'punctuation.definition.escape.backslash.coffee']
+      expect(tokens[8]).toEqual value: '\\', scopes: ['source.coffee', 'string.quoted.double.coffee', 'constant.character.escape.backslash.coffee']
+      expect(tokens[9]).toEqual value: 'c', scopes: ['source.coffee', 'string.quoted.double.coffee']
+      expect(tokens[10]).toEqual value: '"', scopes: ['source.coffee', 'string.quoted.double.coffee', 'punctuation.definition.string.end.coffee']
+
+      {tokens} = grammar.tokenizeLine('"\\a\\t\\a\\b"')
+      expect(tokens[0]).toEqual value: '"', scopes: ['source.coffee', 'string.quoted.double.coffee', 'punctuation.definition.string.begin.coffee']
+      expect(tokens[1]).toEqual value: '\\', scopes: ['source.coffee', 'string.quoted.double.coffee', 'constant.character.escape.backslash.coffee', 'punctuation.definition.escape.backslash.coffee']
+      expect(tokens[2]).toEqual value: 'a', scopes: ['source.coffee', 'string.quoted.double.coffee', 'constant.character.escape.backslash.coffee']
+      expect(tokens[3]).toEqual value: '\\', scopes: ['source.coffee', 'string.quoted.double.coffee', 'constant.character.escape.backslash.coffee', 'punctuation.definition.escape.backslash.coffee']
+      expect(tokens[4]).toEqual value: 't', scopes: ['source.coffee', 'string.quoted.double.coffee', 'constant.character.escape.backslash.coffee']
+      expect(tokens[5]).toEqual value: '\\', scopes: ['source.coffee', 'string.quoted.double.coffee', 'constant.character.escape.backslash.coffee', 'punctuation.definition.escape.backslash.coffee']
+      expect(tokens[6]).toEqual value: 'a', scopes: ['source.coffee', 'string.quoted.double.coffee', 'constant.character.escape.backslash.coffee']
+      expect(tokens[7]).toEqual value: '\\', scopes: ['source.coffee', 'string.quoted.double.coffee', 'constant.character.escape.backslash.coffee', 'punctuation.definition.escape.backslash.coffee']
+      expect(tokens[8]).toEqual value: 'b', scopes: ['source.coffee', 'string.quoted.double.coffee', 'constant.character.escape.backslash.coffee']
+      expect(tokens[9]).toEqual value: '"', scopes: ['source.coffee', 'string.quoted.double.coffee', 'punctuation.definition.string.end.coffee']
+
+    it "tokenises leading backslashes in single-quoted strings", ->
+      {tokens} = grammar.tokenizeLine("'a\\\\b\\\\\\\\c'")
+      expect(tokens[0]).toEqual value: "'", scopes: ['source.coffee', 'string.quoted.single.coffee', 'punctuation.definition.string.begin.coffee']
+      expect(tokens[1]).toEqual value: 'a', scopes: ['source.coffee', 'string.quoted.single.coffee']
+      expect(tokens[2]).toEqual value: '\\', scopes: ['source.coffee', 'string.quoted.single.coffee', 'constant.character.escape.backslash.coffee', 'punctuation.definition.escape.backslash.coffee']
+      expect(tokens[3]).toEqual value: '\\', scopes: ['source.coffee', 'string.quoted.single.coffee', 'constant.character.escape.backslash.coffee']
+      expect(tokens[4]).toEqual value: 'b', scopes: ['source.coffee', 'string.quoted.single.coffee']
+      expect(tokens[5]).toEqual value: '\\', scopes: ['source.coffee', 'string.quoted.single.coffee', 'constant.character.escape.backslash.coffee', 'punctuation.definition.escape.backslash.coffee']
+      expect(tokens[6]).toEqual value: '\\', scopes: ['source.coffee', 'string.quoted.single.coffee', 'constant.character.escape.backslash.coffee']
+      expect(tokens[7]).toEqual value: '\\', scopes: ['source.coffee', 'string.quoted.single.coffee', 'constant.character.escape.backslash.coffee', 'punctuation.definition.escape.backslash.coffee']
+      expect(tokens[8]).toEqual value: '\\', scopes: ['source.coffee', 'string.quoted.single.coffee', 'constant.character.escape.backslash.coffee']
+      expect(tokens[9]).toEqual value: 'c', scopes: ['source.coffee', 'string.quoted.single.coffee']
+      expect(tokens[10]).toEqual value: "'", scopes: ['source.coffee', 'string.quoted.single.coffee', 'punctuation.definition.string.end.coffee']
+
+      {tokens} = grammar.tokenizeLine("'\\a\\t\\a\\b'")
+      expect(tokens[0]).toEqual value: "'", scopes: ['source.coffee', 'string.quoted.single.coffee', 'punctuation.definition.string.begin.coffee']
+      expect(tokens[1]).toEqual value: '\\', scopes: ['source.coffee', 'string.quoted.single.coffee', 'constant.character.escape.backslash.coffee', 'punctuation.definition.escape.backslash.coffee']
+      expect(tokens[2]).toEqual value: 'a', scopes: ['source.coffee', 'string.quoted.single.coffee', 'constant.character.escape.backslash.coffee']
+      expect(tokens[3]).toEqual value: '\\', scopes: ['source.coffee', 'string.quoted.single.coffee', 'constant.character.escape.backslash.coffee', 'punctuation.definition.escape.backslash.coffee']
+      expect(tokens[4]).toEqual value: 't', scopes: ['source.coffee', 'string.quoted.single.coffee', 'constant.character.escape.backslash.coffee']
+      expect(tokens[5]).toEqual value: '\\', scopes: ['source.coffee', 'string.quoted.single.coffee', 'constant.character.escape.backslash.coffee', 'punctuation.definition.escape.backslash.coffee']
+      expect(tokens[6]).toEqual value: 'a', scopes: ['source.coffee', 'string.quoted.single.coffee', 'constant.character.escape.backslash.coffee']
+      expect(tokens[7]).toEqual value: '\\', scopes: ['source.coffee', 'string.quoted.single.coffee', 'constant.character.escape.backslash.coffee', 'punctuation.definition.escape.backslash.coffee']
+      expect(tokens[8]).toEqual value: 'b', scopes: ['source.coffee', 'string.quoted.single.coffee', 'constant.character.escape.backslash.coffee']
+      expect(tokens[9]).toEqual value: "'", scopes: ['source.coffee', 'string.quoted.single.coffee', 'punctuation.definition.string.end.coffee']
+
   describe "firstLineMatch", ->
     it "recognises interpreter directives", ->
       valid = """
