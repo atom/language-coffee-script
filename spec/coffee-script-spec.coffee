@@ -1030,15 +1030,15 @@ describe "CoffeeScript grammar", ->
 
     it "stops tokenizing regex at the first non-escaped forwards slash", ->
       {tokens} = grammar.tokenizeLine("path.replace(/\\\\/g, '/')")
-      expect(tokens[4]).toEqual value: "/", scopes: ["source.coffee", "string.regexp.coffee", "punctuation.definition.string.begin.coffee"]
-      expect(tokens[6]).toEqual value: "/", scopes: ["source.coffee", "string.regexp.coffee", "punctuation.definition.string.end.coffee"]
-      expect(tokens[11]).toEqual value: "/", scopes: ["source.coffee", "string.quoted.single.coffee"]
+      expect(tokens[4]).toEqual value: "/", scopes: ["source.coffee", "meta.method-call.coffee", "meta.arguments.coffee", "string.regexp.coffee", "punctuation.definition.string.begin.coffee"]
+      expect(tokens[6]).toEqual value: "/", scopes: ["source.coffee", "meta.method-call.coffee", "meta.arguments.coffee", "string.regexp.coffee", "punctuation.definition.string.end.coffee"]
+      expect(tokens[11]).toEqual value: "/", scopes: ["source.coffee", "meta.method-call.coffee", "meta.arguments.coffee", "string.quoted.single.coffee"]
 
       {tokens} = grammar.tokenizeLine("path.replace(/\\\\\\//g, '/')")
-      expect(tokens[4]).toEqual value: "/", scopes: ["source.coffee", "string.regexp.coffee", "punctuation.definition.string.begin.coffee"]
-      expect(tokens[6]).toEqual value: "\\/", scopes: ["source.coffee", "string.regexp.coffee", "constant.character.escape.backslash.regexp"]
-      expect(tokens[7]).toEqual value: "/", scopes: ["source.coffee", "string.regexp.coffee", "punctuation.definition.string.end.coffee"]
-      expect(tokens[12]).toEqual value: "/", scopes: ["source.coffee", "string.quoted.single.coffee"]
+      expect(tokens[4]).toEqual value: "/", scopes: ["source.coffee", "meta.method-call.coffee", "meta.arguments.coffee", "string.regexp.coffee", "punctuation.definition.string.begin.coffee"]
+      expect(tokens[6]).toEqual value: "\\/", scopes: ["source.coffee", "meta.method-call.coffee", "meta.arguments.coffee", "string.regexp.coffee", "constant.character.escape.backslash.regexp"]
+      expect(tokens[7]).toEqual value: "/", scopes: ["source.coffee", "meta.method-call.coffee", "meta.arguments.coffee", "string.regexp.coffee", "punctuation.definition.string.end.coffee"]
+      expect(tokens[12]).toEqual value: "/", scopes: ["source.coffee", "meta.method-call.coffee", "meta.arguments.coffee", "string.quoted.single.coffee"]
 
   describe "escape sequences in strings", ->
     it "tokenises leading backslashes in double-quoted strings", ->
