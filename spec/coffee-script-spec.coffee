@@ -897,56 +897,57 @@ describe "CoffeeScript grammar", ->
       expect(tokens[3]).toEqual value: ' ', scopes: ['source.coffee', 'meta.method-call.coffee']
       expect(tokens[4]).toEqual value: '@$', scopes: ['source.coffee', 'meta.method-call.coffee', 'meta.arguments.coffee', 'variable.other.readwrite.instance.coffee']
 
-  it "tokenizes destructuring assignments", ->
-    {tokens} = grammar.tokenizeLine("{something} = hi")
-    expect(tokens[0]).toEqual value: "{", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "punctuation.definition.destructuring.begin.bracket.curly.coffee"]
-    expect(tokens[1]).toEqual value: "something", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "variable.assignment.coffee"]
-    expect(tokens[2]).toEqual value: "}", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "punctuation.definition.destructuring.end.bracket.curly.coffee"]
-    expect(tokens[3]).toEqual value: " ", scopes: ["source.coffee"]
-    expect(tokens[4]).toEqual value: "=", scopes: ["source.coffee", "keyword.operator.assignment.coffee"]
-    expect(tokens[5]).toEqual value: " hi", scopes: ["source.coffee"]
+  describe "destructuring assignments", ->
+    it "tokenizes object and array destructuring", ->
+      {tokens} = grammar.tokenizeLine("{something} = hi")
+      expect(tokens[0]).toEqual value: "{", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "punctuation.definition.destructuring.begin.bracket.curly.coffee"]
+      expect(tokens[1]).toEqual value: "something", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "variable.assignment.coffee"]
+      expect(tokens[2]).toEqual value: "}", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "punctuation.definition.destructuring.end.bracket.curly.coffee"]
+      expect(tokens[3]).toEqual value: " ", scopes: ["source.coffee"]
+      expect(tokens[4]).toEqual value: "=", scopes: ["source.coffee", "keyword.operator.assignment.coffee"]
+      expect(tokens[5]).toEqual value: " hi", scopes: ["source.coffee"]
 
-    {tokens} = grammar.tokenizeLine("[x, y] = browserWindow.getPosition()")
-    expect(tokens[0]).toEqual value: "[", scopes: ["source.coffee", "meta.variable.assignment.destructured.array.coffee", "punctuation.definition.destructuring.begin.bracket.square.coffee"]
-    expect(tokens[1]).toEqual value: "x", scopes: ["source.coffee", "meta.variable.assignment.destructured.array.coffee", "variable.assignment.coffee"]
-    expect(tokens[2]).toEqual value: ",", scopes: ["source.coffee", "meta.variable.assignment.destructured.array.coffee", "punctuation.separator.delimiter.coffee"]
-    expect(tokens[3]).toEqual value: " ", scopes: ["source.coffee", "meta.variable.assignment.destructured.array.coffee"]
-    expect(tokens[4]).toEqual value: "y", scopes: ["source.coffee", "meta.variable.assignment.destructured.array.coffee", "variable.assignment.coffee"]
-    expect(tokens[5]).toEqual value: "]", scopes: ["source.coffee", "meta.variable.assignment.destructured.array.coffee", "punctuation.definition.destructuring.end.bracket.square.coffee"]
-    expect(tokens[6]).toEqual value: " ", scopes: ["source.coffee"]
-    expect(tokens[7]).toEqual value: "=", scopes: ["source.coffee", "keyword.operator.assignment.coffee"]
-    expect(tokens[8]).toEqual value: " ", scopes: ["source.coffee"]
+      {tokens} = grammar.tokenizeLine("[x, y] = browserWindow.getPosition()")
+      expect(tokens[0]).toEqual value: "[", scopes: ["source.coffee", "meta.variable.assignment.destructured.array.coffee", "punctuation.definition.destructuring.begin.bracket.square.coffee"]
+      expect(tokens[1]).toEqual value: "x", scopes: ["source.coffee", "meta.variable.assignment.destructured.array.coffee", "variable.assignment.coffee"]
+      expect(tokens[2]).toEqual value: ",", scopes: ["source.coffee", "meta.variable.assignment.destructured.array.coffee", "punctuation.separator.delimiter.coffee"]
+      expect(tokens[3]).toEqual value: " ", scopes: ["source.coffee", "meta.variable.assignment.destructured.array.coffee"]
+      expect(tokens[4]).toEqual value: "y", scopes: ["source.coffee", "meta.variable.assignment.destructured.array.coffee", "variable.assignment.coffee"]
+      expect(tokens[5]).toEqual value: "]", scopes: ["source.coffee", "meta.variable.assignment.destructured.array.coffee", "punctuation.definition.destructuring.end.bracket.square.coffee"]
+      expect(tokens[6]).toEqual value: " ", scopes: ["source.coffee"]
+      expect(tokens[7]).toEqual value: "=", scopes: ["source.coffee", "keyword.operator.assignment.coffee"]
+      expect(tokens[8]).toEqual value: " ", scopes: ["source.coffee"]
 
-    {tokens} = grammar.tokenizeLine("{'} ='}") # Make sure this *isn't* tokenized as a destructuring assignment
-    expect(tokens[0]).not.toEqual value: "{", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "punctuation.definition.destructuring.begin.bracket.curly.coffee"]
-    expect(tokens[0]).toEqual value: "{", scopes: ["source.coffee", "meta.brace.curly.coffee"]
+      {tokens} = grammar.tokenizeLine("{'} ='}") # Make sure this *isn't* tokenized as a destructuring assignment
+      expect(tokens[0]).not.toEqual value: "{", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "punctuation.definition.destructuring.begin.bracket.curly.coffee"]
+      expect(tokens[0]).toEqual value: "{", scopes: ["source.coffee", "meta.brace.curly.coffee"]
 
-  it "tokenizes nested destructuring assignments", ->
-    {tokens} = grammar.tokenizeLine("{poet: {name, address: [street, city]}} = futurists")
-    expect(tokens[0]).toEqual value: "{", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "punctuation.definition.destructuring.begin.bracket.curly.coffee"]
-    expect(tokens[4]).toEqual value: "{", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "meta.variable.assignment.destructured.object.coffee", "punctuation.definition.destructuring.begin.bracket.curly.coffee"]
-    expect(tokens[11]).toEqual value: "[", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "meta.variable.assignment.destructured.object.coffee", "meta.variable.assignment.destructured.array.coffee", "punctuation.definition.destructuring.begin.bracket.square.coffee"]
-    expect(tokens[16]).toEqual value: "]", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "meta.variable.assignment.destructured.object.coffee", "meta.variable.assignment.destructured.array.coffee", "punctuation.definition.destructuring.end.bracket.square.coffee"]
-    expect(tokens[17]).toEqual value: "}", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "meta.variable.assignment.destructured.object.coffee", "punctuation.definition.destructuring.end.bracket.curly.coffee"]
-    expect(tokens[18]).toEqual value: "}", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "punctuation.definition.destructuring.end.bracket.curly.coffee"]
-    expect(tokens[19]).toEqual value: " ", scopes: ["source.coffee"]
-    expect(tokens[20]).toEqual value: "=", scopes: ["source.coffee", "keyword.operator.assignment.coffee"]
+    it "tokenizes nested destructuring assignments", ->
+      {tokens} = grammar.tokenizeLine("{poet: {name, address: [street, city]}} = futurists")
+      expect(tokens[0]).toEqual value: "{", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "punctuation.definition.destructuring.begin.bracket.curly.coffee"]
+      expect(tokens[4]).toEqual value: "{", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "meta.variable.assignment.destructured.object.coffee", "punctuation.definition.destructuring.begin.bracket.curly.coffee"]
+      expect(tokens[11]).toEqual value: "[", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "meta.variable.assignment.destructured.object.coffee", "meta.variable.assignment.destructured.array.coffee", "punctuation.definition.destructuring.begin.bracket.square.coffee"]
+      expect(tokens[16]).toEqual value: "]", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "meta.variable.assignment.destructured.object.coffee", "meta.variable.assignment.destructured.array.coffee", "punctuation.definition.destructuring.end.bracket.square.coffee"]
+      expect(tokens[17]).toEqual value: "}", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "meta.variable.assignment.destructured.object.coffee", "punctuation.definition.destructuring.end.bracket.curly.coffee"]
+      expect(tokens[18]).toEqual value: "}", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "punctuation.definition.destructuring.end.bracket.curly.coffee"]
+      expect(tokens[19]).toEqual value: " ", scopes: ["source.coffee"]
+      expect(tokens[20]).toEqual value: "=", scopes: ["source.coffee", "keyword.operator.assignment.coffee"]
 
-  it "tokenizes multiple nested destructuring assignments", ->
-    {tokens} = grammar.tokenizeLine("{start: {row: startRow}, end: {row: endRow}} = range")
-    expect(tokens[0]).toEqual value: "{", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "punctuation.definition.destructuring.begin.bracket.curly.coffee"]
-    expect(tokens[4]).toEqual value: "{", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "meta.variable.assignment.destructured.object.coffee", "punctuation.definition.destructuring.begin.bracket.curly.coffee"]
-    expect(tokens[9]).toEqual value: "}", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "meta.variable.assignment.destructured.object.coffee", "punctuation.definition.destructuring.end.bracket.curly.coffee"]
-    expect(tokens[15]).toEqual value: "{", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "meta.variable.assignment.destructured.object.coffee", "punctuation.definition.destructuring.begin.bracket.curly.coffee"]
-    expect(tokens[20]).toEqual value: "}", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "meta.variable.assignment.destructured.object.coffee", "punctuation.definition.destructuring.end.bracket.curly.coffee"]
-    expect(tokens[21]).toEqual value: "}", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "punctuation.definition.destructuring.end.bracket.curly.coffee"]
-    expect(tokens[22]).toEqual value: " ", scopes: ["source.coffee"]
-    expect(tokens[23]).toEqual value: "=", scopes: ["source.coffee", "keyword.operator.assignment.coffee"]
+    it "tokenizes multiple nested destructuring assignments", ->
+      {tokens} = grammar.tokenizeLine("{start: {row: startRow}, end: {row: endRow}} = range")
+      expect(tokens[0]).toEqual value: "{", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "punctuation.definition.destructuring.begin.bracket.curly.coffee"]
+      expect(tokens[4]).toEqual value: "{", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "meta.variable.assignment.destructured.object.coffee", "punctuation.definition.destructuring.begin.bracket.curly.coffee"]
+      expect(tokens[9]).toEqual value: "}", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "meta.variable.assignment.destructured.object.coffee", "punctuation.definition.destructuring.end.bracket.curly.coffee"]
+      expect(tokens[15]).toEqual value: "{", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "meta.variable.assignment.destructured.object.coffee", "punctuation.definition.destructuring.begin.bracket.curly.coffee"]
+      expect(tokens[20]).toEqual value: "}", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "meta.variable.assignment.destructured.object.coffee", "punctuation.definition.destructuring.end.bracket.curly.coffee"]
+      expect(tokens[21]).toEqual value: "}", scopes: ["source.coffee", "meta.variable.assignment.destructured.object.coffee", "punctuation.definition.destructuring.end.bracket.curly.coffee"]
+      expect(tokens[22]).toEqual value: " ", scopes: ["source.coffee"]
+      expect(tokens[23]).toEqual value: "=", scopes: ["source.coffee", "keyword.operator.assignment.coffee"]
 
-  it "doesn't tokenize nested brackets as destructuring assignments", ->
-    {tokens} = grammar.tokenizeLine("[Point(0, 1), [Point(0, 0), Point(0, 1)]]")
-    expect(tokens[0]).not.toEqual value: "[", scopes: ["source.coffee", "meta.variable.assignment.destructured.array.coffee", "punctuation.definition.destructuring.begin.bracket.square.coffee"]
-    expect(tokens[0]).toEqual value: "[", scopes: ["source.coffee", "meta.brace.square.coffee"]
+    it "doesn't tokenize nested brackets as destructuring assignments", ->
+      {tokens} = grammar.tokenizeLine("[Point(0, 1), [Point(0, 0), Point(0, 1)]]")
+      expect(tokens[0]).not.toEqual value: "[", scopes: ["source.coffee", "meta.variable.assignment.destructured.array.coffee", "punctuation.definition.destructuring.begin.bracket.square.coffee"]
+      expect(tokens[0]).toEqual value: "[", scopes: ["source.coffee", "meta.brace.square.coffee"]
 
   it "tokenizes inline constant followed by unless statement correctly", ->
     {tokens} = grammar.tokenizeLine("return 0 unless true")
@@ -954,6 +955,50 @@ describe "CoffeeScript grammar", ->
     expect(tokens[2]).toEqual value: "0", scopes: ["source.coffee", "constant.numeric.decimal.coffee"]
     expect(tokens[4]).toEqual value: "unless", scopes: ["source.coffee", "keyword.control.coffee"]
     expect(tokens[6]).toEqual value: "true", scopes: ["source.coffee", "constant.language.boolean.true.coffee"]
+
+  describe "for loops", ->
+    it "tokenizes for-in loops", ->
+      {tokens} = grammar.tokenizeLine("for food in foods")
+      expect(tokens[0]).toEqual value: "for", scopes: ["source.coffee", "keyword.control.coffee"]
+      expect(tokens[1]).toEqual value: " food ", scopes: ["source.coffee"]
+      expect(tokens[2]).toEqual value: "in", scopes: ["source.coffee", "keyword.control.coffee"]
+      expect(tokens[3]).toEqual value: " foods", scopes: ["source.coffee"]
+
+    it "tokenizes for-of loops", ->
+      {tokens} = grammar.tokenizeLine("for food, type of foods")
+      expect(tokens[0]).toEqual value: "for", scopes: ["source.coffee", "keyword.control.coffee"]
+      expect(tokens[1]).toEqual value: " food", scopes: ["source.coffee"]
+      expect(tokens[2]).toEqual value: ",", scopes: ["source.coffee", "punctuation.separator.delimiter.coffee"]
+      expect(tokens[3]).toEqual value: " type ", scopes: ["source.coffee"]
+      expect(tokens[4]).toEqual value: "of", scopes: ["source.coffee", "keyword.control.coffee"]
+      expect(tokens[5]).toEqual value: " foods", scopes: ["source.coffee"]
+
+    it "tokenizes loops using arrays", ->
+      {tokens} = grammar.tokenizeLine("for food in ['broccoli', 'spinach', 'chocolate']")
+      expect(tokens[0]).toEqual value: "for", scopes: ["source.coffee", "keyword.control.coffee"]
+      expect(tokens[1]).toEqual value: " food ", scopes: ["source.coffee"]
+      expect(tokens[2]).toEqual value: "in", scopes: ["source.coffee", "keyword.control.coffee"]
+      expect(tokens[3]).toEqual value: " ", scopes: ["source.coffee"]
+      expect(tokens[4]).toEqual value: "[", scopes: ["source.coffee", "meta.brace.square.coffee"]
+      expect(tokens[18]).toEqual value: "]", scopes: ["source.coffee", "meta.brace.square.coffee"]
+
+    it "tokenizes loops using the optional `when` keyword", ->
+      {tokens} = grammar.tokenizeLine("for food in foods when food isnt chocolate")
+      expect(tokens[0]).toEqual value: "for", scopes: ["source.coffee", "keyword.control.coffee"]
+      expect(tokens[3]).toEqual value: " foods ", scopes: ["source.coffee"]
+      expect(tokens[4]).toEqual value: "when", scopes: ["source.coffee", "keyword.control.coffee"]
+      expect(tokens[5]).toEqual value: " food ", scopes: ["source.coffee"]
+      expect(tokens[6]).toEqual value: "isnt", scopes: ["source.coffee", "keyword.operator.comparison.coffee"]
+      expect(tokens[7]).toEqual value: " chocolate", scopes: ["source.coffee"]
+
+    it "tokenizes loops using the optional `by` keyword", ->
+      {tokens} = grammar.tokenizeLine("for food in foods by -1")
+      expect(tokens[0]).toEqual value: "for", scopes: ["source.coffee", "keyword.control.coffee"]
+      expect(tokens[3]).toEqual value: " foods ", scopes: ["source.coffee"]
+      expect(tokens[4]).toEqual value: "by", scopes: ["source.coffee", "keyword.control.coffee"]
+      expect(tokens[5]).toEqual value: " ", scopes: ["source.coffee"]
+      expect(tokens[6]).toEqual value: "-", scopes: ["source.coffee", "keyword.operator.coffee"]
+      expect(tokens[7]).toEqual value: "1", scopes: ["source.coffee", "constant.numeric.decimal.coffee"]
 
   describe "regular expressions", ->
     beforeEach ->
