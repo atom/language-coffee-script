@@ -454,11 +454,11 @@
   'arguments':
     'patterns': [
       {
-        'begin': '(?=(@|@?[\\w$]+|[=-]>|\\-\\d|\\[|\\{|\"|\'))|\\('
+        'begin': '(?=(@|@?[\\w$]+|[=-]>|\\-\\d|\\[|{|\"|\'))|\\('
         'beginCaptures':
           '0':
             'name': 'punctuation.definition.arguments.begin.bracket.round.coffee'
-        'end': '\\)|(?=\\s*\\b(of|in|then|is|isnt|and|or|for|else|when|if|unless|by)\\b)|(?=\\s*(#|$))'
+        'end': '\\)|(?=\\s*(?<![\\w$])(of|in|then|is|isnt|and|or|for|else|when|if|unless|by)(?![\\w$]))|(?=\\s*(}|#|$))'
         'endCaptures':
           '0':
             'name': 'punctuation.definition.arguments.end.bracket.round.coffee'
@@ -527,7 +527,7 @@
                 'name': 'invalid.illegal.identifier.coffee'
               }
             ]
-        'end': '(?<=\\))|(?=\\s*(?<![\\w$])(of|in|then|is|isnt|and|or|for|else|when|if|unless|by)(?![\\w$]))|(?=\\s*(#|$))'
+        'end': '(?<=\\))|(?=\\s*(?<![\\w$])(of|in|then|is|isnt|and|or|for|else|when|if|unless|by)(?![\\w$]))|(?=\\s*(}|#|$))'
         'name': 'meta.function-call.coffee'
         'patterns': [
           {
@@ -709,7 +709,7 @@
                 'name': 'invalid.illegal.identifier.coffee'
               }
             ]
-        'end': '(?<=\\))|(?=\\s*(?<![\\w$])(of|in|then|is|isnt|and|or|for|else|when|if|unless|by)(?![\\w$]))|(?=\\s*(#|$))'
+        'end': '(?<=\\))|(?=\\s*(?<![\\w$])(of|in|then|is|isnt|and|or|for|else|when|if|unless|by)(?![\\w$]))|(?=\\s*(}|#|$))'
         'name': 'meta.method-call.coffee'
         'patterns': [
           {
