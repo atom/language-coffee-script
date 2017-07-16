@@ -93,10 +93,10 @@
       '0':
         'name': 'punctuation.definition.string.end.coffee'
     'name': 'string.quoted.script.coffee'
+    'contentName': 'source.embedded.js'
     'patterns': [
       {
-        'match': '(x\h{2}|[0-2][0-7]{0,2}|3[0-6][0-7]|37[0-7]?|[4-7][0-7]?|.)'
-        'name': 'constant.character.escape.coffee'
+        'include': 'source.js'
       }
     ]
   }
@@ -154,7 +154,7 @@
     'name': 'string.regexp.coffee'
   }
   {
-    'match': '\\b(?<![\\.\\$])(break|by|catch|continue|else|finally|for|in|of|if|return|switch|then|throw|try|unless|when|while|until|loop|do|(?<=for)\\s+own)(?!\\s*:)\\b'
+    'match': '\\b(?<![\\.\\$])(break|by|catch|continue|else|finally|for|in|of|if|return|switch|then|throw|try|unless|when|while|until|loop|do|export|import|default|from|as|yield|async|await|(?<=for)\\s+own)(?!\\s*:)\\b'
     'name': 'keyword.control.coffee'
   }
   {
@@ -162,7 +162,7 @@
     'name': 'keyword.operator.$1.coffee'
   }
   {
-    'match': '\\b(?<![\\.\\$])(case|default|function|var|void|with|const|let|enum|export|import|native|__hasProp|__extends|__slice|__bind|__indexOf|implements|interface|package|private|protected|public|static|yield)(?!\\s*:)\\b'
+    'match': '\\b(?<![\\.\\$])(case|function|var|void|with|const|let|enum|native|__hasProp|__extends|__slice|__bind|__indexOf|implements|interface|package|private|protected|public|static)(?!\\s*:)\\b'
     'name': 'keyword.reserved.coffee'
   }
   {
@@ -487,7 +487,7 @@
             'captures':
               '1':
                 'name': 'punctuation.definition.escape.backslash.coffee'
-            'match': '(\\\\)(x\\h{2}|[0-2][0-7]{0,2}|3[0-6][0-7]|37[0-7]?|[4-7][0-7]?|.)'
+            'match': '(\\\\)(x[0-9A-Fa-f]{2}|[0-2][0-7]{0,2}|3[0-6][0-7]|37[0-7]?|[4-7][0-7]?|.)'
             'name': 'constant.character.escape.backslash.coffee'
           }
           {
@@ -929,7 +929,7 @@
             'captures':
               '1':
                 'name': 'punctuation.definition.escape.backslash.coffee'
-            'match': '(\\\\)(x\\h{2}|[0-2][0-7]{0,2}|3[0-6][0-7]?|37[0-7]?|[4-7][0-7]?|.)'
+            'match': '(\\\\)(x[0-9A-Fa-f]{2}|[0-2][0-7]{0,2}|3[0-6][0-7]?|37[0-7]?|[4-7][0-7]?|.)'
             'name': 'constant.character.escape.backslash.coffee'
           }
         ]
@@ -942,7 +942,7 @@
         'name': 'constant.character.character-class.regexp'
       }
       {
-        'match': '\\\\([0-7]{3}|x\\h\\h|u\\h\\h\\h\\h)'
+        'match': '\\\\([0-7]{3}|x[0-9A-Fa-f]{2}|u[0-9A-Fa-f]{4})'
         'name': 'constant.character.numeric.regexp'
       }
       {
@@ -1035,7 +1035,7 @@
                 'name': 'constant.character.control.regexp'
               '6':
                 'name': 'constant.character.escape.backslash.regexp'
-            'match': '(?:.|(\\\\(?:[0-7]{3}|x\\h\\h|u\\h\\h\\h\\h))|(\\\\c[A-Z])|(\\\\.))\\-(?:[^\\]\\\\]|(\\\\(?:[0-7]{3}|x\\h\\h|u\\h\\h\\h\\h))|(\\\\c[A-Z])|(\\\\.))'
+            'match': '(?:.|(\\\\(?:[0-7]{3}|x[0-9A-Fa-f]{2}|u[0-9A-Fa-f]{4}))|(\\\\c[A-Z])|(\\\\.))\\-(?:[^\\]\\\\]|(\\\\(?:[0-7]{3}|x[0-9A-Fa-f]{2}|u[0-9A-Fa-f]{4}))|(\\\\c[A-Z])|(\\\\.))'
             'name': 'constant.other.character-class.range.regexp'
           }
           {
