@@ -416,6 +416,15 @@ describe "CoffeeScript grammar", ->
       expect(tokens[2]).toEqual value: "\\/", scopes: ["source.coffee", "string.regexp.coffee", "constant.character.escape.backslash.regexp"]
       expect(tokens[3]).toEqual value: "/", scopes: ["source.coffee", "string.regexp.coffee", "punctuation.definition.string.end.coffee"]
 
+      {tokens} = grammar.tokenizeLine("/one\\/two!\\/three/")
+      expect(tokens[0]).toEqual value: "/", scopes: ["source.coffee", "string.regexp.coffee", "punctuation.definition.string.begin.coffee"]
+      expect(tokens[1]).toEqual value: "one", scopes: ["source.coffee", "string.regexp.coffee"]
+      expect(tokens[2]).toEqual value: "\\/", scopes: ["source.coffee", "string.regexp.coffee", "constant.character.escape.backslash.regexp"]
+      expect(tokens[3]).toEqual value: "two!", scopes: ["source.coffee", "string.regexp.coffee"]
+      expect(tokens[4]).toEqual value: "\\/", scopes: ["source.coffee", "string.regexp.coffee", "constant.character.escape.backslash.regexp"]
+      expect(tokens[5]).toEqual value: "three", scopes: ["source.coffee", "string.regexp.coffee"]
+      expect(tokens[6]).toEqual value: "/", scopes: ["source.coffee", "string.regexp.coffee", "punctuation.definition.string.end.coffee"]
+
     it "tokenizes regular expressions inside arrays", ->
       {tokens} = grammar.tokenizeLine("[/test/]")
       expect(tokens[0]).toEqual value: "[", scopes: ["source.coffee", "meta.brace.square.coffee"]
