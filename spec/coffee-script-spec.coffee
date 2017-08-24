@@ -334,6 +334,11 @@ describe "CoffeeScript grammar", ->
       expect(tokens[1]).toEqual value: '.', scopes: ['source.coffee', 'punctuation.separator.property.period.coffee']
       expect(tokens[2]).toEqual value: 'property', scopes: ['source.coffee', 'variable.other.property.coffee']
 
+      {tokens} = grammar.tokenizeLine('obj.property instanceof Object')
+      expect(tokens[0]).toEqual value: 'obj', scopes: ['source.coffee', 'variable.other.object.coffee']
+      expect(tokens[1]).toEqual value: '.', scopes: ['source.coffee', 'punctuation.separator.property.period.coffee']
+      expect(tokens[2]).toEqual value: 'property', scopes: ['source.coffee', 'variable.other.property.coffee']
+
       {tokens} = grammar.tokenizeLine('obj.property.property')
       expect(tokens[0]).toEqual value: 'obj', scopes: ['source.coffee', 'variable.other.object.coffee']
       expect(tokens[1]).toEqual value: '.', scopes: ['source.coffee', 'punctuation.separator.property.period.coffee']

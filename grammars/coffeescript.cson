@@ -459,7 +459,7 @@
         'beginCaptures':
           '0':
             'name': 'punctuation.definition.arguments.begin.bracket.round.coffee'
-        'end': '\\)|(?=\\s*(?<![\\w$])(of|in|then|is|isnt|and|or|for|else|when|if|unless|by)(?![\\w$]))|(?=\\s*(}|#|$))'
+        'end': '\\)|(?=\\s*(?<![\\w$])(of|in|then|is|isnt|and|or|for|else|when|if|unless|by|instanceof)(?![\\w$]))|(?=\\s*(}|#|$))'
         'endCaptures':
           '0':
             'name': 'punctuation.definition.arguments.end.bracket.round.coffee'
@@ -504,7 +504,7 @@
         'begin': '''(?x)
           (@)?([\\w$]+)
           \\s*
-          (?=\\s+(?!(?<![\\w$])(of|in|then|is|isnt|and|or|for|else|when|if|unless|by)(?![\\w$]))(?=(@?[\\w$]+|[=-]>|\\-\\d|\\[|\\{|\"|\'))|(?=\\())
+          (?=\\s+(?!(?<![\\w$])(of|in|then|is|isnt|and|or|for|else|when|if|unless|by|instanceof)(?![\\w$]))(?=(@?[\\w$]+|[=-]>|\\-\\d|\\[|\\{|\"|\'))|(?=\\())
         '''
         'beginCaptures':
           '1':
@@ -528,7 +528,7 @@
                 'name': 'invalid.illegal.identifier.coffee'
               }
             ]
-        'end': '(?<=\\))|(?=\\s*(?<![\\w$])(of|in|then|is|isnt|and|or|for|else|when|if|unless|by)(?![\\w$]))|(?=\\s*(}|#|$))'
+        'end': '(?<=\\))|(?=\\s*(?<![\\w$])(of|in|then|is|isnt|and|or|for|else|when|if|unless|by|instanceof)(?![\\w$]))|(?=\\s*(}|#|$))'
         'name': 'meta.function-call.coffee'
         'patterns': [
           {
@@ -609,7 +609,7 @@
     'patterns': [
       {
         # .methodCall(arg1, "arg2", [...])
-        'begin': '(?:(\\.)|(::))\\s*([\\w$]+)\\s*(?=\\s+(?!(?<![\\w$])(of|in|then|is|isnt|and|or|for|else|when|if|unless|by)(?![\\w$]))(?=(@|@?[\\w$]+|[=-]>|\\-\\d|\\[|\\{|\"|\'))|(?=\\())'
+        'begin': '(?:(\\.)|(::))\\s*([\\w$]+)\\s*(?=\\s+(?!(?<![\\w$])(of|in|then|is|isnt|and|or|for|else|when|if|unless|by|instanceof)(?![\\w$]))(?=(@|@?[\\w$]+|[=-]>|\\-\\d|\\[|\\{|\"|\'))|(?=\\())'
         'beginCaptures':
           '1':
             'name': 'punctuation.separator.method.period.coffee'
@@ -710,7 +710,7 @@
                 'name': 'invalid.illegal.identifier.coffee'
               }
             ]
-        'end': '(?<=\\))|(?=\\s*(?<![\\w$])(of|in|then|is|isnt|and|or|for|else|when|if|unless|by)(?![\\w$]))|(?=\\s*(}|#|$))'
+        'end': '(?<=\\))|(?=\\s*(?<![\\w$])(of|in|then|is|isnt|and|or|for|else|when|if|unless|by|instanceof)(?![\\w$]))|(?=\\s*(}|#|$))'
         'name': 'meta.method-call.coffee'
         'patterns': [
           {
