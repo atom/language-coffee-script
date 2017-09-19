@@ -29,11 +29,11 @@ describe "CoffeeScript grammar", ->
     expect(tokens[0]).toEqual value: "_class", scopes: ["source.coffee", "meta.function-call.coffee", "entity.name.function.coffee"]
 
     {tokens} = grammar.tokenizeLine("[class Foo]")
-    expect(tokens[0]).toEqual value: "[", scopes: ["source.coffee", "meta.brace.square.coffee"]
+    expect(tokens[0]).toEqual value: "[", scopes: ["source.coffee", "punctuation.definition.array.begin.bracket.square.coffee"]
     expect(tokens[1]).toEqual value: "class", scopes: ["source.coffee", "meta.class.coffee", "storage.type.class.coffee"]
     expect(tokens[2]).toEqual value: " ", scopes: ["source.coffee", "meta.class.coffee"]
     expect(tokens[3]).toEqual value: "Foo", scopes: ["source.coffee", "meta.class.coffee", "entity.name.type.class.coffee"]
-    expect(tokens[4]).toEqual value: "]", scopes: ["source.coffee", "meta.brace.square.coffee"]
+    expect(tokens[4]).toEqual value: "]", scopes: ["source.coffee", "punctuation.definition.array.end.bracket.square.coffee"]
 
     {tokens} = grammar.tokenizeLine("bar(class Foo)")
     expect(tokens[0]).toEqual value: "bar", scopes: ["source.coffee", "meta.function-call.coffee", "entity.name.function.coffee"]
@@ -516,30 +516,55 @@ describe "CoffeeScript grammar", ->
       {tokens} = grammar.tokenizeLine('123$illegal')
       expect(tokens[0]).toEqual value: '123$illegal', scopes: ['source.coffee', 'invalid.illegal.identifier.coffee']
 
-    describe "objects", ->
-      it "tokenizes them", ->
-        {tokens} = grammar.tokenizeLine('obj.prop')
-        expect(tokens[0]).toEqual value: 'obj', scopes: ['source.coffee', 'variable.other.object.coffee']
+  describe "objects", ->
+    it "tokenizes them", ->
+      {tokens} = grammar.tokenizeLine('obj.prop')
+      expect(tokens[0]).toEqual value: 'obj', scopes: ['source.coffee', 'variable.other.object.coffee']
 
-        {tokens} = grammar.tokenizeLine('$abc$.prop')
-        expect(tokens[0]).toEqual value: '$abc$', scopes: ['source.coffee', 'variable.other.object.coffee']
+      {tokens} = grammar.tokenizeLine('$abc$.prop')
+      expect(tokens[0]).toEqual value: '$abc$', scopes: ['source.coffee', 'variable.other.object.coffee']
 
-        {tokens} = grammar.tokenizeLine('$$.prop')
-        expect(tokens[0]).toEqual value: '$$', scopes: ['source.coffee', 'variable.other.object.coffee']
+      {tokens} = grammar.tokenizeLine('$$.prop')
+      expect(tokens[0]).toEqual value: '$$', scopes: ['source.coffee', 'variable.other.object.coffee']
 
-        {tokens} = grammar.tokenizeLine('obj?.prop')
-        expect(tokens[0]).toEqual value: 'obj', scopes: ['source.coffee', 'variable.other.object.coffee']
-        expect(tokens[1]).toEqual value: '?', scopes: ['source.coffee', 'keyword.operator.existential.coffee']
+      {tokens} = grammar.tokenizeLine('obj?.prop')
+      expect(tokens[0]).toEqual value: 'obj', scopes: ['source.coffee', 'variable.other.object.coffee']
+      expect(tokens[1]).toEqual value: '?', scopes: ['source.coffee', 'keyword.operator.existential.coffee']
 
-      it "tokenizes illegal objects", ->
-        {tokens} = grammar.tokenizeLine('1.prop')
-        expect(tokens[0]).toEqual value: '1', scopes: ['source.coffee', 'invalid.illegal.identifier.coffee']
+    it "tokenizes illegal objects", ->
+      {tokens} = grammar.tokenizeLine('1.prop')
+      expect(tokens[0]).toEqual value: '1', scopes: ['source.coffee', 'invalid.illegal.identifier.coffee']
 
-        {tokens} = grammar.tokenizeLine('123.prop')
-        expect(tokens[0]).toEqual value: '123', scopes: ['source.coffee', 'invalid.illegal.identifier.coffee']
+      {tokens} = grammar.tokenizeLine('123.prop')
+      expect(tokens[0]).toEqual value: '123', scopes: ['source.coffee', 'invalid.illegal.identifier.coffee']
 
-        {tokens} = grammar.tokenizeLine('123a.prop')
-        expect(tokens[0]).toEqual value: '123a', scopes: ['source.coffee', 'invalid.illegal.identifier.coffee']
+      {tokens} = grammar.tokenizeLine('123a.prop')
+      expect(tokens[0]).toEqual value: '123a', scopes: ['source.coffee', 'invalid.illegal.identifier.coffee']
+
+  describe "arrays", ->
+    it "tokenizes basic arrays", ->
+      {tokens} = grammar.tokenizeLine('[a, "b", 3]')
+      expect(tokens[0]).toEqual value: '[', scopes: ['source.coffee', 'punctuation.definition.array.begin.bracket.square.coffee']
+      expect(tokens[1]).toEqual value: 'a', scopes: ['source.coffee']
+      expect(tokens[2]).toEqual value: ',', scopes: ['source.coffee', 'punctuation.separator.delimiter.coffee']
+      expect(tokens[3]).toEqual value: ' ', scopes: ['source.coffee']
+      expect(tokens[9]).toEqual value: '3', scopes: ['source.coffee', 'constant.numeric.decimal.coffee']
+      expect(tokens[10]).toEqual value: ']', scopes: ['source.coffee', 'punctuation.definition.array.end.bracket.square.coffee']
+
+    it "tokenizes inclusive and exclusive slices", ->
+      {tokens} = grammar.tokenizeLine('[a..3]')
+      expect(tokens[0]).toEqual value: '[', scopes: ['source.coffee', 'punctuation.definition.array.begin.bracket.square.coffee']
+      expect(tokens[1]).toEqual value: 'a', scopes: ['source.coffee']
+      expect(tokens[2]).toEqual value: '..', scopes: ['source.coffee', 'keyword.operator.slice.inclusive.coffee']
+      expect(tokens[3]).toEqual value: '3', scopes: ['source.coffee', 'constant.numeric.decimal.coffee']
+      expect(tokens[4]).toEqual value: ']', scopes: ['source.coffee', 'punctuation.definition.array.end.bracket.square.coffee']
+
+      {tokens} = grammar.tokenizeLine('[3...b]')
+      expect(tokens[0]).toEqual value: '[', scopes: ['source.coffee', 'punctuation.definition.array.begin.bracket.square.coffee']
+      expect(tokens[1]).toEqual value: '3', scopes: ['source.coffee', 'constant.numeric.decimal.coffee']
+      expect(tokens[2]).toEqual value: '...', scopes: ['source.coffee', 'keyword.operator.slice.exclusive.coffee']
+      expect(tokens[3]).toEqual value: 'b', scopes: ['source.coffee']
+      expect(tokens[4]).toEqual value: ']', scopes: ['source.coffee', 'punctuation.definition.array.end.bracket.square.coffee']
 
   it "verifies that regular expressions have explicit count modifiers", ->
     source = fs.readFileSync(path.resolve(__dirname, '..', 'grammars', 'coffeescript.cson'), 'utf8')
@@ -992,7 +1017,7 @@ describe "CoffeeScript grammar", ->
     it "doesn't tokenize nested brackets as destructuring assignments", ->
       {tokens} = grammar.tokenizeLine("[Point(0, 1), [Point(0, 0), Point(0, 1)]]")
       expect(tokens[0]).not.toEqual value: "[", scopes: ["source.coffee", "meta.variable.assignment.destructured.array.coffee", "punctuation.definition.destructuring.begin.bracket.square.coffee"]
-      expect(tokens[0]).toEqual value: "[", scopes: ["source.coffee", "meta.brace.square.coffee"]
+      expect(tokens[0]).toEqual value: "[", scopes: ["source.coffee", "punctuation.definition.array.begin.bracket.square.coffee"]
 
   it "tokenizes inline constant followed by unless statement correctly", ->
     {tokens} = grammar.tokenizeLine("return 0 unless true")
@@ -1024,8 +1049,8 @@ describe "CoffeeScript grammar", ->
       expect(tokens[1]).toEqual value: " food ", scopes: ["source.coffee"]
       expect(tokens[2]).toEqual value: "in", scopes: ["source.coffee", "keyword.control.coffee"]
       expect(tokens[3]).toEqual value: " ", scopes: ["source.coffee"]
-      expect(tokens[4]).toEqual value: "[", scopes: ["source.coffee", "meta.brace.square.coffee"]
-      expect(tokens[18]).toEqual value: "]", scopes: ["source.coffee", "meta.brace.square.coffee"]
+      expect(tokens[4]).toEqual value: "[", scopes: ["source.coffee", "punctuation.definition.array.begin.bracket.square.coffee"]
+      expect(tokens[18]).toEqual value: "]", scopes: ["source.coffee", "punctuation.definition.array.end.bracket.square.coffee"]
 
     it "tokenizes loops using the optional `when` keyword", ->
       {tokens} = grammar.tokenizeLine("for food in foods when food isnt chocolate")
@@ -1092,21 +1117,21 @@ describe "CoffeeScript grammar", ->
 
     it "tokenizes regular expressions inside arrays", ->
       {tokens} = grammar.tokenizeLine("[/test/]")
-      expect(tokens[0]).toEqual value: "[", scopes: ["source.coffee", "meta.brace.square.coffee"]
+      expect(tokens[0]).toEqual value: "[", scopes: ["source.coffee", "punctuation.definition.array.begin.bracket.square.coffee"]
       expect(tokens[1]).toEqual value: "/", scopes: ["source.coffee", "string.regexp.coffee", "punctuation.definition.string.begin.coffee"]
       expect(tokens[2]).toEqual value: "test", scopes: ["source.coffee", "string.regexp.coffee"]
       expect(tokens[3]).toEqual value: "/", scopes: ["source.coffee", "string.regexp.coffee", "punctuation.definition.string.end.coffee"]
-      expect(tokens[4]).toEqual value: "]", scopes: ["source.coffee", "meta.brace.square.coffee"]
+      expect(tokens[4]).toEqual value: "]", scopes: ["source.coffee", "punctuation.definition.array.end.bracket.square.coffee"]
 
       {tokens} = grammar.tokenizeLine("[1, /test/]")
-      expect(tokens[0]).toEqual value: "[", scopes: ["source.coffee", "meta.brace.square.coffee"]
+      expect(tokens[0]).toEqual value: "[", scopes: ["source.coffee", "punctuation.definition.array.begin.bracket.square.coffee"]
       expect(tokens[1]).toEqual value: "1", scopes: ["source.coffee", "constant.numeric.decimal.coffee"]
       expect(tokens[2]).toEqual value: ",", scopes: ["source.coffee", "punctuation.separator.delimiter.coffee"]
       expect(tokens[3]).toEqual value: " ", scopes: ["source.coffee"]
       expect(tokens[4]).toEqual value: "/", scopes: ["source.coffee", "string.regexp.coffee", "punctuation.definition.string.begin.coffee"]
       expect(tokens[5]).toEqual value: "test", scopes: ["source.coffee", "string.regexp.coffee"]
       expect(tokens[6]).toEqual value: "/", scopes: ["source.coffee", "string.regexp.coffee", "punctuation.definition.string.end.coffee"]
-      expect(tokens[7]).toEqual value: "]", scopes: ["source.coffee", "meta.brace.square.coffee"]
+      expect(tokens[7]).toEqual value: "]", scopes: ["source.coffee", "punctuation.definition.array.end.bracket.square.coffee"]
 
     it "does not tokenize multiple division as regex", ->
       # https://github.com/atom/language-coffee-script/issues/112
