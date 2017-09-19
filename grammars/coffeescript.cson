@@ -101,10 +101,13 @@
   }
   {
     'begin': '(?<!#)###(?!#)'
-    'captures':
+    'beginCaptures':
       '0':
         'name': 'punctuation.definition.comment.coffee'
-    'end': '###(?:[ \\t]*\\n)'
+    'end': '###'
+    'endCaptures':
+      '0':
+        'name': 'punctuation.definition.comment.coffee'
     'name': 'comment.block.coffee'
     'patterns': [
       {
