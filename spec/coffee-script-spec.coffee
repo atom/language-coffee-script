@@ -528,7 +528,7 @@ describe "CoffeeScript grammar", ->
     runs ->
       {tokens} = grammar.tokenizeLine("`;`")
       expect(tokens[0]).toEqual value: "`", scopes: ["source.coffee", "string.quoted.script.coffee", "punctuation.definition.string.begin.coffee"]
-      expect(tokens[1]).toEqual value: ";", scopes: ["source.coffee", "string.quoted.script.coffee", "source.embedded.js", "punctuation.terminator.statement.js"]
+      expect(tokens[1]).toEqual value: ";", scopes: ["source.coffee", "string.quoted.script.coffee", "source.js.embedded.coffee", "punctuation.terminator.statement.js"]
       expect(tokens[2]).toEqual value: "`", scopes: ["source.coffee", "string.quoted.script.coffee", "punctuation.definition.string.end.coffee"]
 
       lines = grammar.tokenizeLines """
@@ -536,10 +536,17 @@ describe "CoffeeScript grammar", ->
         a = 2
         """
       expect(lines[0][0]).toEqual value: '`', scopes: ["source.coffee", "string.quoted.script.coffee", "punctuation.definition.string.begin.coffee"]
-      expect(lines[0][1]).toEqual value: 'var', scopes: ["source.coffee", "string.quoted.script.coffee", "source.embedded.js", "storage.type.var.js"]
-      expect(lines[0][6]).toEqual value: ';', scopes: ["source.coffee", "string.quoted.script.coffee", "source.embedded.js", "punctuation.terminator.statement.js"]
+      expect(lines[0][1]).toEqual value: 'var', scopes: ["source.coffee", "string.quoted.script.coffee", "source.js.embedded.coffee", "storage.type.var.js"]
+      expect(lines[0][6]).toEqual value: ';', scopes: ["source.coffee", "string.quoted.script.coffee", "source.js.embedded.coffee", "punctuation.terminator.statement.js"]
       expect(lines[0][7]).toEqual value: '`', scopes: ["source.coffee", "string.quoted.script.coffee", "punctuation.definition.string.end.coffee"]
       expect(lines[1][0]).toEqual value: 'a', scopes: ["source.coffee", "variable.assignment.coffee"]
+
+      {tokens} = grammar.tokenizeLine("`// comment` a = 2")
+      expect(tokens[0]).toEqual value: '`', scopes: ["source.coffee", "string.quoted.script.coffee", "punctuation.definition.string.begin.coffee"]
+      expect(tokens[1]).toEqual value: '//', scopes: ["source.coffee", "string.quoted.script.coffee", "source.js.embedded.coffee", "comment.line.double-slash.js", "punctuation.definition.comment.js"]
+      expect(tokens[2]).toEqual value: ' comment', scopes: ["source.coffee", "string.quoted.script.coffee", "source.js.embedded.coffee", "comment.line.double-slash.js"]
+      expect(tokens[3]).toEqual value: '`', scopes: ["source.coffee", "string.quoted.script.coffee", "punctuation.definition.string.end.coffee"]
+      expect(tokens[5]).toEqual value: 'a', scopes: ["source.coffee", "variable.assignment.coffee"]
 
   describe "function calls", ->
     it "tokenizes function calls", ->
