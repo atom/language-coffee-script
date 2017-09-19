@@ -103,25 +103,25 @@ describe "CoffeeScript grammar", ->
       Until here
       ###
     """
-    expect(lines[1][0]).toEqual value: '###', scopes: ['source.coffee', 'comment.block.coffee', 'punctuation.definition.comment.coffee']
-    expect(lines[1][1]).toEqual value: ' I am a block comment', scopes: ['source.coffee', 'comment.block.coffee']
-    expect(lines[3][0]).toEqual value: 'Until here', scopes: ['source.coffee', 'comment.block.coffee']
-    expect(lines[4][0]).toEqual value: '###', scopes: ['source.coffee', 'comment.block.coffee', 'punctuation.definition.comment.coffee']
+    expect(lines[0][0]).toEqual value: '###', scopes: ['source.coffee', 'comment.block.coffee', 'punctuation.definition.comment.coffee']
+    expect(lines[0][1]).toEqual value: ' I am a block comment', scopes: ['source.coffee', 'comment.block.coffee']
+    expect(lines[2][0]).toEqual value: 'Until here', scopes: ['source.coffee', 'comment.block.coffee']
+    expect(lines[3][0]).toEqual value: '###', scopes: ['source.coffee', 'comment.block.coffee', 'punctuation.definition.comment.coffee']
 
     {tokens} = grammar.tokenizeLine "identity = ###::<T>### (value ###: T ###) ###: T ### ->"
     expect(tokens[0]).toEqual value: 'identity', scopes: ['source.coffee', 'variable.assignment.coffee']
     expect(tokens[4]).toEqual value: '###', scopes: ['source.coffee', 'comment.block.coffee', 'punctuation.definition.comment.coffee']
     expect(tokens[5]).toEqual value: '::<T>', scopes: ['source.coffee', 'comment.block.coffee']
     expect(tokens[6]).toEqual value: '###', scopes: ['source.coffee', 'comment.block.coffee', 'punctuation.definition.comment.coffee']
-    expect(tokens[7]).toEqual value: '  (value ', scopes: ['source.coffee'] # TODO: These scopes are incorrect and should be fixed
-    expect(tokens[8]).toEqual value: '###', scopes: ['source.coffee', 'comment.block.coffee', 'punctuation.definition.comment.coffee']
-    expect(tokens[9]).toEqual value: ': T ', scopes: ['source.coffee', 'comment.block.coffee']
+    expect(tokens[9]).toEqual value: 'value ', scopes: ['source.coffee'] # TODO: These scopes are incorrect and should be fixed
     expect(tokens[10]).toEqual value: '###', scopes: ['source.coffee', 'comment.block.coffee', 'punctuation.definition.comment.coffee']
-    expect(tokens[11]).toEqual value: ') ', scopes: ['source.coffee'] # TODO: These scopes are incorrect and should be fixed
+    expect(tokens[11]).toEqual value: ': T ', scopes: ['source.coffee', 'comment.block.coffee']
     expect(tokens[12]).toEqual value: '###', scopes: ['source.coffee', 'comment.block.coffee', 'punctuation.definition.comment.coffee']
-    expect(tokens[13]).toEqual value: ': T ', scopes: ['source.coffee', 'comment.block.coffee']
-    expect(tokens[14]).toEqual value: '###', scopes: ['source.coffee', 'comment.block.coffee', 'punctuation.definition.comment.coffee']
-    expect(tokens[16]).toEqual value: '->', scopes: ['source.coffee', 'meta.function.inline.coffee', 'storage.type.function.coffee']
+    expect(tokens[14]).toEqual value: ' ', scopes: ['source.coffee'] # TODO: These scopes are incorrect and should be fixed
+    expect(tokens[15]).toEqual value: '###', scopes: ['source.coffee', 'comment.block.coffee', 'punctuation.definition.comment.coffee']
+    expect(tokens[16]).toEqual value: ': T ', scopes: ['source.coffee', 'comment.block.coffee']
+    expect(tokens[17]).toEqual value: '###', scopes: ['source.coffee', 'comment.block.coffee', 'punctuation.definition.comment.coffee']
+    expect(tokens[19]).toEqual value: '->', scopes: ['source.coffee', 'meta.function.inline.coffee', 'storage.type.function.coffee']
 
   it "tokenizes annotations in block comments", ->
     lines = grammar.tokenizeLines """
