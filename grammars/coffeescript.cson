@@ -801,7 +801,15 @@
   'operators':
     'patterns': [
       {
-        'match': '([a-zA-Z$_][\\w$]*)?\\s*(%=|\\+=|-=|\\*=|and=|or=|&&=|\\|\\|=|\\?=|(?<!\\()/=)'
+        'match': '(?:([a-zA-Z$_][\\w$]*)?\\s+|(?<![\\w$]))(and=|or=)'
+        'captures':
+          '1':
+            'name': 'variable.assignment.coffee'
+          '2':
+            'name': 'keyword.operator.assignment.compound.coffee'
+      }
+      {
+        'match': '([a-zA-Z$_][\\w$]*)?\\s*(%=|\\+=|-=|\\*=|&&=|\\|\\|=|\\?=|(?<!\\()/=)'
         'captures':
           '1':
             'name': 'variable.assignment.coffee'
