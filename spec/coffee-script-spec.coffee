@@ -214,10 +214,20 @@ describe "CoffeeScript grammar", ->
     expect(tokens[2]).toEqual value: "and=", scopes: ["source.coffee", "keyword.operator.assignment.compound.coffee"]
     expect(tokens[3]).toEqual value: " b", scopes: ["source.coffee"]
 
+    # Should NOT be tokenized as and=
+    {tokens} = grammar.tokenizeLine("operand=true")
+    expect(tokens[0]).toEqual value: "operand", scopes: ["source.coffee", "variable.assignment.coffee"]
+    expect(tokens[1]).toEqual value: "=", scopes: ["source.coffee", "keyword.operator.assignment.coffee"]
+
     {tokens} = grammar.tokenizeLine("a or= b")
     expect(tokens[0]).toEqual value: "a", scopes: ["source.coffee", "variable.assignment.coffee"]
     expect(tokens[2]).toEqual value: "or=", scopes: ["source.coffee", "keyword.operator.assignment.compound.coffee"]
     expect(tokens[3]).toEqual value: " b", scopes: ["source.coffee"]
+
+    # Should NOT be tokenized as or=
+    {tokens} = grammar.tokenizeLine("editor=false")
+    expect(tokens[0]).toEqual value: "editor", scopes: ["source.coffee", "variable.assignment.coffee"]
+    expect(tokens[1]).toEqual value: "=", scopes: ["source.coffee", "keyword.operator.assignment.coffee"]
 
     {tokens} = grammar.tokenizeLine("a -= b")
     expect(tokens[0]).toEqual value: "a", scopes: ["source.coffee", "variable.assignment.coffee"]
