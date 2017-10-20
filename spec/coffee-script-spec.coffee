@@ -1194,6 +1194,60 @@ describe "CoffeeScript grammar", ->
       expect(tokens[7]).toEqual value: "/", scopes: ["source.coffee", "meta.method-call.coffee", "meta.arguments.coffee", "string.regexp.coffee", "punctuation.definition.string.end.coffee"]
       expect(tokens[12]).toEqual value: "/", scopes: ["source.coffee", "meta.method-call.coffee", "meta.arguments.coffee", "string.quoted.single.coffee"]
 
+    it "tokenises multi-line regular expressions", ->
+      {tokens} = grammar.tokenizeLine('/// (XYZ) ///')
+      expect(tokens[0]).toEqual value: '///', scopes: ['source.coffee', 'string.regexp.multiline.coffee', 'punctuation.definition.string.begin.coffee']
+      expect(tokens[2]).toEqual value: '(', scopes: ['source.coffee', 'string.regexp.multiline.coffee', 'meta.group.regexp', 'punctuation.definition.group.regexp']
+      expect(tokens[3]).toEqual value: 'XYZ', scopes: ['source.coffee', 'string.regexp.multiline.coffee', 'meta.group.regexp']
+      expect(tokens[4]).toEqual value: ')', scopes: ['source.coffee', 'string.regexp.multiline.coffee', 'meta.group.regexp', 'punctuation.definition.group.regexp']
+      expect(tokens[6]).toEqual value: '///', scopes: ['source.coffee', 'string.regexp.multiline.coffee', 'punctuation.definition.string.end.coffee']
+
+      lines = grammar.tokenizeLines """
+        ///
+        XYZ //
+        /~/
+        ///
+      """
+      expect(lines[0][0]).toEqual value: '///', scopes: ['source.coffee', 'string.regexp.multiline.coffee', 'punctuation.definition.string.begin.coffee']
+      expect(lines[1][0]).toEqual value: 'XYZ //', scopes: ['source.coffee', 'string.regexp.multiline.coffee']
+      expect(lines[2][0]).toEqual value: '/~/', scopes: ['source.coffee', 'string.regexp.multiline.coffee']
+      expect(lines[3][0]).toEqual value: '///', scopes: ['source.coffee', 'string.regexp.multiline.coffee', 'punctuation.definition.string.end.coffee']
+
+  describe "here-docs", ->
+    it "tokenises single-quoted here-docs", ->
+      {tokens} = grammar.tokenizeLine "'''XYZ'''"
+      expect(tokens[0]).toEqual value: "'''", scopes: ['source.coffee', 'string.quoted.single.heredoc.coffee', 'punctuation.definition.string.begin.coffee']
+      expect(tokens[1]).toEqual value: 'XYZ', scopes: ['source.coffee', 'string.quoted.single.heredoc.coffee']
+      expect(tokens[2]).toEqual value: "'''", scopes: ['source.coffee', 'string.quoted.single.heredoc.coffee', 'punctuation.definition.string.end.coffee']
+
+      lines = grammar.tokenizeLines """
+        '''
+        'ABC'
+        XYZ ''
+        '''
+      """
+      expect(lines[0][0]).toEqual value: "'''", scopes: ['source.coffee', 'string.quoted.single.heredoc.coffee', 'punctuation.definition.string.begin.coffee']
+      expect(lines[1][0]).toEqual value: "'ABC'", scopes: ['source.coffee', 'string.quoted.single.heredoc.coffee']
+      expect(lines[2][0]).toEqual value: "XYZ ''", scopes: ['source.coffee', 'string.quoted.single.heredoc.coffee']
+      expect(lines[3][0]).toEqual value: "'''", scopes: ['source.coffee', 'string.quoted.single.heredoc.coffee', 'punctuation.definition.string.end.coffee']
+
+    it "tokenises double-quoted here-docs", ->
+      {tokens} = grammar.tokenizeLine "'''XYZ'''"
+      expect(tokens[0]).toEqual value: "'''", scopes: ['source.coffee', 'string.quoted.single.heredoc.coffee', 'punctuation.definition.string.begin.coffee']
+      expect(tokens[1]).toEqual value: 'XYZ', scopes: ['source.coffee', 'string.quoted.single.heredoc.coffee']
+      expect(tokens[2]).toEqual value: "'''", scopes: ['source.coffee', 'string.quoted.single.heredoc.coffee', 'punctuation.definition.string.end.coffee']
+
+      lines = grammar.tokenizeLines '''
+        """
+        "ABC"
+        XYZ ""
+        """
+      '''
+      expect(lines[0][0]).toEqual value: '"""', scopes: ['source.coffee', 'string.quoted.double.heredoc.coffee', 'punctuation.definition.string.begin.coffee']
+      expect(lines[1][0]).toEqual value: '"ABC"', scopes: ['source.coffee', 'string.quoted.double.heredoc.coffee']
+      expect(lines[2][0]).toEqual value: 'XYZ ""', scopes: ['source.coffee', 'string.quoted.double.heredoc.coffee']
+      expect(lines[3][0]).toEqual value: '"""', scopes: ['source.coffee', 'string.quoted.double.heredoc.coffee', 'punctuation.definition.string.end.coffee']
+
   describe "escape sequences in strings", ->
     it "tokenises leading backslashes in double-quoted strings", ->
       {tokens} = grammar.tokenizeLine('"a\\\\b\\\\\\\\c"')

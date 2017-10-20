@@ -49,7 +49,7 @@
     'endCaptures':
       '0':
         'name': 'punctuation.definition.string.end.coffee'
-    'name': 'string.quoted.heredoc.coffee'
+    'name': 'string.quoted.single.heredoc.coffee'
     'patterns': [
       {
         'captures':
@@ -127,7 +127,7 @@
   {
     'begin': '///'
     'end': '(///)[gimuy]*'
-    'name': 'string.regexp.coffee'
+    'name': 'string.regexp.multiline.coffee'
     'beginCaptures':
       '0':
         'name': 'punctuation.definition.string.begin.coffee'
