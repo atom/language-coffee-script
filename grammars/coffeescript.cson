@@ -127,7 +127,7 @@
   {
     'begin': '///'
     'end': '(///)[gimuy]*'
-    'name': 'string.regexp.coffee'
+    'name': 'string.regexp.multiline.coffee'
     'beginCaptures':
       '0':
         'name': 'punctuation.definition.string.begin.coffee'
