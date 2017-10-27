@@ -66,24 +66,30 @@ describe "CoffeeScript grammar", ->
   it "tokenizes instantiated anonymous classes", ->
     {tokens} = grammar.tokenizeLine("new class")
 
-    expect(tokens[0]).toEqual value: "new", scopes: ["source.coffee", "meta.class.instance.constructor", "keyword.operator.new.coffee"]
-    expect(tokens[1]).toEqual value: " ", scopes: ["source.coffee", "meta.class.instance.constructor"]
-    expect(tokens[2]).toEqual value: "class", scopes: ["source.coffee", "meta.class.instance.constructor", "storage.type.class.coffee"]
+    expect(tokens[0]).toEqual value: "new", scopes: ["source.coffee", "meta.class.instance.constructor.coffee", "keyword.operator.new.coffee"]
+    expect(tokens[1]).toEqual value: " ", scopes: ["source.coffee", "meta.class.instance.constructor.coffee"]
+    expect(tokens[2]).toEqual value: "class", scopes: ["source.coffee", "meta.class.instance.constructor.coffee", "storage.type.class.coffee"]
 
   it "tokenizes instantiated named classes", ->
     {tokens} = grammar.tokenizeLine("new class Foo")
 
-    expect(tokens[0]).toEqual value: "new", scopes: ["source.coffee", "meta.class.instance.constructor", "keyword.operator.new.coffee"]
-    expect(tokens[1]).toEqual value: " ", scopes: ["source.coffee", "meta.class.instance.constructor"]
-    expect(tokens[2]).toEqual value: "class", scopes: ["source.coffee", "meta.class.instance.constructor", "storage.type.class.coffee"]
-    expect(tokens[3]).toEqual value: " ", scopes: ["source.coffee", "meta.class.instance.constructor"]
-    expect(tokens[4]).toEqual value: "Foo", scopes: ["source.coffee", "meta.class.instance.constructor", "entity.name.type.instance.coffee"]
+    expect(tokens[0]).toEqual value: "new", scopes: ["source.coffee", "meta.class.instance.constructor.coffee", "keyword.operator.new.coffee"]
+    expect(tokens[1]).toEqual value: " ", scopes: ["source.coffee", "meta.class.instance.constructor.coffee"]
+    expect(tokens[2]).toEqual value: "class", scopes: ["source.coffee", "meta.class.instance.constructor.coffee", "storage.type.class.coffee"]
+    expect(tokens[3]).toEqual value: " ", scopes: ["source.coffee", "meta.class.instance.constructor.coffee"]
+    expect(tokens[4]).toEqual value: "Foo", scopes: ["source.coffee", "meta.class.instance.constructor.coffee", "entity.name.type.instance.coffee"]
 
     {tokens} = grammar.tokenizeLine("new Foo")
 
-    expect(tokens[0]).toEqual value: "new", scopes: ["source.coffee", "meta.class.instance.constructor", "keyword.operator.new.coffee"]
-    expect(tokens[1]).toEqual value: " ", scopes: ["source.coffee", "meta.class.instance.constructor"]
-    expect(tokens[2]).toEqual value: "Foo", scopes: ["source.coffee", "meta.class.instance.constructor", "entity.name.type.instance.coffee"]
+    expect(tokens[0]).toEqual value: "new", scopes: ["source.coffee", "meta.class.instance.constructor.coffee", "keyword.operator.new.coffee"]
+    expect(tokens[1]).toEqual value: " ", scopes: ["source.coffee", "meta.class.instance.constructor.coffee"]
+    expect(tokens[2]).toEqual value: "Foo", scopes: ["source.coffee", "meta.class.instance.constructor.coffee", "entity.name.type.instance.coffee"]
+
+  it "tokenizes class names that start with `class` correctly", ->
+    {tokens} = grammar.tokenizeLine("new classTest")
+
+    expect(tokens[0]).toEqual value: "new", scopes: ["source.coffee", "meta.class.instance.constructor.coffee", "keyword.operator.new.coffee"]
+    expect(tokens[2]).toEqual value: "classTest", scopes: ["source.coffee", "meta.class.instance.constructor.coffee", "entity.name.type.instance.coffee"]
 
   it "tokenizes comments", ->
     {tokens} = grammar.tokenizeLine("# I am a comment")
