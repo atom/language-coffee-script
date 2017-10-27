@@ -28,17 +28,17 @@
 '''
 'patterns': [
   {
+    'match': '(new)\\s+(?:(?:(class)\\s+(\\w+(?:\\.\\w*)*)?)|(\\w+(?:\\.\\w*)*))'
+    'name': 'meta.class.instance.constructor.coffee'
     'captures':
       '1':
         'name': 'keyword.operator.new.coffee'
-      '4':
+      '2':
         'name': 'storage.type.class.coffee'
-      '6':
+      '3':
         'name': 'entity.name.type.instance.coffee'
-      '7':
+      '4':
         'name': 'entity.name.type.instance.coffee'
-    'match': '(new)\\s+(((class)(\\s+(\\w+(?:\\.\\w*)*))?)|(\\w+(?:\\.\\w*)*))'
-    'name': 'meta.class.instance.constructor'
   }
   {
     'begin': '\'\'\''
