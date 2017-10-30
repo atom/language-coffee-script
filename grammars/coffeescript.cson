@@ -493,7 +493,7 @@
       }
       {
         'begin': '(?=(@|@?[\\w$]+|[=-]>|\\-\\d|\\[|{|\"|\'))'
-        'end': '(?=\\s*(?<![\\w$])(of|in|then|is|isnt|and|or|for|else|when|if|unless|by|instanceof)(?![\\w$]))|(?=\\s*(}|\\)|#|$))'
+        'end': '(?=\\s*(?<![\\w$])(of|in|then|is|isnt|and|or|for|else|when|if|unless|by|instanceof)(?![\\w$]))|(?=\\s*(}|\\]|\\)|#|$))'
         'name': 'meta.arguments.coffee'
         'patterns': [
           {
@@ -566,7 +566,7 @@
                 'include': '#function_names'
               }
             ]
-        'end': '(?=\\s*(?<![\\w$])(of|in|then|is|isnt|and|or|for|else|when|if|unless|by|instanceof)(?![\\w$]))|(?=\\s*(}|\\)|#|$))'
+        'end': '(?=\\s*(?<![\\w$])(of|in|then|is|isnt|and|or|for|else|when|if|unless|by|instanceof)(?![\\w$]))|(?=\\s*(}|\\]|\\)|#|$))'
         'name': 'meta.function-call.coffee'
         'patterns': [
           {
@@ -700,7 +700,7 @@
                 'include': '#method_names'
               }
             ]
-        'end': '(?=\\s*(?<![\\w$])(of|in|then|is|isnt|and|or|for|else|when|if|unless|by|instanceof)(?![\\w$]))|(?=\\s*(}|\\)|#|$))'
+        'end': '(?=\\s*(?<![\\w$])(of|in|then|is|isnt|and|or|for|else|when|if|unless|by|instanceof)(?![\\w$]))|(?=\\s*(}|\\]|\\)|#|$))'
         'name': 'meta.method-call.coffee'
         'patterns': [
           {
