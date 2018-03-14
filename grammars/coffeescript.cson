@@ -929,6 +929,10 @@
         'name': 'keyword.operator.existential.coffee'
       }
       {
+        'match': '-(?=\\.?[0-9])'
+        'name': 'keyword.operator.numeric.coffee'
+      }
+      {
         'match': '%|\\*|/|-|\\+'
         'name': 'keyword.operator.coffee'
       }
