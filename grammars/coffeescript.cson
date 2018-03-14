@@ -466,6 +466,9 @@
     'include': '#instance_variable'
   }
   {
+    'include': '#variable_name'
+  }
+  {
     'include': '#single_quoted_string'
   }
   {
@@ -644,6 +647,13 @@
       {
         'match': '(@)([a-zA-Z_\\$]\\w*)?'
         'name': 'variable.other.readwrite.instance.coffee'
+      }
+    ]
+  'variable_name':
+    'patterns': [
+      {
+        'match': '[a-zA-Z_\\$]\\w*'
+        'name': 'variable.other.readwrite.coffee'
       }
     ]
   'interpolated_coffee':
