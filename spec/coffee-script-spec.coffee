@@ -1373,7 +1373,7 @@ describe "CoffeeScript grammar", ->
       expect(tokens[13]).toEqual value: 'e', scopes: ['source.coffee', 'meta.tag.coffee', 'meta.function-call.coffee', 'meta.arguments.coffee' ]
       expect(tokens[14]).toEqual value: ')', scopes: ['source.coffee', 'meta.tag.coffee', 'meta.function-call.coffee', 'meta.arguments.coffee', 'punctuation.definition.arguments.end.bracket.round.coffee' ]
       expect(tokens[15]).toEqual value: '}', scopes: ['source.coffee', 'meta.tag.coffee', 'meta.brace.curly.coffee']
-      expect(tokens[16]).toEqual value: '>', scopes: ['source.coffee', 'meta.tag.coffee' ]
+      expect(tokens[16]).toEqual value: '>', scopes: ['source.coffee', 'meta.tag.coffee']
 
   describe "firstLineMatch", ->
     it "recognises interpreter directives", ->
