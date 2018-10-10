@@ -1322,6 +1322,59 @@ describe "CoffeeScript grammar", ->
       expect(tokens[8]).toEqual value: 'b', scopes: ['source.coffee', 'string.quoted.single.coffee', 'constant.character.escape.backslash.coffee']
       expect(tokens[9]).toEqual value: "'", scopes: ['source.coffee', 'string.quoted.single.coffee', 'punctuation.definition.string.end.coffee']
 
+  describe "jsx", ->
+    it "tokenises HTML tags", ->
+      {tokens} = grammar.tokenizeLine("<div></div>")
+      expect(tokens[0]).toEqual value: '<', scopes: ['source.coffee', 'meta.tag.coffee', 'punctuation.definition.tag.coffee']
+      expect(tokens[1]).toEqual value : 'div', scopes : [ 'source.coffee', 'meta.tag.coffee', 'entity.name.tag.coffee' ]
+      expect(tokens[2]).toEqual value : '>', scopes : [ 'source.coffee', 'meta.tag.coffee' ]
+      expect(tokens[3]).toEqual value : '</', scopes : [ 'source.coffee', 'meta.tag.coffee', 'punctuation.definition.tag.coffee' ]
+      expect(tokens[4]).toEqual value : 'div', scopes : [ 'source.coffee', 'meta.tag.coffee', 'entity.name.tag.coffee' ]
+      expect(tokens[5]).toEqual value : '>', scopes : [ 'source.coffee', 'meta.tag.coffee' ]
+
+      {tokens} = grammar.tokenizeLine("<div/>")
+      expect(tokens[0]).toEqual value: '<', scopes: ['source.coffee', 'meta.tag.coffee', 'punctuation.definition.tag.coffee']
+      expect(tokens[1]).toEqual value : 'div', scopes : [ 'source.coffee', 'meta.tag.coffee', 'entity.name.tag.coffee' ]
+      expect(tokens[2]).toEqual value : '/>', scopes : [ 'source.coffee', 'meta.tag.coffee' ]
+
+    it "tokenises HTML tags with attributes", ->
+      {tokens} = grammar.tokenizeLine("<div class='myclass' id=\"myid\">")
+      expect(tokens[0]).toEqual value: '<', scopes: ['source.coffee', 'meta.tag.coffee', 'punctuation.definition.tag.coffee']
+      expect(tokens[1]).toEqual value : 'div', scopes : [ 'source.coffee', 'meta.tag.coffee', 'entity.name.tag.coffee' ]
+      expect(tokens[2]).toEqual value : ' ', scopes : [ 'source.coffee', 'meta.tag.coffee' ]
+      expect(tokens[3]).toEqual value : 'class', scopes : [ 'source.coffee', 'meta.tag.coffee', 'entity.other.attribute-name.coffee' ]
+      expect(tokens[4]).toEqual value : '=', scopes : [ 'source.coffee', 'meta.tag.coffee', 'keyword.operator.assignment.coffee' ]
+      expect(tokens[5]).toEqual value : '\'', scopes : [ 'source.coffee', 'meta.tag.coffee', 'string.quoted.single.coffee', 'punctuation.definition.string.begin.coffee' ]
+      expect(tokens[6]).toEqual value : 'myclass', scopes : [ 'source.coffee', 'meta.tag.coffee', 'string.quoted.single.coffee' ]
+      expect(tokens[7]).toEqual value : '\'', scopes : [ 'source.coffee', 'meta.tag.coffee', 'string.quoted.single.coffee', 'punctuation.definition.string.end.coffee' ]
+      expect(tokens[8]).toEqual value : ' ', scopes : [ 'source.coffee', 'meta.tag.coffee' ]
+      expect(tokens[9]).toEqual value : 'id', scopes : [ 'source.coffee', 'meta.tag.coffee', 'entity.other.attribute-name.coffee' ]
+      expect(tokens[10]).toEqual value : '=', scopes : [ 'source.coffee', 'meta.tag.coffee', 'keyword.operator.assignment.coffee' ]
+      expect(tokens[11]).toEqual value : '"', scopes : [ 'source.coffee', 'meta.tag.coffee', 'string.quoted.double.coffee', 'punctuation.definition.string.begin.coffee' ]
+      expect(tokens[12]).toEqual value : 'myid', scopes : [ 'source.coffee', 'meta.tag.coffee', 'string.quoted.double.coffee' ]
+      expect(tokens[13]).toEqual value : '"', scopes : [ 'source.coffee', 'meta.tag.coffee', 'string.quoted.double.coffee', 'punctuation.definition.string.end.coffee' ]
+      expect(tokens[14]).toEqual value : '>', scopes : [ 'source.coffee', 'meta.tag.coffee' ]
+
+    it "tokenises HTML tags with attributes that have expressions", ->
+      {tokens} = grammar.tokenizeLine("<div on-click={(e)->@handleClick(e)}>")
+      expect(tokens[0]).toEqual value: '<', scopes: ['source.coffee', 'meta.tag.coffee', 'punctuation.definition.tag.coffee']
+      expect(tokens[1]).toEqual value : 'div', scopes : [ 'source.coffee', 'meta.tag.coffee', 'entity.name.tag.coffee' ]
+      expect(tokens[2]).toEqual value : ' ', scopes : [ 'source.coffee', 'meta.tag.coffee' ]
+      expect(tokens[3]).toEqual value : 'on-click', scopes : [ 'source.coffee', 'meta.tag.coffee', 'entity.other.attribute-name.coffee' ]
+      expect(tokens[4]).toEqual value : '=', scopes : [ 'source.coffee', 'meta.tag.coffee', 'keyword.operator.assignment.coffee' ]
+      expect(tokens[5]).toEqual value : '{', scopes : [ 'source.coffee', 'meta.tag.coffee', 'meta.brace.curly.coffee'] 
+      expect(tokens[6]).toEqual value : '(', scopes : [ 'source.coffee', 'meta.tag.coffee', 'meta.function.inline.coffee', 'meta.parameters.coffee', 'punctuation.definition.parameters.begin.bracket.round.coffee' ]
+      expect(tokens[7]).toEqual value : 'e', scopes : [ 'source.coffee', 'meta.tag.coffee', 'meta.function.inline.coffee', 'meta.parameters.coffee', 'variable.parameter.function.coffee' ]
+      expect(tokens[8]).toEqual value : ')', scopes : [ 'source.coffee', 'meta.tag.coffee', 'meta.function.inline.coffee', 'meta.parameters.coffee', 'punctuation.definition.parameters.end.bracket.round.coffee' ]
+      expect(tokens[9]).toEqual value : '->', scopes : [ 'source.coffee', 'meta.tag.coffee', 'meta.function.inline.coffee', 'storage.type.function.coffee' ]
+      expect(tokens[10]).toEqual value : '@', scopes : [ 'source.coffee', 'meta.tag.coffee', 'meta.function-call.coffee', 'variable.other.readwrite.instance.coffee' ]
+      expect(tokens[11]).toEqual value : 'handleClick', scopes : [ 'source.coffee', 'meta.tag.coffee', 'meta.function-call.coffee', 'entity.name.function.coffee' ]
+      expect(tokens[12]).toEqual value : '(', scopes : [ 'source.coffee', 'meta.tag.coffee', 'meta.function-call.coffee', 'meta.arguments.coffee', 'punctuation.definition.arguments.begin.bracket.round.coffee' ]
+      expect(tokens[13]).toEqual value : 'e', scopes : [ 'source.coffee', 'meta.tag.coffee', 'meta.function-call.coffee', 'meta.arguments.coffee' ]
+      expect(tokens[14]).toEqual value : ')', scopes : [ 'source.coffee', 'meta.tag.coffee', 'meta.function-call.coffee', 'meta.arguments.coffee', 'punctuation.definition.arguments.end.bracket.round.coffee' ]
+      expect(tokens[15]).toEqual value : '}', scopes : [ 'source.coffee', 'meta.tag.coffee', 'meta.brace.curly.coffee']
+      expect(tokens[16]).toEqual value : '>', scopes : [ 'source.coffee', 'meta.tag.coffee' ]
+
   describe "firstLineMatch", ->
     it "recognises interpreter directives", ->
       valid = """
